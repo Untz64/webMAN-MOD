@@ -536,6 +536,8 @@ static int get_title_and_id_from_sfo(char *templn, char *title_id, const char *e
 {
 	int ret = FAILED;
 
+	bool use_filename = webman_config->use_filename;
+
 	// read param.sfo
 	unsigned char *mem = (u8*)data;
 	u64 sfo_size = read_file(templn, data, _4KB_, 0);
@@ -543,6 +545,8 @@ static int get_title_and_id_from_sfo(char *templn, char *title_id, const char *e
 	// get titleID & title from PARAM.SFO
 	if(is_sfo(mem))
 	{
+		if(islike(templn + 11, "/GAMEI/") || strstr(templn, "_00-")) use_filename = false;
+
 		parse_param_sfo(mem, title_id, templn, (u16)sfo_size);
 
 		if(SHOW_COVERS) get_cover_by_titleid(icon, title_id);
@@ -550,7 +554,7 @@ static int get_title_and_id_from_sfo(char *templn, char *title_id, const char *e
 		ret = CELL_FS_SUCCEEDED;
 	}
 
-	if(webman_config->use_filename)
+	if(use_filename)
 	{
 		if(NO_ICON && !HAS_TITLE_ID) get_cover_from_name(icon, entry_name, title_id); // get titleID from name
 

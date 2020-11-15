@@ -1,4 +1,5 @@
 #define DEFAULT_MIN_FANSPEED	(25) /* % */
+#define DEFAULT_MAX_FANSPEED	(80) /* % */
 #define MIN_FANSPEED			(20) /* % */
 #define MIN_FANSPEED_8BIT		(0x33) /* 20% */
 #define MAX_FANSPEED_8BIT		(0xF4) /* 95% */
@@ -18,6 +19,7 @@
 #define TOGGLE_MODE		(2)
 #define ENABLE_SC8		(3)
 #define PS2_MODE_OFF	(4)
+#define ENABLE_AUTO2	(5)
 
 #define SET_PS2_MODE	(0)
 #define SYSCON_MODE		(1)
@@ -116,12 +118,15 @@ static void restore_fan(u8 set_syscon_mode)
 	}
 }
 
+static u8 original_fanc = ENABLED;
+
 static void enable_fan_control(u8 enable)
 {
-	if(enable == PS2_MODE_OFF) fan_ps2_mode = false;		else
-	if(enable == ENABLE_SC8) webman_config->fanc = ENABLED;	else
-	if(enable <= ENABLED)	 webman_config->fanc = enable;	else
-	/* enable==TOGGLE_MODE*/ webman_config->fanc = (webman_config->fanc ? DISABLED : ENABLED);
+	if(enable == PS2_MODE_OFF)	fan_ps2_mode = false;					else
+	if(enable == ENABLE_SC8)	webman_config->fanc = original_fanc;	else
+	if(enable == ENABLE_AUTO2)	webman_config->fanc = FAN_AUTO2;		else // 2 = AUTO2
+	if(enable <= ENABLED)		webman_config->fanc = enable;			else // 1 = ENABLED / 0 = SYSCON
+	/* enable==TOGGLE_MODE*/	webman_config->fanc = (webman_config->fanc ? DISABLED : original_fanc);
 
 	max_temp = 0; // syscon
 	if(webman_config->fanc)

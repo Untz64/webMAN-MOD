@@ -136,10 +136,9 @@ int extract_zip(const char* zip_file, const char* dest_path)
 
 		flen = snprintf(path + dlen, 255 - dlen, "%s", filename);
 
-		if (filename[flen - 1] == '/')
-		{
-			mkdirs(path, dlen, dlen + flen); continue;
-		}
+		mkdirs(path, dlen, dlen + flen);
+
+		if (filename[flen - 1] == '/') continue;
 
 		struct zip_stat st;
 		if (zip_stat_index(archive, i, 0, &st)) {

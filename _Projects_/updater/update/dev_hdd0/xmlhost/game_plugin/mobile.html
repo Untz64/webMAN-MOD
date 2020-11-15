@@ -1760,7 +1760,8 @@ var SwipeView = (function (window, document) {
 
 			this.masterPages[this.currentMasterPage].className = this.masterPages[this.currentMasterPage].className.replace(/(^|\s)swipeview-active(\s|$)/, '');
 
-			if(numberOfImages == 2) {this.directionX = 1; this.x++;}
+			if(numberOfImages <= 1) {this.directionX = -1; this.x++;}
+			if(numberOfImages == 2) {this.directionX =  1; this.x++;}
 
 			// Flip the page
 			if (this.directionX > 0)

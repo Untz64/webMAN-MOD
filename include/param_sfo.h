@@ -73,10 +73,11 @@ static void parse_param_sfo(unsigned char *mem, char *title_id, char *title, u16
 }
 
 #ifdef UNLOCK_SAVEDATA
-static u8 unlock_param_sfo(const char *param_sfo, unsigned char *mem, u16 sfo_size)
+static u8 patch_param_sfo(const char *param_sfo, unsigned char *mem, u16 sfo_size, u32 attribute)
 {
-	if( islike(param_sfo, HDD0_HOME_DIR) == false) return false;
-	if(!strstr(param_sfo + 14, "/PARAM.SFO")) return false;
+	if(not_exists(param_sfo)) return false;
+
+	if(!strstr(param_sfo, "/PARAM.SFO")) return false;
 
 	u8 save = 0;
 
@@ -96,7 +97,7 @@ static u8 unlock_param_sfo(const char *param_sfo, unsigned char *mem, u16 sfo_si
 		}
 		else if(!memcmp((char *) &mem[str], "ATTRIBUTE", 9))
 		{
-			memset((char *) &mem[pos], 0, 4); save++; // Remove Copy Protection
+			memcpy((char *) &mem[pos], &attribute, sizeof(u32)); save++; // set attribute (0 = Remove Copy Protection)
 		}
 		else if(!memcmp((char *) &mem[str], "PARAMS", 6))
 		{
@@ -110,6 +111,12 @@ static u8 unlock_param_sfo(const char *param_sfo, unsigned char *mem, u16 sfo_si
 	}
 
 	return save;
+}
+
+static u8 unlock_param_sfo(const char *param_sfo, unsigned char *mem, u16 sfo_size)
+{
+	if( islike(param_sfo, HDD0_HOME_DIR) == false) return false;
+	return patch_param_sfo(param_sfo, mem, sfo_size, 0);
 }
 #endif
 

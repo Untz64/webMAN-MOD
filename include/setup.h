@@ -121,10 +121,11 @@ static void setup_parse_settings(char *param)
 	webman_config->ps2emu = IS_MARKED("b2n=1");
 
 	webman_config->app_home = IS_UNMARKED("ap=1"); // Mount JB GAMES as /app_home
-
-#if defined(PKG_LAUNCHER) || defined(MOUNT_ROMS)
-	webman_config->ps3l = IS_MARKED("p3l=1");
-	webman_config->roms = IS_MARKED("rom=1");
+#ifdef MOUNT_GAMEI
+	webman_config->gamei = IS_MARKED("gmi=1");
+#endif
+#ifdef MOUNT_ROMS
+	webman_config->roms  = IS_MARKED("rom=1");
 #endif
 
 	webman_config->ignore = IS_MARKED("igf=1"); // ignore game in content scanning
@@ -194,8 +195,8 @@ static void setup_parse_settings(char *param)
 	if(IS_UNMARKED("vrc=1")) webman_config->combo2|=VIDRECORD;
 #endif
 
-	webman_config->info  = get_valuen(param, "xi=", 0, 3); // XMB info level
-	webman_config->minfo = get_valuen(param, "mi=", 0, 3); // Mount info level
+	webman_config->info  = get_valuen(param, "&xi=", 0, 3); // XMB info level
+	webman_config->minfo = get_valuen(param, "&mi=", 0, 3); // Mount info level
 
 	webman_config->wmstart = IS_MARKED("wn=1");
 	webman_config->tid     = IS_MARKED("tid=1");
@@ -266,6 +267,8 @@ static void setup_parse_settings(char *param)
 
 	if(IS_MARKED("&temp=3"))
 		webman_config->fanc = FAN_AUTO2;
+
+	original_fanc = (webman_config->fanc == FAN_AUTO2) ? FAN_AUTO2 : ENABLED;
 
 	max_temp = 0;
 	if(webman_config->fanc)
@@ -517,7 +520,7 @@ static void setup_form(char *buffer, char *templn)
 	close_language();
  #endif
 
-	u8 value, b;
+	u8 value, b, h = is_app_home_onxmb();
 	sprintf(templn, "<style>#cnt,#cfg,#adv,#cmb,#wt{max-height:0px;overflow: hidden;transition:max-height 0.25s linear;}td+td{vertical-align:top;text-align:left;white-space:nowrap}</style>"
 					"<form action=\"/setup.ps3\" method=\"get\" enctype=\"application/x-www-form-urlencoded\" target=\"_self\">"
 					"<b><a class=\"tg\" href=\"javascript:tgl(cnt);\"> %s </a></b><br><div id=\"cnt\">"
@@ -525,7 +528,7 @@ static void setup_form(char *buffer, char *templn)
 					"<tr><td width=\"250\">", STR_SCAN2); concat(buffer, templn);
 
 	//Scan these devices
-	if(!isDir("/dev_hdd0/GAMEZ") && is_app_home_onxmb())
+	if(!isDir("/dev_hdd0/GAMEZ") && h)
 		_add_checkbox("np", "/dev_hdd0/game", (webman_config->npdrm), buffer);
 	_add_checkbox("u0", drives[1], (webman_config->usb0), buffer);
 	_add_checkbox("u1", drives[2], (webman_config->usb1), buffer);
@@ -546,16 +549,12 @@ static void setup_form(char *buffer, char *templn)
 	//Scan for content
 	concat(buffer, "<td nowrap valign=top>");
 
-#if defined(PKG_LAUNCHER) || defined(MOUNT_ROMS)
-	b = isDir(PKGLAUNCH_DIR);
-	add_checkbox("ps3", "PLAYSTATION\xC2\xAE\x33"    , " (",    !(webman_config->cmask & PS3), buffer);
-	add_checkbox("ap", "/app_home", b ? "," : ")<br>",          !(webman_config->app_home)   , buffer);
-	if(b) add_checkbox("p3l", "PKG Launcher"         , " & "  ,  (webman_config->ps3l)       , buffer);
-	if(b) add_checkbox("rom", "ROMS"                 , ")<br>",  (webman_config->roms)       , buffer);
-#else
-	add_checkbox("ps3", "PLAYSTATION\xC2\xAE\x33"    , " (",    !(webman_config->cmask & PS3), buffer);
-	add_checkbox("ap", "/app_home"                   , ")<br>", !(webman_config->app_home),    buffer);
-#endif
+	add_checkbox("ps3", "PLAYSTATION\xC2\xAE\x33", h ? " (" : "<br>",  !(webman_config->cmask & PS3), buffer);
+	if(h)
+	{
+		add_checkbox("ap", "/app_home", "," , !(webman_config->app_home), buffer);
+		add_checkbox("gmi", "GAMEI", ")<br>",  (webman_config->gamei), buffer);
+	}
 
 	b = isDir(PS2_CLASSIC_PLACEHOLDER);
 	add_checkbox("ps2", "PLAYSTATION\xC2\xAE\x32", " (" ,   !(webman_config->cmask & PS2), buffer);
@@ -578,9 +577,16 @@ static void setup_form(char *buffer, char *templn)
 	add_checkbox("rxv", STR_RXVID                    ,     ")<br>"    ,  (webman_config->rxvid)      , buffer);
 
 	add_checkbox("dvd", "DVD "                       ,       STR_VIDLG, !(webman_config->cmask & DVD), buffer);
+	concat(buffer, "<br>");
 #endif
 
-	concat(buffer, "<br><br>");
+	#if defined(MOUNT_ROMS)
+	b = isDir(PKGLAUNCH_DIR);
+	if(b)
+		_add_checkbox("rom", "ROMS",  (webman_config->roms),  buffer);
+	else
+		concat(buffer, "<br>");
+	#endif
 
 	add_checkbox("igf", "wm_ignore.txt", " <button onclick=\"window.location='/edit.ps3" WMIGNORE_FILES "';return false;\">&#x270D;</button><br>", webman_config->ignore, buffer);
 
@@ -854,7 +860,10 @@ static void setup_form(char *buffer, char *templn)
 	//add_checkbox("shh", "Offline [Lock PSN]", _BR_, (webman_config->spp & 2), buffer);
 	concat(buffer, " • Offline  : <select name=\"shh\">");
 	add_option_item(0, STR_DISABLED, !(webman_config->spp & 6), buffer);
-	add_option_item(1, "Lock PSN",    (webman_config->spp & 2), buffer);
+
+	if(!payload_ps3hen)
+		add_option_item(1, "Lock PSN",    (webman_config->spp & 2), buffer);
+
 	#ifdef OFFLINE_INGAME
 	add_option_item(2, STR_GAMES,     (webman_config->spp & 4), buffer);
 	#endif
@@ -1243,9 +1252,8 @@ static void read_settings(void)
 	webman_config->ntfs = 1; // use internal prepNTFS to scan content
 #endif
 
-#if defined(PKG_LAUNCHER) || defined(MOUNT_ROMS)
-	bool is_pkg_launcher_installed = isDir(PKGLAUNCH_DIR);
-	if(is_pkg_launcher_installed) {webman_config->ps3l = webman_config->roms = 1; f1_len = 13;}
+#if defined(MOUNT_ROMS)
+	webman_config->roms = isDir(PKGLAUNCH_DIR); f1_len = webman_config->roms ? 13 : 11;
 #endif
 
 	//webman_config->lastp = 0;       //disable last play
@@ -1282,7 +1290,7 @@ static void read_settings(void)
 	if(payload_ps3hen) webman_config->man_speed = 0x5A; // ps3hen default is 35% manual
 
 	webman_config->minfan = DEFAULT_MIN_FANSPEED; // 25% defined in fancontrol.h
-	webman_config->maxfan = 80; // %
+	webman_config->maxfan = DEFAULT_MAX_FANSPEED; // 80% defined in fancontrol.h
 
 	//webman_config->bind = 0;        //enable remote access to FTP/WWW services
 	//webman_config->ftpd = 0;        //enable ftp server
@@ -1296,6 +1304,10 @@ static void read_settings(void)
 
 	//webman_config->foot  = 0;       //Standard (896KB)
 	webman_config->nospoof = 1;       //don't spoof fw version
+
+	#ifdef MOUNT_GAMEI
+	webman_config->gamei = is_app_home_onxmb(); // scan GAMEI
+	#endif
 
 	webman_config->pspl = 1;          //Show PSP Launcher
 	webman_config->ps2l = 1;          //Show PS2 Classic Launcher
@@ -1363,6 +1375,8 @@ static void read_settings(void)
 	webman_config->ps2_rate = RANGE(webman_config->ps2_rate, MIN_FANSPEED, webman_config->maxfan); // %
 	webman_config->dyn_temp = RANGE(webman_config->dyn_temp, 40, MAX_TEMPERATURE);  //°C
 
+	original_fanc = (webman_config->fanc == FAN_AUTO2) ? FAN_AUTO2 : ENABLED;
+
 #if defined(SPOOF_CONSOLEID)
 	get_eid0_idps();
 	if(!webman_config->vIDPS1[0] && !webman_config->vIDPS1[1]) {sprintf(webman_config->vIDPS1, "%016llX", IDPS[0]); sprintf(webman_config->vIDPS2, "%016llX", IDPS[1]);}
@@ -1378,9 +1392,6 @@ static void read_settings(void)
 	if(!(webman_config->combo & SYS_ADMIN)) sys_admin = 1; // set admin mode if ADMIN combo L2+R2+TRIANGLE is disabled
 #endif
 
-#if defined(PKG_LAUNCHER) || defined(MOUNT_ROMS)
-	if(!is_pkg_launcher_installed) {webman_config->ps3l = webman_config->roms = 0; f1_len = 11;}
-#endif
 	// settings
 	if(save_defaults)
 	{

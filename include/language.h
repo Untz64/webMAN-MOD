@@ -248,14 +248,13 @@ static char COVERS_PATH[100];//		= "";
 #define STR_RBGNORM		"NORM MODE TOGGLE"
 #define STR_RBGMENU		"MENU TOGGLE"
 
-/*
-static u32 get_xreg_value(const char *key, u32 default_value)
+#ifdef DEBUG_XREGISTRY
+static u32 get_xreg_value(const char *key, u32 new_value, char *str_value, bool read_only)
 {
 	int reg = NONE;
-	u32 reg_value = default_value;
+	u32 reg_value = new_value;
 	u16 off_string, len_data, len_string;
-	u64 read, pos, off_val_data;
-	CellFsStat stat;
+	u64 r;
 	char string[256];
 
 	if(cellFsOpen("/dev_flash2/etc/xRegistry.sys", CELL_FS_O_RDONLY, &reg, NULL, 0) != CELL_FS_SUCCEEDED || reg == NONE)
@@ -263,56 +262,66 @@ static u32 get_xreg_value(const char *key, u32 default_value)
 		return reg_value;
 	}
 
+	CellFsStat stat;
 	cellFsStat("/dev_flash2/etc/xRegistry.sys", &stat);
-
-	u64 entry_name = 0x10000;
+	u64 entry_offset = 0x10000;
 
 	while(true)
 	{
 	//// Data entries ////
 		//unk
-		entry_name += 2;
+		entry_offset += 2;
 
 		//relative entry offset
-		cellFsLseek(reg, entry_name, 0, &pos);
-		cellFsRead(reg, &off_string, 2, &read);
-		entry_name += 4;
+		cellFsLseek(reg, entry_offset, 0, &r);
+		cellFsRead(reg, &off_string, 2, &r);
+		entry_offset += 4;
 
 		//data lenght
-		cellFsLseek(reg, entry_name, 0, &pos);
-		cellFsRead(reg, &len_data, 2, &read);
-		entry_name += 3;
-
-		//data
-		off_val_data = entry_name;
-		entry_name += len_data + 1;
+		cellFsReadWithOffset(reg, entry_offset, &len_data, 2, &r);
+		entry_offset += 3;
 
 	//// String Entries ////
 		off_string += 0x12;
 
 		//string length
-		cellFsReadWithOffset(reg, off_string, &len_string, 2, &read);
+		cellFsReadWithOffset(reg, off_string, &len_string, 2, &r);
 		off_string += 3;
 
 		//string
 		memset(string, 0, sizeof(string));
-		cellFsReadWithOffset(reg, off_string, string, len_string, &read);
+		cellFsReadWithOffset(reg, off_string, string, len_string, &r);
 
-		//Find language
+		//Find key
 		if(IS(string, key))
 		{
-			cellFsReadWithOffset(reg, off_val_data, &reg_value, 4, &read);
+			if(read_only)
+			{
+				if(len_data == 4)
+					cellFsReadWithOffset(reg, entry_offset, &reg_value, 4, &r);
+				else
+					cellFsReadWithOffset(reg, entry_offset, str_value, len_data, &r);
+			}
+			else
+			{
+				if(len_data == 4)
+					cellFsWriteWithOffset(reg, entry_offset, &new_value, 4, &r);
+				else
+					cellFsWriteWithOffset(reg, entry_offset, str_value, strlen(str_value), &r);
+			}
 			break;
 		}
 
-		if(off_string == 0xCCDD || entry_name >= stat.st_size) break;
+		entry_offset += len_data + 1;
+
+		if(off_string == 0xCCDD || entry_offset >= stat.st_size) break;
 	}
 
 	cellFsClose(reg);
 
 	return reg_value;
 }
-*/
+#endif
 
 static u32 get_system_language(u8 *lang)
 {
@@ -389,6 +398,11 @@ static u32 get_system_language(u8 *lang)
 
 static u8 lang_roms = 0;
 
+static void close_language(void)
+{
+	if(fh) cellFsClose(fh); lang_roms = fh = 0;
+}
+
 static bool language(const char *key_name, char *label, const char *default_str)
 {
 	u64 bytes_read = 0;
@@ -399,6 +413,8 @@ static bool language(const char *key_name, char *label, const char *default_str)
 
 	u8 do_retry = 1;
 	char buffer[MAX_LINE_LEN];
+
+	if(!lang_roms) close_language();
 
  retry:
 
@@ -469,14 +485,9 @@ static bool language(const char *key_name, char *label, const char *default_str)
 
 	} while(lang_pos < size);
 
-	if(do_retry) {cellFsClose(fh); do_retry--, fh = lang_pos = 0; goto retry;}
+	if(do_retry) {cellFsClose(fh); fh = do_retry = lang_pos = 0; goto retry;}
 
 	return true;
-}
-
-static void close_language(void)
-{
-	if(fh) cellFsClose(fh); lang_roms = fh = 0;
 }
 
 #undef CHUNK_SIZE
@@ -591,7 +602,7 @@ static void update_language(void)
 	if(lang ==  2) id = 5;  // it
 	if(lang ==  3) id = 3;  // es
 	if(lang ==  4) id = 4;  // de
-    if(lang ==  5) id = 6;  // nl
+	if(lang ==  5) id = 6;  // nl
 	if(lang ==  6) id = 7;  // pt
 	if(lang ==  7) id = 8;  // ru
 	if(lang ==  9) id = 16; // pl

@@ -59,6 +59,7 @@
 
 #ifdef PKG_LAUNCHER
  #define MOUNT_ROMS
+ #define MOUNT_GAMEI
 #endif
 
 #ifndef WM_REQUEST
@@ -132,7 +133,7 @@ SYS_MODULE_STOP(wwwd_stop);
 SYS_MODULE_EXIT(wwwd_stop);
 
 #define WM_APPNAME			"webMAN"
-#define WM_VERSION			"1.47.30 MOD"
+#define WM_VERSION			"1.47.31 MOD"
 #define WM_APP_VERSION		WM_APPNAME " " WM_VERSION
 #define WEBMAN_MOD			WM_APPNAME " MOD"
 
@@ -213,8 +214,6 @@ static u8 refreshing_xml = 0;
 #ifdef SYS_BGM
 static u8 system_bgm = 0;
 #endif
-
-#define NTFS 			(12)
 
 #define APP_GAME  0xFF
 
@@ -380,6 +379,7 @@ static bool mount_game(const char *_path, u8 do_eject);
 static void do_umount_iso(void);
 static void unload_vsh_gui(void);
 static void set_app_home(const char *game_path);
+static bool is_iso_0(const char *filename);
 #endif
 
 static size_t get_name(char *name, const char *filename, u8 cache);
@@ -387,7 +387,6 @@ static void get_cpursx(char *cpursx);
 static void get_last_game(char *last_path);
 static void add_game_info(char *buffer, char *templn, u8 is_cpursx);
 static void mute_snd0(bool scan_gamedir);
-static bool is_iso_0(const char *filename);
 
 static bool from_reboot = false;
 static bool is_busy = false;
@@ -492,7 +491,7 @@ static void wwwd_thread(u64 arg)
 	restoreAutoPowerOff();
 	#endif
 
-	if(cobra_version >= 0x0800) sys_ppu_thread_sleep(2); // wait 2 seconds on cobra 8.x for network
+	if(cobra_version >= 0x0800) sys_ppu_thread_sleep(3); // wait 3 seconds on cobra 8.x for network
 
 	if(!webman_config->ftpd)
 		sys_ppu_thread_create(&thread_id_ftpd, ftpd_thread, NULL, THREAD_PRIO, THREAD_STACK_SIZE_FTP_SERVER, SYS_PPU_THREAD_CREATE_JOINABLE, THREAD_NAME_FTP); // start ftp daemon immediately
@@ -507,7 +506,7 @@ static void wwwd_thread(u64 arg)
 
 #ifdef PS3MAPI
 	///////////// PS3MAPI BEGIN //////////// [requires PS3MAPI enabled in /setup.ps3, the option is found in "XMB/In-Game PAD SHORTCUTS", next to DEL CFW SYSCALLS]
-	if(!webman_config->ftpd && (webman_config->ftp_port != PS3MAPIPORT) && (webman_config->sc8mode != 4))
+	if(!webman_config->ftpd && (webman_config->ftp_port != PS3MAPIPORT) && (webman_config->sc8mode != PS3MAPI_DISABLED))
 		sys_ppu_thread_create(&thread_id_ps3mapi, ps3mapi_thread, NULL, THREAD_PRIO, THREAD_STACK_SIZE_PS3MAPI_SVR, SYS_PPU_THREAD_CREATE_JOINABLE, THREAD_NAME_PS3MAPI);
 	///////////// PS3MAPI END //////////////
 #endif

@@ -9,7 +9,9 @@ set CHERE_INVOKING=1
 
 cls
 
-del /q .\webftp_server*.*>nul
+if exist .\webftp_server*.* del /q .\webftp_server*.*>nul
+
+if not exist objs goto build
 
 del /q objs\cobra\*.d>nul
 del /q objs\cobra\*.o>nul
@@ -20,6 +22,8 @@ attrib -r objs\*.*
 del /q objs\*.d>nul
 del /q objs\*.o>nul
 rd objs>nul
+
+:build
 
 cls
 title [1/4] Building webftp_server_full.sprx...

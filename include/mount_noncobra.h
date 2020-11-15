@@ -141,7 +141,7 @@ install_mm_payload:
 			char path2[strlen(_path) + 24];
 
 			sprintf(path2, "%s/PS3_GAME", _path); check_ps3_game(path2);
-			add_to_map("/app_home/PS3_GAME", path2);
+			add_to_map(APP_HOME_DIR, path2);
 
 			sprintf(path2, "%s/PS3_GAME/USRDIR", _path); check_ps3_game(path2);
 			add_to_map("/app_home/USRDIR", path2);

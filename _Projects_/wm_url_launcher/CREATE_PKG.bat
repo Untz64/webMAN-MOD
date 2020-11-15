@@ -16,7 +16,7 @@ set PYTHON=c:\Python27
 
 :: Don't change these...
 set PATH=%PYTHON%;%PATH%
-set PKG=.\bin\pkg_custom.py
+set PKG=.\pypkg\pkg_custom.py
 
 :: Change these for your application / manual...
 set CONTENTID=UP0001-PKGLAUNCH_00-0000000000000000

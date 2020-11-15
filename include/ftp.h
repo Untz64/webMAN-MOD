@@ -33,9 +33,15 @@ static u8 ftp_session = 1;
 #define FTP_OUT_OF_MEMORY       -6
 #define FTP_DEVICE_IS_FULL      -8
 
-static u8 absPath(char* absPath_s, const char* path, const char* cwd)
+static u8 parsePath(char *absPath_s, const char *path, const char *cwd, bool scan)
 {
-	if(*path == '/') strcpy(absPath_s, path);
+	if(*path == '/')
+	{
+		strcpy(absPath_s, path);
+
+		if(islike(absPath_s, "/dev_blind")) {mount_device("/dev_blind", NULL, NULL); filepath_check(absPath_s); return 1;}
+		if(islike(absPath_s, "/dev_hdd1") )  mount_device("/dev_hdd1",  NULL, NULL);
+	}
 	else
 	{
 		u16 len = sprintf(absPath_s, "%s", cwd);
@@ -45,12 +51,32 @@ static u8 absPath(char* absPath_s, const char* path, const char* cwd)
 		strcat(absPath_s + len, path);
 	}
 
+	if(scan)
+		if(not_exists(absPath_s))
+		{
+			for(u8 i = 0; i < MAX_DRIVES; i++)
+			{
+				if(i == NET) i = NTFS + 1;
+				sprintf(absPath_s, "%s/%s", drives[i], path);
+				filepath_check(absPath_s);
+				if(file_exists(absPath_s)) return 0;
+			}
+			sprintf(absPath_s, "%s/%s", cwd, path);
+		}
+
 	filepath_check(absPath_s);
 
-	if(islike(absPath_s, "/dev_blind")) {mount_device("/dev_blind", NULL, NULL); return 1;}
-	if(islike(absPath_s, "/dev_hdd1") )  mount_device("/dev_hdd1",  NULL, NULL);
-
 	return 0;
+}
+
+static u8 findPath(char *absPath_s, const char *path, const char* cwd)
+{
+	return parsePath(absPath_s, path, cwd, true);
+}
+
+static u8 absPath(char *absPath_s, const char *path, const char* cwd)
+{
+	return parsePath(absPath_s, path, cwd, false);
 }
 
 static int ssplit(const char* str, char* left, int lmaxlen, char* right, int rmaxlen)
@@ -215,7 +241,7 @@ static void handleclient_ftp(u64 conn_s_ftp_p)
 					{
 						if(split)
 						{
-							absPath(filename, param, cwd);
+							findPath(filename, param, cwd);
 
 							int err = FTP_FILE_UNAVAILABLE;
 
@@ -282,7 +308,7 @@ static void handleclient_ftp(u64 conn_s_ftp_p)
 											if(read_e)
 											{
 												#ifdef UNLOCK_SAVEDATA
-												if(webman_config->unlock_savedata) unlock_param_sfo(filename, (unsigned char*)buffer2, (u16)read_e);
+												if(webman_config->unlock_savedata && (read_e < 8192)) unlock_param_sfo(filename, (unsigned char*)buffer2, (u16)read_e);
 												#endif
 												if(send(data_s, buffer2, (size_t)read_e, 0) < 0) break; // FAILED
 											}
@@ -396,7 +422,7 @@ static void handleclient_ftp(u64 conn_s_ftp_p)
 											if(read_e > 0)
 											{
 												#ifdef UNLOCK_SAVEDATA
-												if(webman_config->unlock_savedata) unlock_param_sfo(filename, (unsigned char*)buffer2, (u16)read_e);
+												if(webman_config->unlock_savedata && (read_e < 8192)) unlock_param_sfo(filename, (unsigned char*)buffer2, (u16)read_e);
 												#endif
 												if(cellFsWrite(fd, buffer2, read_e, NULL) != CELL_FS_SUCCEEDED) break; // FAILED
 											}
@@ -466,7 +492,7 @@ static void handleclient_ftp(u64 conn_s_ftp_p)
 				{
 					if(split)
 					{
-						absPath(filename, param, cwd);
+						findPath(filename, param, cwd);
 						#ifdef USE_NTFS
 						if(is_ntfs_path(filename))
 						{
@@ -573,7 +599,7 @@ static void handleclient_ftp(u64 conn_s_ftp_p)
 				{
 					if(split)
 					{
-						absPath(filename, param, cwd);
+						findPath(filename, param, cwd);
 #ifdef USE_NTFS
 						if(is_ntfs_path(filename))
 						{
@@ -706,7 +732,7 @@ static void handleclient_ftp(u64 conn_s_ftp_p)
 						if(split)
 						{
 							strcpy(tempcwd, param);
-							absPath(d_path, tempcwd, cwd);
+							findPath(d_path, tempcwd, cwd);
 
 							if(!isDir(d_path) && (*wcard == NULL)) {strcpy(wcard, tempcwd); split = 0, *param = NULL;}
 						}
@@ -864,7 +890,7 @@ static void handleclient_ftp(u64 conn_s_ftp_p)
 					if(split)
 					{
 						if(IS(param, "..")) goto cdup;
-						absPath(tempcwd, param, cwd);
+						findPath(tempcwd, param, cwd);
 					}
 					else
 						sprintf(tempcwd, "%s", cwd);
@@ -1088,7 +1114,7 @@ static void handleclient_ftp(u64 conn_s_ftp_p)
 						else
 						if(_IS(cmd, "INSTALL"))
 						{
-							absPath(param, filename, cwd); char *msg = filename;
+							findPath(param, filename, cwd); char *msg = filename;
 
 							if(installPKG(param, msg) == CELL_OK)
 								ssend(conn_s_ftp, FTP_OK_250); // Requested file action okay, completed.
@@ -1148,7 +1174,7 @@ static void handleclient_ftp(u64 conn_s_ftp_p)
 							else
 							{
 								ssend(conn_s_ftp, FTP_OK_250);		// Requested file action okay, completed.
-								absPath(param, filename, cwd);
+								findPath(param, filename, cwd);
 
 								fix_in_progress = true, fix_aborted = false;
 
@@ -1168,7 +1194,7 @@ static void handleclient_ftp(u64 conn_s_ftp_p)
 						{
 							split = ssplit(param, cmd, 10, filename, STD_PATH_LEN - 1);
 
-							strcpy(param, filename); absPath(filename, param, cwd);
+							strcpy(param, filename); findPath(filename, param, cwd);
 
 							ssend(conn_s_ftp, FTP_OK_250); // Requested file action okay, completed.
 							int attributes = val(cmd);
@@ -1183,7 +1209,7 @@ static void handleclient_ftp(u64 conn_s_ftp_p)
 						{
 							show_status(STR_COPYING, filename);
 
-							absPath(source, filename, cwd);
+							findPath(source, filename, cwd);
 							ssend(conn_s_ftp, FTP_OK_200); // The requested action has been successfully completed.
 						}
 						else

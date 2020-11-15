@@ -33,7 +33,7 @@ rem psn_package_npdrm.exe -n package.conf build\EP0001-UPDWEBMOD_00-000000000000
 
 rem del package.conf>>nul
 
-make_package_custom.exe -c EP0001-UPDWEBMOD_00-0000000000000000 build\EP0001-UPDWEBMOD_00-0000000000000000
+pkg_custom.exe -c EP0001-UPDWEBMOD_00-0000000000000000 build\EP0001-UPDWEBMOD_00-0000000000000000
 
 if exist webMAN_MOD_1.47.xx_Updater.pkg del webMAN_MOD_1.47.xx_Updater.pkg>>nul
 move /y EP0001-UPDWEBMOD_00-0000000000000000.pkg webMAN_MOD_1.47.xx_Updater.pkg>>nul

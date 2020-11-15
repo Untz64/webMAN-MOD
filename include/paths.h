@@ -2,6 +2,7 @@
 #define VSH_MODULE_PATH		"/dev_blind/vsh/module/"
 #define VSH_ETC_PATH		"/dev_blind/vsh/etc/"
 #define PS2_EMU_PATH		"/dev_blind/ps2emu/"
+#define PSP_EMU_PATH		"/dev_blind/pspemu/"
 #define REBUG_COBRA_PATH	"/dev_blind/rebug/cobra/"
 #define HABIB_COBRA_PATH	"/dev_blind/habib/cobra/"
 #define SYS_COBRA_PATH		"/dev_blind/sys/"
@@ -12,6 +13,8 @@
 
 #define XMB_DISC_ICON		"/dev_hdd0/tmp/game/ICON0.PNG"
 #define CATEGORY_GAME_XML	"/dev_flash/vsh/resource/explore/xmb/category_game.xml"
+
+#define APP_HOME_DIR		"/app_home/PS3_GAME"
 
 #define HDD0_HOME_DIR		"/dev_hdd0/home"
 #define HDD0_GAME_DIR		"/dev_hdd0/game/"
@@ -124,6 +127,10 @@
 static const char *smonth[12] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 static char drives[17][12] = {"/dev_hdd0", "/dev_usb000", "/dev_usb001", "/dev_usb002", "/dev_usb003", "/dev_usb006", "/dev_usb007", "/net0", "/net1", "/net2", "/net3", "/net4", "/dev_ntfs", "/dev_sd", "/dev_ms", "/dev_cf", "/dev_blind"};
 static char paths [13][10] = {"GAMES", "GAMEZ", "PS3ISO", "BDISO", "DVDISO", "PS2ISO", "PSXISO", "PSXGAMES", "PSPISO", "ISO", "video", "GAMEI", "ROMS"};
+
+#define NET				(7)
+#define NTFS 			(12)
+#define MAX_DRIVES		16
 
 #define LINELEN			512 // file listing
 #define MAX_LINE_LEN	640 // html games

@@ -758,6 +758,14 @@
 						n = 0;
 						break;
 					}
+					else if(!(webman_config->combo & DISABLEFC) && (pad_data.button[CELL_PAD_BTN_OFFSET_DIGITAL1] == (CELL_PAD_CTRL_L3 | CELL_PAD_CTRL_START)) && (pad_data.button[CELL_PAD_BTN_OFFSET_DIGITAL2] == CELL_PAD_CTRL_L2 )) // L3+L2+START (enable auto #2)
+					{
+						// L3+L2+START = Enable Auto #2
+						enable_fan_control(ENABLE_AUTO2);
+
+						n = 0;
+						break;
+					}
 					else
 					if((pad_data.button[CELL_PAD_BTN_OFFSET_DIGITAL1] == CELL_PAD_CTRL_L3) && (pad_data.button[CELL_PAD_BTN_OFFSET_DIGITAL2] & CELL_PAD_CTRL_R1))
 					{

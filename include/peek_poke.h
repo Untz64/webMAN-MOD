@@ -97,6 +97,12 @@ static u64 peek(u64 addr)
 ///////////////// LV1/LV2 POKE HEN ////////////////
 static void lv2_poke_fan_hen(u64 addr, u64 value)
 {
+	if(payload_ps3hen && IS_INGAME)
+	{
+		CellRtcTick pTick; cellRtcGetCurrentTick(&pTick);
+		if((pTick.tick - gTick.tick) < 15000000) return; // do not poke within the first 15 seconds ingame
+	}
+
 	system_call_2(SC_POKE_LV2, addr, value); //{system_call_3(SC_COBRA_SYSCALL8, 0x7003ULL, addr, value);} // advanced poke (requires restore original value)
 }
 
@@ -271,6 +277,7 @@ static u16 Hex2Bin(const char *src, char *out)
 {
 	char *target = out;
 	char value[3]; value[2] = NULL;
+	if(islike(src, "0x")) src += 2;
 	while(*src && src[1])
 	{
 		value[0] = src[0], value[1] = src[1];

@@ -248,13 +248,13 @@ static void ps3mapi_led(char *buffer, char *templn, char *param)
 
 		if(color == 0) color = RED;	  else
 		if(color == 1) color = GREEN; else
-		if(color == 2) color = RED+GREEN; //YELLOW
+		if(color == 2) color = GREEN | RED; //YELLOW
 
 		int mode = get_valuen(param, "mode=", 0, 3);
 
-		if(mode == 1) mode = ON;		 else
-		if(mode == 2) mode = BLINK_FAST; else
-		if(mode == 3) mode = BLINK_SLOW;
+		//if(mode == 1) mode = ON;		 else
+		//if(mode == 2) mode = BLINK_FAST; else
+		//if(mode == 3) mode = BLINK_SLOW;
 
 		if(color & RED)   { system_call_2(SC_SYS_CONTROL_LED, RED  , mode); }
 		if(color & GREEN) { system_call_2(SC_SYS_CONTROL_LED, GREEN, mode); }

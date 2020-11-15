@@ -7,21 +7,33 @@
 	// ------------------
 	// mount GAMEI game
 	// ------------------
- #ifdef PKG_LAUNCHER
+	#ifdef MOUNT_GAMEI
 	{
 		char *pos = strstr(_path, "/GAMEI/");
-		if(pos)
+		if(pos && !islike(_path, "/net"))
 		{
-			sys_map_path(PKGLAUNCH_DIR, _path0);
-			get_value(map_title_id, pos + 7, TITLE_ID_LEN);
+			int tid_offset = 7; // folder is title_id
+			char *slash = strstr(pos + tid_offset, "/"); if(slash) *slash = 0;
+
+			if(strstr(pos + tid_offset, "_00-") == pos + 23) tid_offset += 7; // folder is content_id
+
+			do_umount(false);
+
+			sys_map_path(APP_HOME_DIR, _path);
+			if(isDir(PKGLAUNCH_DIR)) sys_map_path(PKGLAUNCH_DIR, _path);
+
+			get_value(map_title_id, pos + tid_offset, TITLE_ID_LEN);
 			sprintf(_path, "/dev_hdd0/game/%s", map_title_id);
 			sys_map_path(_path, _path0);
+
+			sys_ppu_thread_sleep(1);
+			launch_app_home_icon();
 
 			mount_unk = EMU_GAMEI;
 			goto exit_mount;
 		}
 	}
- #endif
+	#endif
 
 	// ------------------
 	// mount NPDRM game
@@ -60,6 +72,7 @@
 			ret = isDir(_path);
 		}
 
+		do_umount(false);
 		set_app_home(_path);
 
 		if(launch_app_home_icon()) ret = true;

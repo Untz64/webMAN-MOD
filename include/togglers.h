@@ -5,13 +5,15 @@ static void swap_file(const char *path, const char *curfile, const char *rento, 
 {
 	char file1[64], file2[64], file3[64];
 
-	sprintf(file3, "%s%s", path, newfile);
+	sprintf(file1, "%s%s", path, newfile); strncpy(file1, "/dev_flash", 10);
 
-	if(file_exists(file3))
+	if(file_exists(file1))
 	{
 		sprintf(file1, "%s%s", path, curfile);
 		sprintf(file2, "%s%s", path, rento);
+		sprintf(file3, "%s%s", path, newfile);
 
+		mount_device("/dev_blind", NULL, NULL);
 		cellFsRename(file1, file2);
 		cellFsRename(file3, file1);
 	}

@@ -1,0 +1,2671 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<style>
+.dot-elastic {
+	position: relative;
+	width: 10px;
+	height: 10px;
+	border-radius: 5px;
+	background-color: #9880ff;
+	color: #9880ff;
+	animation: dot-elastic 1s infinite linear;
+}
+
+.dot-elastic::before, .dot-elastic::after {
+	content: '';
+	display: inline-block;
+	position: absolute;
+	top: 0;
+}
+
+.dot-elastic::before {
+	left: -15px;
+	width: 10px;
+	height: 10px;
+	border-radius: 5px;
+	background-color: #9880ff;
+	color: #9880ff;
+	animation: dot-elastic-before 1s infinite linear;
+}
+
+.dot-elastic::after {
+	left: 15px;
+	width: 10px;
+	height: 10px;
+	border-radius: 5px;
+	background-color: #9880ff;
+	color: #9880ff;
+	animation: dot-elastic-after 1s infinite linear;
+}
+
+@keyframes dot-elastic-before {
+	0% {
+		transform: scale(1, 1);
+	}
+	25% {
+		transform: scale(1, 1.5);
+	}
+	50% {
+		transform: scale(1, 0.67);
+	}
+	75% {
+		transform: scale(1, 1);
+	}
+	100% {
+		transform: scale(1, 1);
+	}
+}
+
+@keyframes dot-elastic {
+	0% {
+		transform: scale(1, 1);
+	}
+	25% {
+		transform: scale(1, 1);
+	}
+	50% {
+		transform: scale(1, 1.5);
+	}
+	75% {
+		transform: scale(1, 1);
+	}
+	100% {
+		transform: scale(1, 1);
+	}
+}
+
+@keyframes dot-elastic-after {
+	0% {
+		transform: scale(1, 1);
+	}
+	25% {
+		transform: scale(1, 1);
+	}
+	50% {
+		transform: scale(1, 0.67);
+	}
+	75% {
+		transform: scale(1, 1.5);
+	}
+	100% {
+		transform: scale(1, 1);
+	}
+}
+
+#txtSrchDB {
+	background-position: 10px 12px; /* Position the search icon */
+	background-repeat: no-repeat; /* Do not repeat the icon image */
+	width: 100%; /* Full-width */
+	font-size: 16px; /* Increase font-size */
+	padding: 12px 20px 12px 40px; /* Add some padding */
+	border: 1px solid #ddd; /* Add a grey border */
+	margin-bottom: 12px; /* Add some space below the input */
+	border-radius: 10px;
+	outline-color: navy;
+}
+
+#dbTable {
+	border-collapse: collapse; /* Collapse borders */
+	width: 100%; /* Full-width */
+	border: 1px solid #ddd; /* Add a grey border */
+	font-size: 18px; /* Increase font-size */
+	font-family: Arial;
+}
+
+#dbTable th, #dbTable td {
+	text-align: left; /* Left-align text */
+	padding: 9px 12px 6px 12px; /* Add padding */
+}
+
+#dbTable tr {
+	/* Add a bottom border to all table rows */
+	border-bottom: 1px solid #ddd;
+	cursor: pointer;
+}
+
+#dbTable th {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 125px;
+	background-color: #f1f1f1;
+}
+
+#dbTable tr.header {
+	background-color: #f1f1f1;
+}
+
+#dbTable tr:hover {
+	background-color: #f1f1f1;
+	color: #33D;
+}
+
+H1 a {color:#334; text-decoration:none;}
+
+#category {position:absolute; top:15px; right:2px; color:navy; font-family:arial; font-size:20px; border-radius:5px;}
+
+div.sticky {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 10px;
+	background-color: white;
+}
+
+#sorting {
+	position:fixed;
+	top:45%;
+	left:35%;
+	width:200px;
+	font-size:60px;
+	font-family:arial;
+	background-color:#f0f0f0;
+	padding:20px;
+	border-width:5px;
+	box-shadow: 15px 15px 15px #ccc;
+	border-radius: 10px;
+	opacity:0.9;
+}
+
+#clear {
+	position:fixed;
+	top: 87px;
+	right: 24px;
+	font-size: 24px;
+	font-family: Arial;
+	color: #ccc;
+	cursor: pointer;
+}
+
+#clear:hover {
+	color: blue;
+}
+
+#compat {font-size:10px; font-family:arial;}
+#compat a {text-decoration:none; color:#ccc;}
+#compat a:hover {text-decoration:underline; color:blue;}
+#title:hover {color:#339;}
+</style>
+<title>PS2 CONFIG Database</title>
+</head>
+
+<body onload="dbLinks();">
+
+<div id="sorting" style="display: none;">
+<table><tr>
+<td style="width:150px;font-size:40px;">Sorting</td>
+<td><div class="dot-elastic" style="top:10px;"></div></td>
+</tr></table>
+</div>
+
+<div style="position:fixed;top:0px;width:100%;height:125px;background-color:white;"></div>
+<div class="sticky">
+<h1>
+<a id="title" href="https://www.psx-place.com/threads/compatibility-list-ps2-on-ps3.1306/">PS2 CONFIG Database</a> -
+<a href="https://github.com/Zarh/ManaGunZ" title="ManaGunZ"><font size="3" color="#aac"> [ManaGunZ DB]</font></a></br>
+<div id="compat"><a href="https://www.psdevwiki.com/ps3/PS2_Classics_Emulator_Compatibility_List" target="_blank">PS2 Classics Emulator Compatibility List</a> &bull; <a href="https://www.psx-place.com/resources/ps2-classics-gui.638/"> PS2 Classic GUI</a> &bull; <a href="https://store.brewology.com/ahomebrew.php?brewid=290">PS2 Classic Launcher</a></div>
+</h1>
+<input type="text" id="txtSrchDB" onkeyup="doSearch();" placeholder="Search for names..">
+<div id="clear" onclick="input.value='';doSearch();">X</div>
+<select accesskey="c" tabindex="-1" id="category" onchange="category=this.value;doSearch();input.select();" ondblclick="this.value=category='ALL';doSearch();">
+<option value="ALL"   >CUSTOM + NET + GX + SOFT</option>
+<option value="CUSTOM">CUSTOM</option>
+<option value="NET"   >NET</option>
+<option value="GX"    >GX</option>
+<option value="SOFT"  >SOFT</option>
+</select>
+
+</div>
+
+<script>
+function $(id){return document.getElementById(id);}
+var input = $("txtSrchDB");
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const q = urlParams.get('q');
+
+setTimeout(function(){
+	input.value = q;
+	input.focus();
+	input.select();
+}, 1);
+</script>
+
+<table id="dbTable">
+<thead>
+<tr class="header">
+  <th style="width:10%;" onclick="sortTable(0);">Type</th>
+  <th style="width:20%;" onclick="sortTable(1);">Title ID</th>
+  <th style="width:70%;" onclick="sortTable(2);">Title</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>CUSTOM</td><td>SCES_533.58</td><td>24 - The Game</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_212.68</td><td>24 - The Game</td></tr>
+<tr><td>CUSTOM</td><td>SCES_504.10</td><td>Ace Combat - Distant Thunder</td></tr>
+<tr><td>CUSTOM</td><td>SCES_524.24</td><td>Ace Combat - Squadron Leader</td></tr>
+<tr><td>CUSTOM</td><td>SCES_540.41</td><td>Ace Combat - The Belkan War</td></tr>
+<tr><td>CUSTOM</td><td title="Texture Fix">SLPS_250.52</td><td>Ace Combat 4 - Shattered Skies</td></tr>
+<tr><td>CUSTOM</td><td title="Texture Fix">SLUS_201.52</td><td>Ace Combat 4 - Shattered Skies</td></tr>
+<tr><td>CUSTOM</td><td>SCKA_200.42</td><td>Ace Combat 5 - The Unsung War</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_254.18</td><td>Ace Combat 5 - The Unsung War</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_208.51</td><td>Ace Combat 5 - The Unsung War</td></tr>
+<tr><td>CUSTOM</td><td>SCKA_200.70</td><td>Ace Combat Zero - The Belkan War</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_256.29</td><td>Ace Combat Zero - The Belkan War</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_213.46</td><td>Ace Combat Zero - The Belkan War</td></tr>
+<tr><td>CUSTOM</td><td>SLES_539.56</td><td>Aeon Flux</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_212.05</td><td>Aeon Flux</td></tr>
+<tr><td>CUSTOM</td><td>SLES_509.19</td><td>Akira Psycho Ball</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_661.75</td><td>Akumajo Dracula - Yami no Juin</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_205.69</td><td>All-Star Baseball 2004</td></tr>
+<tr><td>CUSTOM</td><td>SLES_516.02</td><td>All-Stars Baseball 2004</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_201.81</td><td>Alpine Racer 3</td></tr>
+<tr><td>CUSTOM</td><td>SCES_517.06</td><td>Amplitude</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_972.58</td><td>Amplitude</td></tr>
+<tr><td>CUSTOM</td><td>SCCS_400.01</td><td>Ape Escape 2</td></tr>
+<tr><td>CUSTOM</td><td>SCES_508.85</td><td>Ape Escape 2</td></tr>
+<tr><td>CUSTOM</td><td>SCES_511.02</td><td>Ape Escape 2</td></tr>
+<tr><td>CUSTOM</td><td>SCES_511.03</td><td>Ape Escape 2</td></tr>
+<tr><td>CUSTOM</td><td>SCES_511.04</td><td>Ape Escape 2</td></tr>
+<tr><td>CUSTOM</td><td>SCES_511.05</td><td>Ape Escape 2</td></tr>
+<tr><td>CUSTOM</td><td>SCPS_550.35</td><td>Ape Escape 2</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_206.85</td><td>Ape Escape 2</td></tr>
+<tr><td>CUSTOM</td><td>SCPS_192.06</td><td>Ape Escape 2 [PlayStation 2 The Best]</td></tr>
+<tr><td>CUSTOM</td><td>SCES_536.42</td><td>Ape Escape 3</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_975.01</td><td>Ape Escape 3</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_214.45</td><td>Ar Tonelico</td></tr>
+<tr><td>CUSTOM</td><td>SLES_545.86</td><td>Ar tonelico - Melody of Elemia</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_256.04</td><td>Ar tonelico - Melody of Elemia</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_217.88</td><td>Ar Tonelico 2 - Melody of Metafalica</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_211.65</td><td>Arc the Lad - End of Darkness</td></tr>
+<tr><td>CUSTOM</td><td>SCPS_150.58</td><td>Arc the Lad - Generation</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_972.31</td><td>Arc the Lad - Twighlight of the Spirits</td></tr>
+<tr><td>CUSTOM</td><td>SCKA_200.06</td><td>Argus no Senshi</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_251.78</td><td>Argus no Senshi</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_206.44</td><td>Armored Core - Silent Line</td></tr>
+<tr><td>CUSTOM</td><td>SLES_537.64</td><td>Atelier Iris - Eternal Mana</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_211.13</td><td>Atelier Iris - Eternal Mana</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_664.36</td><td>Atelier Iris - Grand Fantasm</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_659.85</td><td>Atelier Iris 2 - Eternal Mana</td></tr>
+<tr><td>CUSTOM</td><td>SLES_543.85</td><td>Atelier Iris 2 - The Azoth of Destiny</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_213.27</td><td>Atelier Iris 2 - The Azoth of Destiny</td></tr>
+<tr><td>CUSTOM</td><td>SLES_548.22</td><td>Atelier Iris 3 - Grand Phantasm</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_215.64</td><td>Atelier Iris 3 - Grand Phantasm</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_651.31</td><td>Atelier Judie - Gramnad no Renkinjutsushi</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_250.45</td><td>Atelier Lilie</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_655.94</td><td>Atelier no Iris - Eternal Mana</td></tr>
+<tr><td>CUSTOM</td><td>SLES_508.50</td><td>ATV Off-Road 2</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_205.70</td><td>ATV Quad Power Racing 2</td></tr>
+<tr><td>CUSTOM</td><td>SLES_506.72</td><td>Baldur's Gate - Dark Alliance</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_200.35</td><td>Baldur's Gate - Dark Alliance</td></tr>
+<tr><td>CUSTOM</td><td>SLES_521.87</td><td>Baldur's Gate - Dark Alliance 2</td></tr>
+<tr><td>CUSTOM</td><td>SLES_521.88</td><td>Baldur's Gate - Dark Alliance 2</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_206.75</td><td>Baldur's Gate - Dark Alliance 2</td></tr>
+<tr><td>CUSTOM</td><td>SLES_555.78</td><td>Band Hero</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_218.98</td><td>Band Hero</td></tr>
+<tr><td>CUSTOM</td><td>SLES_509.72</td><td>Barbarian</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_150.01</td><td>Barbarian</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_201.36</td><td>Barbarian</td></tr>
+<tr><td>CUSTOM</td><td>SLES_553.71</td><td>Barbie Horse Adventures - Riding Camp</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_210.26</td><td>Battlefield 2 - Mordern Combat</td></tr>
+<tr><td>CUSTOM</td><td>SLES_513.55</td><td>Big Mutha Truckers</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_202.91</td><td>Big Mutha Truckers</td></tr>
+<tr><td>CUSTOM</td><td>SLES_529.80</td><td>Big Mutha Truckers 2</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_210.86</td><td>Big Mutha Truckers 2</td></tr>
+<tr><td>CUSTOM</td><td>SLES_507.71</td><td>Blood Omen 2 - Legend of Kain</td></tr>
+<tr><td>CUSTOM</td><td>SLES_507.72</td><td>Blood Omen 2 - Legend of Kain</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_204.61</td><td>BloodRayne</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_208.62</td><td>Bloodrayne 2</td></tr>
+<tr><td>CUSTOM</td><td>SLES_502.03</td><td>Bloody Roar 3</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_620.55</td><td>Bloody Roar 3</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_202.12</td><td>Bloody Roar 3</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_212.69</td><td>Bully</td></tr>
+<tr><td>CUSTOM</td><td>SLES_510.44</td><td>Burnout 2 - Point of Impact</td></tr>
+<tr><td>CUSTOM</td><td>SLES_529.68</td><td>Burnout 2 - Point of Impact</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_204.97</td><td>Burnout 2 - Point of Impact</td></tr>
+<tr><td>CUSTOM</td><td>SLES_525.84</td><td>Burnout 3 - Takedown</td></tr>
+<tr><td>CUSTOM</td><td>SLES_525.85</td><td>Burnout 3 - Takedown</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_210.50</td><td>Burnout 3 - Takedown</td></tr>
+<tr><td>CUSTOM</td><td>SLAJ_250.94</td><td>Burnout Dominator</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_667.39</td><td>Burnout Dominator</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_212.42</td><td>Burnout Revenge</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_620.98</td><td>Busin - Wizardry Alternative</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_976.02</td><td>Buzz! Jr. Jungle Party [Game Only]</td></tr>
+<tr><td>CUSTOM</td><td>SCES_542.19</td><td>Buzz! Junior Jungle Party</td></tr>
+<tr><td>CUSTOM</td><td>SCES_542.20</td><td>Buzz! Junior Jungle Party</td></tr>
+<tr><td>CUSTOM</td><td>SCES_545.24</td><td>Buzz! Junior Jungle Party</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_201.41</td><td>CART Fury - Championship Racing</td></tr>
+<tr><td>CUSTOM</td><td>SLES_502.67</td><td>CART Fury Championship Racing</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_209.62</td><td>Castle of Shikigami 2</td></tr>
+<tr><td>CUSTOM</td><td>SLES_535.18</td><td>Castle Shikigami II</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_211.68</td><td>Castlevania - Curse of Dakness</td></tr>
+<tr><td>CUSTOM</td><td>SLES_537.55</td><td>Castlevania - Curse Of Darkness</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_253.28</td><td>Castlevania - Curse of Darkness</td></tr>
+<tr><td>CUSTOM</td><td>SLES_530.39</td><td>Champions - Return to Arms</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_209.73</td><td>Champions - Return to Arms</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_205.65</td><td>Champions of Norrath</td></tr>
+<tr><td>CUSTOM</td><td>SLES_523.25</td><td>Champions of Norrath - Realms of EverQuest</td></tr>
+<tr><td>CUSTOM</td><td>SLES_527.68</td><td>Commandos - Strike Force</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_211.03</td><td>Commandos Strike Force</td></tr>
+<tr><td>CUSTOM</td><td>SLES_525.73</td><td>Conflict - Global Storm</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_211.72</td><td>Conflict - Global Terror</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_658.01</td><td>Crash Bandicoot 5</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_209.09</td><td>Crash Bandicoot Twinsanity</td></tr>
+<tr><td>CUSTOM</td><td>SLES_525.68</td><td>Crash Twinsanity</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_621.02</td><td>Crazy Taxi</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_624.27</td><td>Dance Dance Revolution - Party Collection</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_653.58</td><td>Dance Dance Revolution Extreme</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_209.16</td><td>Dance Dance Revolution Extreme</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_204.37</td><td>Dance Dance Revolution MAX</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_207.11</td><td>Dance Dance Revolution MAX 2</td></tr>
+<tr><td>CUSTOM</td><td>SLES_530.09</td><td>Dance Factory</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_212.96</td><td>Dance Factory</td></tr>
+<tr><td>CUSTOM</td><td>SLES_517.57</td><td>Dancing Stage Fever</td></tr>
+<tr><td>CUSTOM</td><td>SLES_515.10</td><td>Dancing Stage Fever MegaMix</td></tr>
+<tr><td>CUSTOM</td><td>SLES_525.98</td><td>Dancing Stage Fusion</td></tr>
+<tr><td>CUSTOM</td><td>SCPS_150.04</td><td>Dark Cloud</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_215.74</td><td>Dawn of Mana</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_621.54</td><td>DDR Max - Dance Dance Revolution - 6th Mix</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_652.77</td><td>DDR Max 2 - Dance Dance Revolution - 7th Mix</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_250.02</td><td>Dead or Alive 2</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_200.71</td><td>Dead or Alive 2</td></tr>
+<tr><td>CUSTOM</td><td>SCES_500.03</td><td>Dead or Alive 2 - Hardcore</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_250.26</td><td>Dead or Alive 2 - Hardcore</td></tr>
+<tr><td>CUSTOM</td><td>SLES_529.55</td><td>Deadly Strike</td></tr>
+<tr><td>CUSTOM</td><td>SLES_503.58</td><td>Devil May Cry</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_650.38</td><td>Devil May Cry</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_675.02</td><td>Devil May Cry</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_202.16</td><td>Devil May Cry</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_252.65</td><td>Devil May Cry 3</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_209.64</td><td>Devil May Cry 3</td></tr>
+<tr><td>CUSTOM</td><td>SLES_530.38</td><td>Devil May Cry 3 - Dante's Awakening</td></tr>
+<tr><td>CUSTOM</td><td>SLES_541.86</td><td>Devil May Cry 3 - Dante's Awakening [Special Edition]</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_213.61</td><td>Devil May Cry 3 - Dante's Awakening [Special Edition]</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_661.60</td><td>Devil May Cry 3 [Special Edition]</td></tr>
+<tr><td>CUSTOM</td><td>SLES_526.31</td><td>Digimon Rumble Arena 2</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_205.61</td><td>Disaster Report</td></tr>
+<tr><td>CUSTOM</td><td>SLES_517.20</td><td>Disney's Extreme Skate Adventure</td></tr>
+<tr><td>CUSTOM</td><td>SLES_517.21</td><td>Disney's Extreme Skate Adventure</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_206.07</td><td>Disney's Extreme Skate Adventure</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_206.28</td><td>Disney's Finding Nemo</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_204.78</td><td>Disney's PK - Out of the Shadows</td></tr>
+<tr><td>CUSTOM</td><td>SCES_511.76</td><td>Disney's Treasure Planet</td></tr>
+<tr><td>CUSTOM</td><td>SCES_511.77</td><td>Disney's Treasure Planet</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_971.46</td><td>Disney's Treasure Planet</td></tr>
+<tr><td>CUSTOM</td><td>SLES_517.55</td><td>Disney-Pixar's Finding Nemo</td></tr>
+<tr><td>CUSTOM</td><td>SLES_518.71</td><td>Disney-Pixar's Finding Nemo</td></tr>
+<tr><td>CUSTOM</td><td>SLES_519.07</td><td>Disney/Pixar Alla Ricerca di Nemo</td></tr>
+<tr><td>CUSTOM</td><td>SLES_518.70</td><td>Disney/Pixar Finding Nemo</td></tr>
+<tr><td>CUSTOM</td><td>SLES_518.72</td><td>Disney/Pixar Finding Nemo</td></tr>
+<tr><td>CUSTOM</td><td>SLES_519.60</td><td>Disney/Pixar À Procura de Nemo</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_250.26</td><td>DOA2-Hardcore</td></tr>
+<tr><td>CUSTOM</td><td>SLES_507.73</td><td>Donald Duck - Phantomias Platyrhynchos Kineticus</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_212.58</td><td>dot Hack - G.U. Vol.1 - Rebirth</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_214.88</td><td>dot Hack - G.U. Vol.2 - Reminisce</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_256.56</td><td>dot Hack - G.U. Vol.3 - Aruku Youna Hayasa de</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_214.89</td><td>dot Hack - G.U. Vol.3 - Redemption</td></tr>
+<tr><td>CUSTOM</td><td>SLES_522.37</td><td>dot Hack - Part 1 - Infection</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_202.67</td><td>dot Hack - Part 1 - Infection</td></tr>
+<tr><td>CUSTOM</td><td>SLES_524.67</td><td>dot Hack - Part 2 - Mutation</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_205.62</td><td>dot Hack - Part 2 - Mutation</td></tr>
+<tr><td>CUSTOM</td><td>SLES_524.69</td><td>dot Hack - Part 3 - Outbreak</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_205.63</td><td>dot Hack - Part 3 - Outbreak</td></tr>
+<tr><td>CUSTOM</td><td>SLES_524.68</td><td>dot Hack - Part 4 - Quarantine</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_205.64</td><td>dot Hack - Part 4 - Quarantine</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_251.58</td><td>dot Hack - Vol.3 - Erosion Pollution</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_252.02</td><td>dot Hack - Vol.4 - Zettai Houi</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_256.51</td><td>dot Hack G.U. Vol.1 - Saitan</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_256.55</td><td>dot Hack G.U. Vol.2 - Kimi Omou Koe</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_250.80</td><td>Dot Hack Vol. 1 - Infection</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_251.38</td><td>Dot Hack Vol. 2 - Mutation</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_251.45</td><td>Dot Hack Vol. 3 - Outbreak</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_251.21</td><td>dot Hack Vol.1</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_251.43</td><td>dot Hack Vol.2 - Mutation</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_663.63</td><td>Dragon Quest - Shounen Yangus no Fushigi na Daibouken</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_251.74</td><td>DragonBall Z - Budokai</td></tr>
+<tr><td>CUSTOM</td><td>SLES_512.13</td><td>DragonBall Z - Budokai</td></tr>
+<tr><td>CUSTOM</td><td>SCES_500.06</td><td>Drakan - The Ancients' Gates</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_971.28</td><td>Drakan - The Ancients' Gates</td></tr>
+<tr><td>CUSTOM</td><td>SLES_539.86</td><td>DreamWorks La Gang del Bosco</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_201.13</td><td>Driving Emotion Type S</td></tr>
+<tr><td>CUSTOM</td><td>SLES_500.73</td><td>Driving Emotion Type-S</td></tr>
+<tr><td>CUSTOM</td><td>SCES_504.59</td><td>Dropship - United Peace Force</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_204.63</td><td>Dropship - United Peace Force</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_202.77</td><td>Dynasty Warriors 3</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_206.17</td><td>Dynasty Warriors 3 - Xtreme Legends</td></tr>
+<tr><td>CUSTOM</td><td>SLES_503.56</td><td>ESPN International Winter Sports</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_622.14</td><td>Ever Blue 2</td></tr>
+<tr><td>CUSTOM</td><td>SLES_513.81</td><td>Everblue 2</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_205.98</td><td>Everblue 2</td></tr>
+<tr><td>CUSTOM</td><td>SCES_545.35</td><td>Everybody's Tennis</td></tr>
+<tr><td>CUSTOM</td><td>SLES_535.39</td><td>Fahrenheit</td></tr>
+<tr><td>CUSTOM</td><td>SLES_535.40</td><td>Fahrenheit</td></tr>
+<tr><td>CUSTOM</td><td>SLES_515.26</td><td>Fallout - Brotherhood of Steel</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_205.39</td><td>Fallout - Brotherhood of Steel</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_207.66</td><td>Fatal Frame 2 - Crimson Butterfly</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_200.20</td><td>FIFA 2000 World Championship</td></tr>
+<tr><td>CUSTOM</td><td>SLES_500.11</td><td>FIFA 2001</td></tr>
+<tr><td>CUSTOM</td><td>SLES_500.12</td><td>FIFA 2001</td></tr>
+<tr><td>CUSTOM</td><td>SLES_500.13</td><td>FIFA 2001</td></tr>
+<tr><td>CUSTOM</td><td>SLES_500.14</td><td>FIFA 2001</td></tr>
+<tr><td>CUSTOM</td><td>SLES_500.15</td><td>FIFA 2001</td></tr>
+<tr><td>CUSTOM</td><td>SLES_500.16</td><td>FIFA 2001</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_205.24</td><td>Fighter Maker 2</td></tr>
+<tr><td>CUSTOM</td><td>SCES_504.90</td><td>Final Fantasy X</td></tr>
+<tr><td>CUSTOM</td><td>SCES_504.91</td><td>Final Fantasy X</td></tr>
+<tr><td>CUSTOM</td><td>SCES_504.92</td><td>Final Fantasy X</td></tr>
+<tr><td>CUSTOM</td><td>SCES_504.93</td><td>Final Fantasy X</td></tr>
+<tr><td>CUSTOM</td><td>SCES_504.94</td><td>Final Fantasy X</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_250.50</td><td>Final Fantasy X</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_203.12</td><td>Final Fantasy X</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_675.13</td><td>Final Fantasy X International</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_250.88</td><td>Final Fantasy X International</td></tr>
+<tr><td>CUSTOM</td><td>SLES_518.15</td><td>Final Fantasy X-2</td></tr>
+<tr><td>CUSTOM</td><td>SLES_518.16</td><td>Final Fantasy X-2</td></tr>
+<tr><td>CUSTOM</td><td>SLES_518.17</td><td>Final Fantasy X-2</td></tr>
+<tr><td>CUSTOM</td><td>SLES_518.18</td><td>Final Fantasy X-2</td></tr>
+<tr><td>CUSTOM</td><td>SLES_518.19</td><td>Final Fantasy X-2</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_251.44</td><td>Final Fantasy X-2</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_252.50</td><td>Final Fantasy X-2</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_206.72</td><td>Final Fantasy X-2</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_654.78</td><td>Final Fantasy X-2 International</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_217.02</td><td>Fire Pro Wrestling - Returns</td></tr>
+<tr><td>CUSTOM</td><td>SLES_527.53</td><td>FlatOut</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_209.01</td><td>FlatOut</td></tr>
+<tr><td>CUSTOM</td><td>SLES_540.02</td><td>FlatOut 2</td></tr>
+<tr><td>CUSTOM</td><td>SLES_540.03</td><td>FlatOut 2</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_254.01</td><td>FlatOut 2</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_212.51</td><td>FlatOut 2</td></tr>
+<tr><td>CUSTOM</td><td>SLES_520.65</td><td>Flipnic</td></tr>
+<tr><td>CUSTOM</td><td>SCES_538.51</td><td>Forbidden Siren 2</td></tr>
+<tr><td>CUSTOM</td><td>SCKA_200.69</td><td>Forbidden Siren 2</td></tr>
+<tr><td>CUSTOM</td><td>SLES_532.96</td><td>Ford Mustang - The Legend Lives</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_211.62</td><td>Ford Mustang - The Legend Lives</td></tr>
+<tr><td>CUSTOM</td><td>SLES_536.98</td><td>Ford vs. Chevy</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_212.76</td><td>Ford vs. Chevy</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_203.43</td><td>Forever Kingdom</td></tr>
+<tr><td>CUSTOM</td><td>SLES_526.69</td><td>Forgotten Realms - Demon Stone</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_252.52</td><td>Forgotten Realms - Demon Stone</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_208.04</td><td>Forgotten Realms - Demon Stone</td></tr>
+<tr><td>CUSTOM</td><td>SLES_545.59</td><td>Free Running</td></tr>
+<tr><td>CUSTOM</td><td>SLES_514.67</td><td>Freedom Fighters</td></tr>
+<tr><td>CUSTOM</td><td>SLES_514.68</td><td>Freedom Fighters</td></tr>
+<tr><td>CUSTOM</td><td>SLES_514.69</td><td>Freedom Fighters</td></tr>
+<tr><td>CUSTOM</td><td>SLES_514.70</td><td>Freedom Fighters</td></tr>
+<tr><td>CUSTOM</td><td>SLES_514.71</td><td>Freedom Fighters</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_655.48</td><td>Freedom Fighters</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_206.58</td><td>Freedom Fighters - The Battle for Liberty Island</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_205.60</td><td>Galerians Ash</td></tr>
+<tr><td>CUSTOM</td><td>SLES_513.43</td><td>Galerians Ash</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_213.93</td><td>Gallop Racer 2006</td></tr>
+<tr><td>CUSTOM</td><td>SCKA_200.27</td><td>Ghost in the Shell - Stand Alone Complex</td></tr>
+<tr><td>CUSTOM</td><td>SCPS_150.64</td><td>Ghost in the Shell - Stand Alone Complex</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_210.06</td><td>Ghost in the Shell - Stane Alone Complex</td></tr>
+<tr><td>CUSTOM</td><td>SLES_543.17</td><td>Ghost Rider</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_209.93</td><td>Ghosthunter</td></tr>
+<tr><td>CUSTOM</td><td>SCES_514.63</td><td>Ghosthunter</td></tr>
+<tr><td>CUSTOM</td><td>SCES_521.56</td><td>Ghosthunter - Hunter on the spectres</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_657.01</td><td>Ghosthunter</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_201.78</td><td>Giants - Citizen Kabuto</td></tr>
+<tr><td>CUSTOM</td><td>SLES_544.90</td><td>God Hand</td></tr>
+<tr><td>CUSTOM</td><td>SCES_531.33</td><td>God of War</td></tr>
+<tr><td>CUSTOM</td><td>SCKA_300.02</td><td>God of War</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_973.99</td><td>God of War</td></tr>
+<tr><td>CUSTOM</td><td>SCES_542.06</td><td>God of War II</td></tr>
+<tr><td>CUSTOM</td><td>SCKA_300.06</td><td>God of War II</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_974.81</td><td>God of War II</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_207.12</td><td>Gradius V</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_971.02</td><td>Gran Turismo 3 - A-Spec</td></tr>
+<tr><td>CUSTOM</td><td>SCES_517.19</td><td>Gran Turismo 4</td></tr>
+<tr><td>CUSTOM</td><td>SCKA_300.01</td><td>Gran Turismo 4</td></tr>
+<tr><td>CUSTOM</td><td>SCPS_170.01</td><td>Gran Turismo 4</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_973.28</td><td>Gran Turismo 4</td></tr>
+<tr><td>CUSTOM</td><td>SLES_541.35</td><td>Grand Theft Auto - Liberty City Stories</td></tr>
+<tr><td>CUSTOM</td><td>SLES_541.36</td><td>Grand Theft Auto - Liberty City Stories</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_214.23</td><td>Grand Theft Auto - Liberty City Stories</td></tr>
+<tr><td>CUSTOM</td><td>SLES_525.41</td><td>Grand Theft Auto - San Andreas</td></tr>
+<tr><td>CUSTOM</td><td>SLES_529.27</td><td>Grand Theft Auto - San Andreas</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_659.84</td><td>Grand Theft Auto - San Andreas</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_209.46</td><td>Grand Theft Auto - San Andreas</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_205.52</td><td>Grand Theft Auto - Vice City</td></tr>
+<tr><td>CUSTOM</td><td>SLES_546.22</td><td>Grand Theft Auto - Vice City Stories</td></tr>
+<tr><td>CUSTOM</td><td>SLES_546.23</td><td>Grand Theft Auto - Vice City Stories</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_215.90</td><td>Grand Theft Auto - Vice City Stories</td></tr>
+<tr><td>CUSTOM</td><td>SLES_503.30</td><td>Grand Theft Auto III</td></tr>
+<tr><td>CUSTOM</td><td>SLES_507.93</td><td>Grand Theft Auto III</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_200.62</td><td>Grand Theft Auto III</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_216.04</td><td>GrimGrimoire</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_621.08</td><td>Growlanser 3 - The Duel Darkness</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_207.58</td><td>Growlanser Generations [Disc1of2]</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_207.59</td><td>Growlanser Generations [Disc2of2]</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_150.07</td><td>Growlanser II - The Sense of Justice</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_201.06</td><td>Growlanser II - The Sense of Justice</td></tr>
+<tr><td>CUSTOM</td><td>SLES_551.91</td><td>Guitar Hero - Aerosmith</td></tr>
+<tr><td>CUSTOM</td><td>SLES_552.00</td><td>Guitar Hero - Aerosmith</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_217.40</td><td>Guitar Hero - Aerosmith</td></tr>
+<tr><td>CUSTOM</td><td>SLES_555.44</td><td>Guitar Hero - Greatest Hits</td></tr>
+<tr><td>CUSTOM</td><td>SLES_554.72</td><td>Guitar Hero - Metallica</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_218.43</td><td>Guitar Hero - Metallica</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_218.66</td><td>Guitar Hero - Smash Hits</td></tr>
+<tr><td>CUSTOM</td><td>SLES_555.18</td><td>Guitar Hero - Van Halen</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_218.67</td><td>Guitar Hero - Van Halen</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_217.81</td><td>Guitar Hero - World Tour</td></tr>
+<tr><td>CUSTOM</td><td>SLES_555.33</td><td>Guitar Hero 5</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_218.65</td><td>Guitar Hero 5 [Game Only]</td></tr>
+<tr><td>CUSTOM</td><td>SLES_549.62</td><td>Guitar Hero III - Legends of Rock</td></tr>
+<tr><td>CUSTOM</td><td>SLES_549.74</td><td>Guitar Hero III - Legends of Rock</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_253.63</td><td>Guitar Hero III - Legends of Rock</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_216.72</td><td>Guitar Hero III - Legends of Rock</td></tr>
+<tr><td>CUSTOM</td><td>SLES_553.55</td><td>Guitar Hero World Tour</td></tr>
+<tr><td>CUSTOM</td><td>SLES_509.84</td><td>Gumball 3000</td></tr>
+<tr><td>CUSTOM</td><td>SLES_535.23</td><td>Gun</td></tr>
+<tr><td>CUSTOM</td><td>SLES_536.47</td><td>Gun</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_211.39</td><td>Gun</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_200.50</td><td>Happy! Happy!! Boarders in Hokkaido</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_150.21</td><td>Harry Potter - Quidditch World Cup</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_207.69</td><td>Harry Potter - Quidditch World Cup</td></tr>
+<tr><td>CUSTOM</td><td>SLES_511.92</td><td>Harry Potter and the Chamber of Secrets</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_645.28</td><td>Harry Potter and the Chamber of Secrets</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_205.76</td><td>Harry Potter and The Chamber of Secrets</td></tr>
+<tr><td>CUSTOM</td><td>SLES_524.40</td><td>Harry Potter and the Prisoner of Azkaban</td></tr>
+<tr><td>CUSTOM</td><td>SLES_526.00</td><td>Harry Potter and The Prisoner of Azkaban</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_251.72</td><td>Harry Potter and the Prisoner of Azkaban</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_656.12</td><td>Harry Potter and The Prisoner of Azkaban</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_209.26</td><td>Harry Potter and The Prisoner of Azkaban</td></tr>
+<tr><td>CUSTOM</td><td>SLES_525.27</td><td>Harry Potter og Fangen fra Azkaban</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_202.34</td><td>Harry Potter to Himitsu no Heya</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_621.22</td><td>Hermina to Culus - Lilie no Atelier Mou Hitotsu no Monogatari</td></tr>
+<tr><td>CUSTOM</td><td>SLES_521.32</td><td>Hitman - Contracts</td></tr>
+<tr><td>CUSTOM</td><td>SLES_521.33</td><td>Hitman - Contracts</td></tr>
+<tr><td>CUSTOM</td><td>SLES_521.34</td><td>Hitman - Contracts</td></tr>
+<tr><td>CUSTOM</td><td>SLES_521.35</td><td>Hitman - Contracts</td></tr>
+<tr><td>CUSTOM</td><td>SLES_521.36</td><td>Hitman - Contracts</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_252.18</td><td>Hitman - Contracts</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_254.06</td><td>Hitman - Contracts</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_208.82</td><td>Hitman - Contracts</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_252.69</td><td>Hitman - Silent Assasin</td></tr>
+<tr><td>CUSTOM</td><td>SLES_509.92</td><td>Hitman 2 - Silent Assassin</td></tr>
+<tr><td>CUSTOM</td><td>SLES_511.07</td><td>Hitman 2 - Silent Assassin</td></tr>
+<tr><td>CUSTOM</td><td>SLES_511.08</td><td>Hitman 2 - Silent Assassin</td></tr>
+<tr><td>CUSTOM</td><td>SLES_511.09</td><td>Hitman 2 - Silent Assassin</td></tr>
+<tr><td>CUSTOM</td><td>SLES_511.10</td><td>Hitman 2 - Silent Assassin</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_250.55</td><td>Hitman 2 - Silent Assassin</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_203.74</td><td>Hitman 2 - Silent Assassin</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_976.10</td><td>Hot Shots Tennis</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_216.28</td><td>Hot Wheels - Beat That</td></tr>
+<tr><td>CUSTOM</td><td>SLES_549.71</td><td>Hot Wheels - Beat That!</td></tr>
+<tr><td>CUSTOM</td><td>SLES_541.58</td><td>Hummer Badlands</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_213.57</td><td>Hummer Badlands</td></tr>
+<tr><td>CUSTOM</td><td>SLES_518.23</td><td>Hunter - The Reckoning Wayward</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_650.05</td><td>I am the Coach</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_663.01</td><td>Ibara</td></tr>
+<tr><td>CUSTOM</td><td>SLES_539.84</td><td>Ice Age 2 - The Meltdown</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_213.07</td><td>Ice Age 2 - The Meltdown</td></tr>
+<tr><td>CUSTOM</td><td>SLES_541.47</td><td>Ice Age 2 - The Meltdown [RUS]</td></tr>
+<tr><td>CUSTOM</td><td>SCES_507.60</td><td>Ico</td></tr>
+<tr><td>CUSTOM</td><td>SCPS_560.01</td><td>Ico</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_253.09</td><td>INDIGO PROPHECY</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_211.96</td><td>Indigo Prophecy</td></tr>
+<tr><td>CUSTOM</td><td>SLES_500.39</td><td>International Superstar Soccer</td></tr>
+<tr><td>CUSTOM</td><td>SCES_532.86</td><td>Jak X - Combat Racing</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_974.29</td><td>Jak X - Combat Racing</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_202.45</td><td>Jeremy McGrath - Supercross World 2002</td></tr>
+<tr><td>CUSTOM</td><td>SLES_505.44</td><td>Jet Ion GP</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_972.79</td><td>Jet Li - Rise to Honor</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_660.61</td><td>Jikkyou Powerful Pro Baseball 12</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_656.30</td><td>Jikkyou Powerful Pro Baseball XI</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_658.25</td><td>Jikkyou Powerful Pro Yakyuu 11 Chou Ketteiban</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_665.90</td><td>Jikkyou Powerful Pro Yakyuu 13 Chou Ketteiban</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_621.92</td><td>Jikkyou Powerful Pro Yakyuu 9</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_201.31</td><td>Jissen Pachi-Slot Hisshouhou! Juuou</td></tr>
+<tr><td>CUSTOM</td><td>SLES_544.23</td><td>Justice League Heroes</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_213.04</td><td>Justice League Heroes</td></tr>
+<tr><td>CUSTOM</td><td>SLES_521.79</td><td>Kaan Barbarian Blade</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_210.89</td><td>Karaoke Revolution Vol.3</td></tr>
+<tr><td>CUSTOM</td><td>SCKA_200.25</td><td>Katamari Damacy</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_253.60</td><td>Katamari Damacy</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_210.08</td><td>Katamari Damacy</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_650.15</td><td>Kessen 2</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_202.75</td><td>Kessen 2</td></tr>
+<tr><td>CUSTOM</td><td>SLES_505.78</td><td>Kessen II</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_255.69</td><td>Kidou Senshi Gundam SEED - Rengou vs. Z.A.F.T.</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_666.76</td><td>Kingdom Hearts - Re:Chain of Memories</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_217.99</td><td>Kingdom Hearts - Re:Chain of Memories</td></tr>
+<tr><td>CUSTOM</td><td>SLES_541.14</td><td>Kingdom Hearts II</td></tr>
+<tr><td>CUSTOM</td><td>SLES_542.32</td><td>Kingdom Hearts II</td></tr>
+<tr><td>CUSTOM</td><td>SLES_542.33</td><td>Kingdom Hearts II</td></tr>
+<tr><td>CUSTOM</td><td>SLES_542.34</td><td>Kingdom Hearts II</td></tr>
+<tr><td>CUSTOM</td><td>SLES_542.35</td><td>Kingdom Hearts II</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_210.05</td><td>Kingdom Hearts II</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_666.75</td><td>Kingdom Hearts II - Final Mix +</td></tr>
+<tr><td>CUSTOM</td><td>SLES_510.11</td><td>Knight Rider - The Game</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_150.06</td><td>Knight Rider - The Game</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_201.50</td><td>Knockout Kings 2001</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_210.07</td><td>Kuon</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_208.47</td><td>La Pucelle - Tactics</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_207.73</td><td>Legacy of Kain - Defiance</td></tr>
+<tr><td>CUSTOM</td><td>SLES_521.50</td><td>Legacy of Kain - Defiance</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_651.16</td><td>Lilie no Atelier Plus - Salburg no Renkinjutsushi 3</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_620.02</td><td>Live World Soccer 2000</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_210.15</td><td>Madagascar</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_212.13</td><td>Madden NFL '06</td></tr>
+<tr><td>CUSTOM</td><td>SLES_522.80</td><td>Mafia</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_206.71</td><td>Mafia</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_217.35</td><td>Mana Khemia - Alchemists of Al-Revis</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_218.90</td><td>Mana Khemia 2 - Fall of Alchemy</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_551.14</td><td>Mana-Khemia 2 - Ochita Gakuen to Renkinjutsushi-tachi</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_208.27</td><td>Manhunt</td></tr>
+<tr><td>CUSTOM</td><td>SLES_535.85</td><td>Marvel Nemesis - Rise of the Imperfects</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_212.81</td><td>Marvel Nemesis - Rise of the Imperfects</td></tr>
+<tr><td>CUSTOM</td><td>SLES_503.25</td><td>Max Payne</td></tr>
+<tr><td>CUSTOM</td><td>SLES_503.26</td><td>Max Payne</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_252.44</td><td>Max Payne</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_202.30</td><td>Max Payne</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_621.27</td><td>Maximo</td></tr>
+<tr><td>CUSTOM</td><td>SLES_518.73</td><td>Medal of Honor - Rising Sun</td></tr>
+<tr><td>CUSTOM</td><td>SLES_518.74</td><td>Medal of Honor - Rising Sun</td></tr>
+<tr><td>CUSTOM</td><td>SLES_518.75</td><td>Medal of Honor - Rising Sun</td></tr>
+<tr><td>CUSTOM</td><td>SLES_518.76</td><td>Medal of Honor - Rising Sun</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_207.53</td><td>Medal of Honor - Rising Sun</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_551.84</td><td>Melty Blood - Actress Again</td></tr>
+<tr><td>CUSTOM</td><td>SLES_503.83</td><td>Metal Gear Solid 2 - Sons of Liberty</td></tr>
+<tr><td>CUSTOM</td><td>SLES_503.85</td><td>Metal Gear Solid 2 - Sons of Liberty</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_201.44</td><td>Metal Gear Solid 2 - Sons of Liberty</td></tr>
+<tr><td>CUSTOM</td><td>SLES_820.13</td><td>Metal Gear Solid 3 - Snake Eater</td></tr>
+<tr><td>CUSTOM</td><td>SLES_820.24</td><td>Metal Gear Solid 3 - Snake Eater</td></tr>
+<tr><td>CUSTOM</td><td>SLES_820.26</td><td>Metal Gear Solid 3 - Snake Eater</td></tr>
+<tr><td>CUSTOM</td><td>SLES_820.32</td><td>Metal Gear Solid 3 - Snake Eater</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_252.51</td><td>Metal Gear Solid 3 - Snake Eater</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_657.90</td><td>Metal Gear Solid 3 - Snake Eater</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_209.15</td><td>Metal Gear Solid 3 - Snake Eater</td></tr>
+<tr><td>CUSTOM</td><td>SLES_820.42</td><td>Metal Gear Solid 3 - Subsistance [Disc1of2]</td></tr>
+<tr><td>CUSTOM</td><td>SLES_820.44</td><td>Metal Gear Solid 3 - Subsistance [Disc1of2]</td></tr>
+<tr><td>CUSTOM</td><td>SLES_820.46</td><td>Metal Gear Solid 3 - Subsistance [Disc1of2]</td></tr>
+<tr><td>CUSTOM</td><td>SLES_820.48</td><td>Metal Gear Solid 3 - Subsistance [Disc1of2]</td></tr>
+<tr><td>CUSTOM</td><td>SLES_820.43</td><td>Metal Gear Solid 3 - Subsistance [Disc2of2]</td></tr>
+<tr><td>CUSTOM</td><td>SLES_820.45</td><td>Metal Gear Solid 3 - Subsistance [Disc2of2]</td></tr>
+<tr><td>CUSTOM</td><td>SLES_820.47</td><td>Metal Gear Solid 3 - Subsistance [Disc2of2]</td></tr>
+<tr><td>CUSTOM</td><td>SLES_820.49</td><td>Metal Gear Solid 3 - Subsistance [Disc2of2]</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_253.53</td><td>Metal Gear Solid 3 - Subsistance [Limited Edition] [Disc1of2]</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_253.54</td><td>Metal Gear Solid 3 - Subsistance [Limited Edition] [Disc2of2]</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_212.43</td><td>Metal Gear Solid 3 - Subsistence</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_662.20</td><td>Metal Gear Solid 3 - Subsistence [First Print Limited Edition] [Disc1of3]</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_662.21</td><td>Metal Gear Solid 3 - Subsistence [First Print Limited Edition] [Disc2of3]</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_213.59</td><td>Metal Gear Solid 3 - Subsistence [Limited Edition] [Disc2of3]</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_215.50</td><td>Metal Slug Anthology</td></tr>
+<tr><td>CUSTOM</td><td>SCPS_150.16</td><td>Minna no Golf 3</td></tr>
+<tr><td>CUSTOM</td><td>SCPS_150.59</td><td>Minna no Golf 4</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_625.55</td><td>Momotaro Densetsu</td></tr>
+<tr><td>CUSTOM</td><td>SLES_507.17</td><td>Mortal Kombat - Deadly Alliance</td></tr>
+<tr><td>CUSTOM</td><td>SLES_514.39</td><td>Mortal Kombat - Deadly Alliance</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_204.23</td><td>Mortal Kombat - Deadly Alliance</td></tr>
+<tr><td>CUSTOM</td><td>SLES_524.04</td><td>MTV Music Generator 3</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_208.61</td><td>MTV Music Generator 3 - This is the Remix</td></tr>
+<tr><td>CUSTOM</td><td>SLES_522.89</td><td>MTX Mototrax</td></tr>
+<tr><td>CUSTOM</td><td>SLES_522.90</td><td>MTX Mototrax</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_203.99</td><td>MTX Mototrax</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_209.83</td><td>Musashi Samurai Legend</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_213.67</td><td>MVP '06 - NCAA Baseball</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_207.67</td><td>MX Unleashed</td></tr>
+<tr><td>CUSTOM</td><td>SLES_520.43</td><td>MX Unleashed Migrated</td></tr>
+<tr><td>CUSTOM</td><td>SLES_531.06</td><td>MX vs. ATV Unleashed</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_252.82</td><td>MX vs. ATV Unleashed</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_211.04</td><td>MX vs. ATV Unleashed</td></tr>
+<tr><td>CUSTOM</td><td>SCES_516.77</td><td>My Street</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_972.12</td><td>My Street (Online)</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_252.32</td><td>Naruto - Narutimate Hero</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_252.93</td><td>Naruto - Narutimett Hero</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_253.98</td><td>Naruto - Narutimett Hero 2</td></tr>
+<tr><td>CUSTOM</td><td>SLES_541.63</td><td>Naruto - Ultimate Ninja</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_213.58</td><td>Naruto - Ultimate Ninja</td></tr>
+<tr><td>CUSTOM</td><td>SLES_548.78</td><td>Naruto - Ultimate Ninja 2</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_215.75</td><td>Naruto - Ultimate Ninja 2</td></tr>
+<tr><td>CUSTOM</td><td>SLES_552.37</td><td>Naruto - Ultimate Ninja 3</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_217.27</td><td>Naruto - Ultimate Ninja 3</td></tr>
+<tr><td>CUSTOM</td><td>SLES_547.27</td><td>Naruto - Uzumaki Chronicles</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_214.98</td><td>Naruto - Uzumaki Chronicles</td></tr>
+<tr><td>CUSTOM</td><td>SLES_550.90</td><td>Naruto - Uzumaki Chronicles 2</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_215.94</td><td>Naruto - Uzumaki Chronicles 2</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_255.89</td><td>Naruto Narutimett Hero 3</td></tr>
+<tr><td>CUSTOM</td><td>SLES_554.81</td><td>Naruto Shippuden - Ultimate Ninja 4</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_218.62</td><td>Naruto Shippuden - Ultimate Ninja 4</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_975.89</td><td>NBA '08 featuring The Life Vol.3</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_214.94</td><td>Need for Speed - Carbon [Collector's Edition]</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_203.62</td><td>Need for Speed - Hot Pursuit 2</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_253.50</td><td>Netsu Chu! Pro Baseball 2004</td></tr>
+<tr><td>CUSTOM</td><td>SLES_515.47</td><td>Next Generation Tennis 2003</td></tr>
+<tr><td>CUSTOM</td><td>SLES_534.98</td><td>Nickelodeon Bob Esponja - ¡Luces, Cámara, Esponja!</td></tr>
+<tr><td>CUSTOM</td><td>SLES_534.95</td><td>Nickelodeon Bob L'éponge - Silence on Tourne!</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_219.44</td><td>Nickelodeon Dora's Big Birthday Adventure</td></tr>
+<tr><td>CUSTOM</td><td>SLES_534.97</td><td>Nickelodeon SpongeBob Schwammkopf - Film ab!</td></tr>
+<tr><td>CUSTOM</td><td>SLES_534.99</td><td>Nickelodeon SpongeBob Squarepants - Licht uit, Camera aan!</td></tr>
+<tr><td>CUSTOM</td><td>SLES_535.00</td><td>Nickelodeon Svampbob Fyrkant - Tystnad, Tagning, Tvaettsvamp</td></tr>
+<tr><td>CUSTOM</td><td>SLES_505.92</td><td>No One Lives Forever</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_200.28</td><td>No One Lives Forever</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_215.77</td><td>Odin Sphere</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_973.40</td><td>Official U.S. PlayStation Magazine Demo Disc 087</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_973.41</td><td>Official U.S. PlayStation Magazine Demo Disc 088</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_973.42</td><td>Official U.S. PlayStation Magazine Demo Disc 089</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_974.42</td><td>Official U.S. PlayStation Magazine Demo Disc 090</td></tr>
+<tr><td>CUSTOM</td><td>SLES_544.39</td><td>Okami</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_211.15</td><td>Okami</td></tr>
+<tr><td>CUSTOM</td><td>SLES_501.34</td><td>Oni</td></tr>
+<tr><td>CUSTOM</td><td>SLES_501.76</td><td>Oni</td></tr>
+<tr><td>CUSTOM</td><td>SLES_501.77</td><td>Oni</td></tr>
+<tr><td>CUSTOM</td><td>SLES_501.78</td><td>Oni</td></tr>
+<tr><td>CUSTOM</td><td>SLES_501.79</td><td>Oni</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_200.64</td><td>Oni</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_650.10</td><td>Onimusha</td></tr>
+<tr><td>CUSTOM</td><td>SLES_820.38</td><td>Onimusha - Dawn of Dreams</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_211.80</td><td>Onimusha - Dawn of Dreams</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_213.62</td><td>Onimusha - Dawn of Dreams</td></tr>
+<tr><td>CUSTOM</td><td>SLES_820.39</td><td>Onimusha - Dawn of Dreams (Disc 2)</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_200.18</td><td>Onimusha - Warlords</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_651.00</td><td>Onimusha 2</td></tr>
+<tr><td>CUSTOM</td><td>SLES_509.78</td><td>Onimusha 2 - Samurai's Destiny</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_675.18</td><td>Onimusha 2 - Samurai's Destiny</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_203.93</td><td>Onimusha 2 - Samurai's Destiny</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_654.13</td><td>Onimusha 3</td></tr>
+<tr><td>CUSTOM</td><td>SLES_519.14</td><td>Onimusha 3 - Demon Siege</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_250.93</td><td>Onimusha 3 - Demon Siege</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_206.94</td><td>Onimusha 3 - Demon Siege</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_675.07</td><td>Onimusha Wsrlords</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_650.56</td><td>Orega Kantoku da Vol.2 - Getitou Pennent Race</td></tr>
+<tr><td>CUSTOM</td><td>SLES_538.66</td><td>Over the Hedge</td></tr>
+<tr><td>CUSTOM</td><td>SLES_539.87</td><td>Over the Hedge</td></tr>
+<tr><td>CUSTOM</td><td>SLES_539.88</td><td>Over the Hedge</td></tr>
+<tr><td>CUSTOM</td><td>SLES_539.89</td><td>Over the Hedge</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_213.00</td><td>Over the Hedge</td></tr>
+<tr><td>CUSTOM</td><td>SLES_539.59</td><td>Pac-Man World 3</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_212.19</td><td>Pac-Man World 3</td></tr>
+<tr><td>CUSTOM</td><td>SCES_504.08</td><td>PaRappa the Rapper 2</td></tr>
+<tr><td>CUSTOM</td><td>SCPS_150.17</td><td>PaRappa the Rapper 2</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_971.67</td><td>Parappa the Rapper 2</td></tr>
+<tr><td>CUSTOM</td><td>SLES_556.36</td><td>PES 2011 - Pro Evolution Soccer</td></tr>
+<tr><td>CUSTOM</td><td>SLES_556.37</td><td>PES 2011 - Pro Evolution Soccer</td></tr>
+<tr><td>CUSTOM</td><td>SLES_556.38</td><td>PES 2011 - Pro Evolution Soccer</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_219.42</td><td>PES 2011 - Pro Evolution Soccer</td></tr>
+<tr><td>CUSTOM</td><td>SLES_543.08</td><td>Phantasy Star Universe</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_660.31</td><td>Phantasy Star Universe</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_211.94</td><td>Phantasy Star Universe</td></tr>
+<tr><td>CUSTOM</td><td>SLES_548.92</td><td>Phantasy Star Universe - Ambition of the Illuminus</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_216.31</td><td>Phantasy Star Universe - Ambition of the Illuminus</td></tr>
+<tr><td>CUSTOM</td><td>SCPS_150.05</td><td>Phase Paradox</td></tr>
+<tr><td>CUSTOM</td><td>SLES_516.67</td><td>Piglet's Big Game</td></tr>
+<tr><td>CUSTOM</td><td>SLES_516.68</td><td>Piglet's Big Game</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_206.59</td><td>Piglet's Big Game</td></tr>
+<tr><td>CUSTOM</td><td>SLES_546.07</td><td>Pimp My Ride</td></tr>
+<tr><td>CUSTOM</td><td>SLES_546.32</td><td>Pimp My Ride</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_215.80</td><td>Pimp my Ride</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_654.45</td><td>Powerful Pro Baseball 10 - Decision</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_622.74</td><td>Powerful Pro Baseball 9 Ketteiban</td></tr>
+<tr><td>CUSTOM</td><td>SCES_511.35</td><td>Primal</td></tr>
+<tr><td>CUSTOM</td><td>SCES_516.85</td><td>Primal</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_971.42</td><td>Primal - Civilization Is Only Skin Deep</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_200.13</td><td>Primal Image Vol.01</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_252.74</td><td>Princess Maker 4</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_210.37</td><td>Project - Snowblind</td></tr>
+<tr><td>CUSTOM</td><td>SLES_505.53</td><td>Project Eden</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_201.64</td><td>Project Eden</td></tr>
+<tr><td>CUSTOM</td><td>SLES_523.84</td><td>Project Zero 2 - Crimson Butterfly</td></tr>
+<tr><td>CUSTOM</td><td>SLES_503.84</td><td>Project Zero II</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_211.20</td><td>Psychonauts</td></tr>
+<tr><td>CUSTOM</td><td>SLES_541.73</td><td>På andra sidan häcken</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_201.67</td><td>Quake III - Revolution</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_658.00</td><td>Radiata Stories</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_212.62</td><td>Radiata Stories</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_202.46</td><td>Rally Shox</td></tr>
+<tr><td>CUSTOM</td><td>SCES_509.16</td><td>Ratchet &amp; Clank</td></tr>
+<tr><td>CUSTOM</td><td>SCPS_150.37</td><td>Ratchet &amp; Clank</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_971.99</td><td>Ratchet &amp; Clank</td></tr>
+<tr><td>CUSTOM</td><td>SCPS_150.99</td><td>Ratchet &amp; Clank - Giga Battle</td></tr>
+<tr><td>CUSTOM</td><td>SCKA_200.11</td><td>Ratchet &amp; Clank - Going Commando</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_972.68</td><td>Ratchet &amp; Clank - Going Commando</td></tr>
+<tr><td>CUSTOM</td><td>SCPS_150.56</td><td>Ratchet &amp; Clank 2</td></tr>
+<tr><td>CUSTOM</td><td>SCKA_200.37</td><td>Ratchet &amp; Clank 2 - Gagaga! Ginga no Commando-ssu [Big Hit Series]</td></tr>
+<tr><td>CUSTOM</td><td>SCES_516.07</td><td>Ratchet &amp; Clank 2 - Locked &amp; Loaded</td></tr>
+<tr><td>CUSTOM</td><td>SCES_524.56</td><td>Ratchet &amp; Clank 3</td></tr>
+<tr><td>CUSTOM</td><td>SCPS_150.84</td><td>Ratchet &amp; Clank 3</td></tr>
+<tr><td>CUSTOM</td><td>SCKA_200.60</td><td>Ratchet - Deadlocked</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_974.65</td><td>Ratchet - Deadlocked</td></tr>
+<tr><td>CUSTOM</td><td>SCES_532.85</td><td>Ratchet - Gladiator</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_973.53</td><td>Ratchet and Clank - Up Your Arsenal</td></tr>
+<tr><td>CUSTOM</td><td>SLES_545.87</td><td>Raw Danger</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_215.01</td><td>Raw Danger</td></tr>
+<tr><td>CUSTOM</td><td>SLES_512.22</td><td>Rayman 3 - Hoodlum Havoc</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_250.78</td><td>Rayman 3 - Hoodlum Havoc</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_206.01</td><td>Rayman 3 - Hoodlum Havoc</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_202.72</td><td>Rayman Arena</td></tr>
+<tr><td>CUSTOM</td><td>SLES_504.57</td><td>Rayman M</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_205.00</td><td>Red Dead Revolver</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_204.42</td><td>Red Faction 2</td></tr>
+<tr><td>CUSTOM</td><td>SCPS_110.12</td><td>Rimoko Koron</td></tr>
+<tr><td>CUSTOM</td><td>SLES_527.61</td><td>Rocky - Legends</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_208.90</td><td>Rocky - Legends</td></tr>
+<tr><td>CUSTOM</td><td>SLES_501.20</td><td>Rumble Racing</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_201.74</td><td>Rumble Racing</td></tr>
+<tr><td>CUSTOM</td><td>SLES_513.45</td><td>Run Like Hell</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_656.03</td><td>Run Like Hell</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_200.37</td><td>Run Like Hell - Hunt or Be Hunted</td></tr>
+<tr><td>CUSTOM</td><td>SLES_514.45</td><td>Rygar - The Legendary Adventure</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_204.71</td><td>Rygar - The Legendary Adventure</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_250.89</td><td>Salt Lake 2002</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_203.78</td><td>Salt Lake 2002</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_201.78</td><td>Samurai</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_653.80</td><td>Samurai Michi 2</td></tr>
+<tr><td>CUSTOM</td><td>SLES_525.51</td><td>Samurai Warriors</td></tr>
+<tr><td>CUSTOM</td><td>SLES_525.52</td><td>Samurai Warriors</td></tr>
+<tr><td>CUSTOM</td><td>SLES_525.54</td><td>Samurai Warriors</td></tr>
+<tr><td>CUSTOM</td><td>SLES_525.55</td><td>Samurai Warriors</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_208.78</td><td>Samurai Warriors</td></tr>
+<tr><td>CUSTOM</td><td>SLES_543.40</td><td>Samurai Warriors 2</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_214.62</td><td>Samurai Warriors 2</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_204.30</td><td>Savage Skies</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_657.78</td><td>Sega Ages 2500 Series Vol.18 - Dragon Force</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_627.75</td><td>Sega Ages 2500 Vol.32 - Phantasy Star Complete Collection</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_665.76</td><td>Seiken Densetsu 4</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_655.17</td><td>Sengoku Musou</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_203.47</td><td>Shadow Hearts</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_250.41</td><td>Shadow Hearts</td></tr>
+<tr><td>CUSTOM</td><td>SLES_504.46</td><td>Shadow Man: 2econd Coming</td></tr>
+<tr><td>CUSTOM</td><td>SLES_506.08</td><td>Shadow Man: 2econd Coming</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_204.13</td><td>Shadow Man: 2econd Coming</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_201.46</td><td>Shadow of Destiny</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_622.47</td><td>Shin Contra</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_209.74</td><td>Shin Megami Tensei - Digital Devil Saga</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_209.11</td><td>Shin Megami Tensei - Nocturne</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_216.21</td><td>Shin Megami Tensei - Persona 3 FES</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_217.82</td><td>Shin Megami Tensei - Persona 4</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_742.33</td><td>Shin Onimusha - Dawn of Dreams (Disc 2)</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_662.75</td><td>Shin Onimusha - Dawn of Dreams [Disc1of2]</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_742.32</td><td>Shin Onimusha - Dawn of Dreams [PlayStation 2 The Best]</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_653.40</td><td>Shinseiki Evangelion - Ayanami Ikusai Keikaku with Asuka Hokan Keikaku</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_217.31</td><td>Silent Hill - Origins</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_202.28</td><td>Silent Hill 2 Greatest Hits (SLUS-20228GH)</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_206.22</td><td>Silent Hill 3</td></tr>
+<tr><td>CUSTOM</td><td>SLES_524.45</td><td>Silent Hill 4 - The Room</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_208.73</td><td>Silent Hill 4 - The Room</td></tr>
+<tr><td>CUSTOM</td><td>SLES_551.47</td><td>Silent Hill Origins</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_250.41</td><td>Silent Line - Armored Core</td></tr>
+<tr><td>CUSTOM</td><td>SCES_522.68</td><td>Sing-Star</td></tr>
+<tr><td>CUSTOM</td><td>SCES_525.65</td><td>Sing-Star</td></tr>
+<tr><td>CUSTOM</td><td>SCES_522.99</td><td>SingStar</td></tr>
+<tr><td>CUSTOM</td><td>SCES_525.66</td><td>SingStar</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_976.16</td><td>SingStar 80's</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_976.26</td><td>SingStar 90's</td></tr>
+<tr><td>CUSTOM</td><td>SCES_554.35</td><td>SingStar ABBA</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_976.11</td><td>SingStar Amped [with Microphone]</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_975.80</td><td>SingStar Pop [with Microphone]</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_976.27</td><td>Singstar Pop Volume 2</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_975.71</td><td>SingStar Rocks! [with Microphone]</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_973.55</td><td>Siren</td></tr>
+<tr><td>CUSTOM</td><td>SCPS_151.06</td><td>Siren 2</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_206.20</td><td>Smash Cars</td></tr>
+<tr><td>CUSTOM</td><td>SLES_518.00</td><td>Smash Cars Racing</td></tr>
+<tr><td>CUSTOM</td><td>SLES_535.60</td><td>Sonic Riders</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_206.43</td><td>Soul Calibur II</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_212.16</td><td>Soul Calibur III</td></tr>
+<tr><td>CUSTOM</td><td>SLES_501.96</td><td>Soul Reaver 2 - Legacy of Kain</td></tr>
+<tr><td>CUSTOM</td><td>SLES_529.06</td><td>Spongebob and Friends - Movin'</td></tr>
+<tr><td>CUSTOM</td><td>SLES_534.94</td><td>Spongebob Squarepants - Lights, Camera, PANTS!</td></tr>
+<tr><td>CUSTOM</td><td>SLES_534.96</td><td>Spongebob Squarepants - Lights, Camera, PANTS!</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_253.19</td><td>SpongeBob SquarePants - Lights, Camera, PANTS!</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_212.52</td><td>SpongeBob Squarepants - Lights, Camera, PANTS!</td></tr>
+<tr><td>CUSTOM</td><td>SLES_512.85</td><td>Spongebob Squarepants - Revenge of the Flying Dutchman</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_204.25</td><td>Spongebob Squarepants - Revenge of the Flying Dutchman</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_206.80</td><td>SpongeBob SquarePants - The Battle for Bikini Bottoms</td></tr>
+<tr><td>CUSTOM</td><td>SLES_544.63</td><td>Sprint Cars - Road to Knoxville</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_214.18</td><td>Sprint Cars - Road to Knoxville</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_216.01</td><td>Sprint Cars 2 - Showdown at Eldora</td></tr>
+<tr><td>CUSTOM</td><td>SLES_525.05</td><td>Spy Fiction</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_250.07</td><td>Spy Fiction</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_253.11</td><td>Spy Fiction</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_208.56</td><td>Spy Fiction</td></tr>
+<tr><td>CUSTOM</td><td>SLES_820.28</td><td>Star Ocean 3 - Till the End of Time [Disc1of2]</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_204.88</td><td>Star Ocean 3 - Till the End of Time [Disc1of2]</td></tr>
+<tr><td>CUSTOM</td><td>SLES_820.29</td><td>Star Ocean 3 - Till the End of Time [Disc2of2]</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_208.91</td><td>Star Ocean 3 - Till the End of Time [Disc2of2]</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_654.38</td><td>Star Ocean 3 [Director's Cut] [Disc1of2]</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_652.09</td><td>Star Ocean 3 [Limited Edition]</td></tr>
+<tr><td>CUSTOM</td><td>SLES_535.01</td><td>Star Wars - Battlefront II</td></tr>
+<tr><td>CUSTOM</td><td>SLES_535.02</td><td>Star Wars - Battlefront II</td></tr>
+<tr><td>CUSTOM</td><td>SLES_535.03</td><td>Star Wars - Battlefront II</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_205.10</td><td>Star Wars - Clone Wars</td></tr>
+<tr><td>CUSTOM</td><td>SLES_503.71</td><td>Star Wars - Jedi Starfighter</td></tr>
+<tr><td>CUSTOM</td><td>SLES_546.58</td><td>Star Wars - The Force Unleashed</td></tr>
+<tr><td>CUSTOM</td><td>SLES_525.45</td><td>Star Wars Battlefront</td></tr>
+<tr><td>CUSTOM</td><td>SLES_525.46</td><td>Star Wars Battlefront</td></tr>
+<tr><td>CUSTOM</td><td>SLES_525.47</td><td>Star Wars Battlefront</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_208.98</td><td>Star Wars Battlefront</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_661.90</td><td>Star Wars Battlefront II</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_212.40</td><td>Star Wars Battlefront II</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_664.85</td><td>State of Emergency - Revenge</td></tr>
+<tr><td>CUSTOM</td><td>SLES_540.89</td><td>State of Emergency 2</td></tr>
+<tr><td>CUSTOM</td><td>SLES_540.92</td><td>State of Emergency 2</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_209.66</td><td>State of Emergency 2</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_213.44</td><td>Steambot Chronicles</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_214.97</td><td>Strawberry Shortcake - Adventures in the Land of Dreams</td></tr>
+<tr><td>CUSTOM</td><td>SLES_543.09</td><td>Strawberry Shortcake - The Sweet Dreams Game</td></tr>
+<tr><td>CUSTOM</td><td>SLES_530.45</td><td>Street Racing Syndicate</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_205.82</td><td>Street Racing Syndicate</td></tr>
+<tr><td>CUSTOM</td><td>SLES_820.01</td><td>Summoner</td></tr>
+<tr><td>CUSTOM</td><td>SLES_820.03</td><td>Summoner</td></tr>
+<tr><td>CUSTOM</td><td>SLES_820.05</td><td>Summoner</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_200.74</td><td>Summoner</td></tr>
+<tr><td>CUSTOM</td><td>SLES_511.41</td><td>Summoner 2</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_204.48</td><td>Summoner 2</td></tr>
+<tr><td>CUSTOM</td><td>SLES_537.01</td><td>Super Monkey Ball Adventure</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_212.72</td><td>Super Monkey Ball Adventure</td></tr>
+<tr><td>CUSTOM</td><td>SLES_537.46</td><td>Superman Returns</td></tr>
+<tr><td>CUSTOM</td><td>SLES_543.48</td><td>Superman Returns</td></tr>
+<tr><td>CUSTOM</td><td>SLES_543.49</td><td>Superman Returns</td></tr>
+<tr><td>CUSTOM</td><td>SLES_543.50</td><td>Superman Returns</td></tr>
+<tr><td>CUSTOM</td><td>SLES_543.51</td><td>Superman Returns</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_253.67</td><td>Superman Returns</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_214.34</td><td>Superman Returns - The Video Game</td></tr>
+<tr><td>CUSTOM</td><td>SCES_547.94</td><td>Syphon Filter - Dark Mirror</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_973.62</td><td>Syphon Filter - Dark Mirror</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_976.20</td><td>Syphon Filter - Dark Mirror</td></tr>
+<tr><td>CUSTOM</td><td>SCES_520.33</td><td>Syphon Filter - The Omega Strain</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_972.64</td><td>Syphon Filter - The Omega Strain</td></tr>
+<tr><td>CUSTOM</td><td>SCKA_200.32</td><td>Syphon Filter - The Omega Virus</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_251.23</td><td>Taisho Mononoke Ibunroku</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_652.28</td><td>Taisho Mononoke Ibunroku</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_205.19</td><td>Tak and The Power of Juju</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_257.15</td><td>Tales of Destiny</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_258.42</td><td>Tales of Destiny [Director's Cut]</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_213.86</td><td>Tales of the Abyss</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_250.71</td><td>Tantei Jinguuji Saburo - Innocent Black</td></tr>
+<tr><td>CUSTOM</td><td>SCES_508.78</td><td>Tekken 4</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_203.28</td><td>Tekken 4</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_255.10</td><td>Tekken 5</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_200.01</td><td>Tekken Tag Tournament</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_252.34</td><td>Tenchu 3</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_203.97</td><td>Tenchu 3 - Wrath of Heaven</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_202.13</td><td>Test Drive</td></tr>
+<tr><td>CUSTOM</td><td>SLES_531.54</td><td>The Bard's Tale</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_208.03</td><td>The Bard's Tale</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_250.23</td><td>The Bouncer</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_200.69</td><td>The Bouncer</td></tr>
+<tr><td>CUSTOM</td><td>SLES_544.83</td><td>The Fast and the Furious</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_214.49</td><td>The Fast and the Furious - Tokyo Drift</td></tr>
+<tr><td>CUSTOM</td><td>SCES_527.58</td><td>The Getaway - Black Monday</td></tr>
+<tr><td>CUSTOM</td><td>SCKA_200.18</td><td>The Getaway - Black Monday</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_974.08</td><td>The Getaway - Black Monday</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_661.83</td><td>The Getaway - Black Monday</td></tr>
+<tr><td>CUSTOM</td><td>SLES_502.76</td><td>The Gift</td></tr>
+<tr><td>CUSTOM</td><td>SLES_502.96</td><td>The Gift</td></tr>
+<tr><td>CUSTOM</td><td>SLES_502.97</td><td>The Gift</td></tr>
+<tr><td>CUSTOM</td><td>SLES_502.98</td><td>The Gift</td></tr>
+<tr><td>CUSTOM</td><td>SLES_502.99</td><td>The Gift</td></tr>
+<tr><td>CUSTOM</td><td>SLES_543.59</td><td>The Legend of Spyro - A New Beginning</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_213.72</td><td>The Legend of Spyro - A New Beginning</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_216.07</td><td>The Legend of Spyro - The Eternal Night</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_205.20</td><td>The Lord of the Rings - The Fellowship of the Ring</td></tr>
+<tr><td>CUSTOM</td><td>SLES_509.88</td><td>The Lord of the Rings - The Fellowship of the Ring (Der Herr der Ringe - Die Gefahrten)</td></tr>
+<tr><td>CUSTOM</td><td>SLES_512.52</td><td>The Lord of the Rings - The Two Towers</td></tr>
+<tr><td>CUSTOM</td><td>SLES_512.55</td><td>The Lord of the Rings - The Two Towers</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_675.46</td><td>The Lord of the Rings - The Two Towers</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_290.04</td><td>The Lord of the Rings - The Two Towers</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_205.78</td><td>The Lord of the Rings - The Two Towers</td></tr>
+<tr><td>CUSTOM</td><td>SLES_512.54</td><td>The Lord of the Rings - The Two Towers (Der Herr der Ringe - Die Zwei Turme)</td></tr>
+<tr><td>CUSTOM</td><td>SLES_512.56</td><td>The Lord of the Rings - The Two Towers (El Senor de Los Anillos - Las Dos Torres)</td></tr>
+<tr><td>CUSTOM</td><td>SLES_512.53</td><td>The Lord of the Rings - The Two Towers (Seigneur des Anneaux - Les Deux Tours)</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_290.03</td><td>The Lord of the Rings - The Two Towers [Collector's Box]</td></tr>
+<tr><td>CUSTOM</td><td>SLES_516.93</td><td>The Suffering</td></tr>
+<tr><td>CUSTOM</td><td>SLES_524.39</td><td>The Suffering</td></tr>
+<tr><td>CUSTOM</td><td>SLES_525.31</td><td>The Suffering</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_206.36</td><td>The Suffering</td></tr>
+<tr><td>CUSTOM</td><td>SLES_535.26</td><td>The Suffering - Ties That Bind</td></tr>
+<tr><td>CUSTOM</td><td>SLES_535.27</td><td>The Suffering - Ties that Bind</td></tr>
+<tr><td>CUSTOM</td><td>SLES_535.28</td><td>The Suffering - Ties That Bind</td></tr>
+<tr><td>CUSTOM</td><td>SLES_536.26</td><td>The Suffering - Ties That Bind</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_211.89</td><td>The Suffering - Ties That Bind</td></tr>
+<tr><td>CUSTOM</td><td>SLES_518.52</td><td>Thug MOTX [Demo]</td></tr>
+<tr><td>CUSTOM</td><td>SLES_542.53</td><td>Tiger Woods PGA Tour '07</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_200.92</td><td>Tiger Woods PGA Tour 2001</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_207.57</td><td>Tiger Woods PGA Tour 2004</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_210.02</td><td>Tiger Woods PGA Tour 2005</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_203.14</td><td>TimeSplitters 2</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_254.14</td><td>To Heart 2</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_208.31</td><td>Tokyo Xtreme Racer 3</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_206.13</td><td>Tom Clancy's Ghost Recon</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_206.52</td><td>Tom Clancy's Splinter Cell</td></tr>
+<tr><td>CUSTOM</td><td>SLES_512.27</td><td>Tomb Raider - Angel of Darkness</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_215.55</td><td>Tomb Raider - Anniversary</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_212.03</td><td>Tomb Raider - Legend</td></tr>
+<tr><td>CUSTOM</td><td>SLES_539.08</td><td>Tomb Raider - Legends</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_250.73</td><td>Tomb Raider - The Angel of Darkness</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_252.46</td><td>Tomb Raider - The Angel of Darkness</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_204.67</td><td>Tomb Raider - The Angel of Darkness</td></tr>
+<tr><td>CUSTOM</td><td>SLES_518.54</td><td>Tony Hawk Underground</td></tr>
+<tr><td>CUSTOM</td><td>SLES_535.34</td><td>Tony Hawk's American Wasteland</td></tr>
+<tr><td>CUSTOM</td><td>SLES_535.35</td><td>Tony Hawk's American Wasteland</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_212.08</td><td>Tony Hawk's American Wasteland</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_212.95</td><td>Tony Hawk's American Wasteland [Collector's Edition]</td></tr>
+<tr><td>CUSTOM</td><td>SLES_547.14</td><td>Tony Hawk's Downhill Jam</td></tr>
+<tr><td>CUSTOM</td><td>SLES_547.15</td><td>Tony Hawk's Downhill Jam</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_214.56</td><td>Tony Hawk's Downhill Jam</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_654.19</td><td>Tony Hawk's Pro Skater 2003</td></tr>
+<tr><td>CUSTOM</td><td>SLES_511.30</td><td>Tony Hawk's Pro Skater 4</td></tr>
+<tr><td>CUSTOM</td><td>SLES_511.31</td><td>Tony Hawk's Pro Skater 4</td></tr>
+<tr><td>CUSTOM</td><td>SLES_511.32</td><td>Tony Hawk's Pro Skater 4</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_205.04</td><td>Tony Hawk's Pro Skater 4</td></tr>
+<tr><td>CUSTOM</td><td>SLES_543.89</td><td>Tony Hawk's Project 8</td></tr>
+<tr><td>CUSTOM</td><td>SLES_543.90</td><td>Tony Hawk's Project 8</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_214.44</td><td>Tony Hawk's Project 8</td></tr>
+<tr><td>CUSTOM</td><td>SLES_549.63</td><td>Tony Hawk's Proving Ground</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_216.16</td><td>Tony Hawk's Proving Ground</td></tr>
+<tr><td>CUSTOM</td><td>SLES_518.48</td><td>Tony Hawk's Underground</td></tr>
+<tr><td>CUSTOM</td><td>SLES_518.51</td><td>Tony Hawk's Underground</td></tr>
+<tr><td>CUSTOM</td><td>SLES_518.53</td><td>Tony Hawk's Underground</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_207.31</td><td>Tony Hawk's Underground</td></tr>
+<tr><td>CUSTOM</td><td>SLES_526.21</td><td>Tony Hawk's Underground 2</td></tr>
+<tr><td>CUSTOM</td><td>SLES_526.22</td><td>Tony Hawk's Underground 2</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_209.65</td><td>Tony Hawk's Underground 2</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_975.02</td><td>Tourist Trophy</td></tr>
+<tr><td>CUSTOM</td><td>SCES_533.72</td><td>Tourist Trophy - The Real Riding Simulator</td></tr>
+<tr><td>CUSTOM</td><td>SCPS_151.05</td><td>Tourist Trophy - The Real Riding Simulator</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_251.75</td><td>Transformers</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_206.68</td><td>Transformers</td></tr>
+<tr><td>CUSTOM</td><td>SLES_523.88</td><td>Transformers Armada - Prelude to Energon [Special Edition]</td></tr>
+<tr><td>CUSTOM</td><td>SLES_533.09</td><td>Transformers Director's Cut</td></tr>
+<tr><td>CUSTOM</td><td>SLES_536.16</td><td>True Crime - New York City</td></tr>
+<tr><td>CUSTOM</td><td>SLES_536.17</td><td>True Crime - New York City</td></tr>
+<tr><td>CUSTOM</td><td>SLES_536.18</td><td>True Crime - New York City</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_211.06</td><td>True Crime - New York City</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_203.33</td><td>Turok - Evolution</td></tr>
+<tr><td>CUSTOM</td><td>SLES_504.79</td><td>Turok Evolution</td></tr>
+<tr><td>CUSTOM</td><td>SCUS_976.21</td><td>Twisted Metal - Head-On [Extra Twisted Edition]</td></tr>
+<tr><td>CUSTOM</td><td>SLES_512.20</td><td>Ty - The Tazmanian Tiger</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_205.71</td><td>Ty the Tasmanian Tiger</td></tr>
+<tr><td>CUSTOM</td><td>SLES_546.44</td><td>Valkyrie Profile 2 - Silmeria</td></tr>
+<tr><td>CUSTOM</td><td>SLES_546.45</td><td>Valkyrie Profile 2 - Silmeria</td></tr>
+<tr><td>CUSTOM</td><td>SLES_546.46</td><td>Valkyrie Profile 2 - Silmeria</td></tr>
+<tr><td>CUSTOM</td><td>SLES_546.47</td><td>Valkyrie Profile 2 - Silmeria</td></tr>
+<tr><td>CUSTOM</td><td>SLES_546.48</td><td>Valkyrie Profile 2 - Silmeria</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_664.19</td><td>Valkyrie Profile 2 - Silmeria</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_214.52</td><td>Valkyrie Profile 2 - Silmeria</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_653.11</td><td>Viorate no Atelier - The Alchemist of Gramnad</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_204.18</td><td>Wakeboarding Unleashed (Partial fix)</td></tr>
+<tr><td>CUSTOM</td><td>SLES_519.58</td><td>Whiplash</td></tr>
+<tr><td>CUSTOM</td><td>SLES_511.26</td><td>Whirl Tour</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_204.89</td><td>Whirl Tour</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_210.84</td><td>Winnie the Pooh's Rumbly Tumbly Adventure</td></tr>
+<tr><td>CUSTOM</td><td>SCES_500.05</td><td>Wipeout Fusion</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_204.62</td><td>Wipeout Fusion</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_654.84</td><td>WISP - Word Image Sound Play</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_202.59</td><td>Wizadry - Tale of the Forsaken</td></tr>
+<tr><td>CUSTOM</td><td>SLES_511.18</td><td>Wizardry - Tales of the Forsaken Land</td></tr>
+<tr><td>CUSTOM</td><td>SLES_506.13</td><td>Woody Woodpecker</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_645.19</td><td>Woody Woodpecker - Escape from Buzz Buzzard Park</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_203.41</td><td>Woody Woodpecker - Escape from Buzz Buzzard Park</td></tr>
+<tr><td>CUSTOM</td><td>SLES_531.30</td><td>World Championship Poker</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_210.28</td><td>World Championship Poker</td></tr>
+<tr><td>CUSTOM</td><td>SLES_545.47</td><td>World Championship Poker featuring Howard Lederer - All In</td></tr>
+<tr><td>CUSTOM</td><td>SLES_515.09</td><td>World of Outlaws - Sprint Cars</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_202.83</td><td>World of Outlaws - Sprint Cars 2002</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_652.84</td><td>World Rallt Championship II Extreme</td></tr>
+<tr><td>CUSTOM</td><td>SCES_516.84</td><td>World Rally Championship 3</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_655.83</td><td>World Rally Championship 3</td></tr>
+<tr><td>CUSTOM</td><td>SCES_523.89</td><td>World Rally Championship 4</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_659.75</td><td>World Rally Championship 4</td></tr>
+<tr><td>CUSTOM</td><td>SCES_509.34</td><td>World Rally Championship II Extreme</td></tr>
+<tr><td>CUSTOM</td><td>SLAJ_251.15</td><td>World Soccer Winning Eleven 2011</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_254.77</td><td>World Soccer Winning Eleven 2011</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_552.76</td><td>World Soccer Winning Eleven 2011</td></tr>
+<tr><td>CUSTOM</td><td>SLES_518.43</td><td>Worms 3D</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_208.94</td><td>Worms 3D</td></tr>
+<tr><td>CUSTOM</td><td>SCES_536.80</td><td>WRC - Rally Evolved</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_250.99</td><td>WRC - World Rally Championship</td></tr>
+<tr><td>CUSTOM</td><td>SCES_532.47</td><td>WRC - World Rally Championship - Rally Evolved</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_666.27</td><td>WWE SmackDown! vs. RAW 2007</td></tr>
+<tr><td>CUSTOM</td><td>SLES_504.77</td><td>WWF Smackdown! - Just Bring It</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_203.16</td><td>WWF SmackDown! - Just Bring It!</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_250.87</td><td>WWF SmackDown! Just Bring It</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_207.15</td><td>WWII Paratroopers</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_213.48</td><td>Yakuza</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_200.94</td><td>X Squad</td></tr>
+<tr><td>CUSTOM</td><td>SLES_500.31</td><td>X-Squad</td></tr>
+<tr><td>CUSTOM</td><td>SLUS_204.69</td><td>Xenosaga - Episode I - Der Wille zur Macht</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_251.13</td><td>Zettai Zetsumei Toshi</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_258.51</td><td>Zettai Zetsumei Toshi 2 - Itetsuita Kioku Tachi [Irem Collection]</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_256.06</td><td>Zettai Zetsumei Toshi 2 - Itetsuita Kioutachi</td></tr>
+<tr><td>CUSTOM</td><td>SLPS_732.04</td><td>Zettai Zetsumi Toshi [PlayStation 2 The Best]</td></tr>
+<tr><td>CUSTOM</td><td>SLPM_651.90</td><td>zzz_unknown_japanese_title</td></tr>
+<tr><td>CUSTOM</td><td>SCKA_200.88</td><td>zzz_unknown_korean_title</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_252.60</td><td>zzz_unknown_korean_title</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_253.14</td><td>zzz_unknown_korean_title</td></tr>
+<tr><td>CUSTOM</td><td>SLKA_254.02</td><td>zzz_unknown_korean_title</td></tr>
+<tr><td>NET</td><td>SLUS_204.61</td><td>BloodRayne</td></tr>
+<tr><td>NET</td><td>SLUS_208.62</td><td>Bloodrayne 2</td></tr>
+<tr><td>NET</td><td>SLUS_212.69</td><td>Bully</td></tr>
+<tr><td>NET</td><td>SCPS_150.04</td><td>Dark Cloud</td></tr>
+<tr><td>NET</td><td>SLUS_200.71</td><td>Dead or Alive 2</td></tr>
+<tr><td>NET</td><td>SLPS_250.26</td><td>Dead or Alive 2 - Hardcore</td></tr>
+<tr><td>NET</td><td>SLES_529.55</td><td>Deadly Strike</td></tr>
+<tr><td>NET</td><td>SLES_526.31</td><td>Digimon Rumble Arena 2</td></tr>
+<tr><td>NET</td><td>SLPM_250.26</td><td>DOA2-Hardcore</td></tr>
+<tr><td>NET</td><td>SLUS_207.66</td><td>Fatal Frame 2 - Crimson Butterfly</td></tr>
+<tr><td>NET</td><td>SLES_544.90</td><td>God Hand</td></tr>
+<tr><td>NET</td><td>SLUS_207.12</td><td>Gradius V</td></tr>
+<tr><td>NET</td><td>SLES_529.27</td><td>Grand Theft Auto - San Andreas</td></tr>
+<tr><td>NET</td><td>SLUS_209.46</td><td>Grand Theft Auto - San Andreas</td></tr>
+<tr><td>NET</td><td>SLUS_205.52</td><td>Grand Theft Auto - Vice City</td></tr>
+<tr><td>NET</td><td>SLES_503.30</td><td>Grand Theft Auto III</td></tr>
+<tr><td>NET</td><td>SLUS_200.62</td><td>Grand Theft Auto III</td></tr>
+<tr><td>NET</td><td>SLUS_216.04</td><td>GrimGrimoire</td></tr>
+<tr><td>NET</td><td>SLPS_253.60</td><td>Katamari Damacy</td></tr>
+<tr><td>NET</td><td>SLUS_202.75</td><td>Kessen 2</td></tr>
+<tr><td>NET</td><td>SLUS_208.47</td><td>La Pucelle - Tactics</td></tr>
+<tr><td>NET</td><td>SLPM_551.14</td><td>Mana-Khemia 2 - Ochita Gakuen to Renkinjutsushi-tachi</td></tr>
+<tr><td>NET</td><td>SLUS_208.27</td><td>Manhunt</td></tr>
+<tr><td>NET</td><td>SLES_503.25</td><td>Max Payne</td></tr>
+<tr><td>NET</td><td>SLUS_219.44</td><td>Nickelodeon Dora's Big Birthday Adventure</td></tr>
+<tr><td>NET</td><td>SLUS_215.77</td><td>Odin Sphere</td></tr>
+<tr><td>NET</td><td>SCUS_971.42</td><td>Primal - Civilization Is Only Skin Deep</td></tr>
+<tr><td>NET</td><td>SLUS_211.20</td><td>Psychonauts</td></tr>
+<tr><td>NET</td><td>SLUS_202.72</td><td>Rayman Arena</td></tr>
+<tr><td>NET</td><td>SLUS_204.42</td><td>Red Faction 2</td></tr>
+<tr><td>NET</td><td>SLUS_204.71</td><td>Rygar - The Legendary Adventure</td></tr>
+<tr><td>NET</td><td>SLPM_657.78</td><td>Sega Ages 2500 Series Vol.18 - Dragon Force</td></tr>
+<tr><td>NET</td><td>SLPM_627.75</td><td>Sega Ages 2500 Vol.32 - Phantasy Star Complete Collection</td></tr>
+<tr><td>NET</td><td>SLPM_622.47</td><td>Shin Contra</td></tr>
+<tr><td>NET</td><td>SLUS_209.74</td><td>Shin Megami Tensei - Digital Devil Saga</td></tr>
+<tr><td>NET</td><td>SLUS_209.11</td><td>Shin Megami Tensei - Nocturne</td></tr>
+<tr><td>NET</td><td>SLUS_216.21</td><td>Shin Megami Tensei - Persona 3 FES</td></tr>
+<tr><td>NET</td><td>SLUS_217.82</td><td>Shin Megami Tensei - Persona 4</td></tr>
+<tr><td>NET</td><td>SCUS_973.55</td><td>Siren</td></tr>
+<tr><td>NET</td><td>SLES_820.05</td><td>Summoner</td></tr>
+<tr><td>NET</td><td>SCUS_972.64</td><td>Syphon Filter - The Omega Strain</td></tr>
+<tr><td>NET</td><td>SLPS_251.13</td><td>Zettai Zetsumei Toshi</td></tr>
+<tr><td>NET</td><td>SLPS_732.04</td><td>Zettai Zetsumei Toshi [PlayStation 2 The Best]</td></tr>
+<tr><td>NET</td><td>SLPS_256.06</td><td>Zettai Zetsumei Toshi 2 - Itetsuita Kioutachi</td></tr>
+<tr><td>GX</td><td>SCES_533.58</td><td>24 - The Game</td></tr>
+<tr><td>GX</td><td>SLUS_212.68</td><td>24 - The Game</td></tr>
+<tr><td>GX</td><td>SCES_504.10</td><td>Ace Combat - Distant Thunder</td></tr>
+<tr><td>GX</td><td>SCES_524.24</td><td>Ace Combat - Squadron Leader</td></tr>
+<tr><td>GX</td><td>SCES_540.41</td><td>Ace Combat - The Belkan War</td></tr>
+<tr><td>GX</td><td>SLPS_250.52</td><td>Ace Combat 4 - Shattered Skies</td></tr>
+<tr><td>GX</td><td>SLUS_201.52</td><td>Ace Combat 4 - Shattered Skies</td></tr>
+<tr><td>GX</td><td>SCKA_200.42</td><td>Ace Combat 5 - The Unsung War</td></tr>
+<tr><td>GX</td><td>SLPS_254.18</td><td>Ace Combat 5 - The Unsung War</td></tr>
+<tr><td>GX</td><td>SLUS_208.51</td><td>Ace Combat 5 - The Unsung War</td></tr>
+<tr><td>GX</td><td>SCKA_200.70</td><td>Ace Combat Zero - The Belkan War</td></tr>
+<tr><td>GX</td><td>SLPS_256.29</td><td>Ace Combat Zero - The Belkan War</td></tr>
+<tr><td>GX</td><td>SLUS_213.46</td><td>Ace Combat Zero - The Belkan War</td></tr>
+<tr><td>GX</td><td>SLES_539.56</td><td>Aeon Flux</td></tr>
+<tr><td>GX</td><td>SLUS_212.05</td><td>Aeon Flux</td></tr>
+<tr><td>GX</td><td>SLES_509.19</td><td>Akira Psycho Ball</td></tr>
+<tr><td>GX</td><td>SLPM_661.75</td><td>Akumajo Dracula - Yami no Juin</td></tr>
+<tr><td>GX</td><td>SLUS_205.69</td><td>All-Star Baseball 2004</td></tr>
+<tr><td>GX</td><td>SLES_516.02</td><td>All-Stars Baseball 2004</td></tr>
+<tr><td>GX</td><td>SCES_517.06</td><td>Amplitude</td></tr>
+<tr><td>GX</td><td>SCUS_972.58</td><td>Amplitude</td></tr>
+<tr><td>GX</td><td>SCES_536.42</td><td>Ape Escape 3</td></tr>
+<tr><td>GX</td><td>SCUS_975.01</td><td>Ape Escape 3</td></tr>
+<tr><td>GX</td><td>SLUS_214.45</td><td>Ar Tonelico</td></tr>
+<tr><td>GX</td><td>SLES_545.86</td><td>Ar tonelico - Melody of Elemia</td></tr>
+<tr><td>GX</td><td>SLPS_256.04</td><td>Ar tonelico - Melody of Elemia</td></tr>
+<tr><td>GX</td><td>SLUS_217.88</td><td>Ar Tonelico 2 - Melody of Metafalica</td></tr>
+<tr><td>GX</td><td>SLUS_211.65</td><td>Arc the Lad - End of Darkness</td></tr>
+<tr><td>GX</td><td>SCPS_150.58</td><td>Arc the Lad - Generation</td></tr>
+<tr><td>GX</td><td>SCKA_200.06</td><td>Argus no Senshi</td></tr>
+<tr><td>GX</td><td>SLPS_251.78</td><td>Argus no Senshi</td></tr>
+<tr><td>GX</td><td>SLUS_206.44</td><td>Armored Core - Silent Line</td></tr>
+<tr><td>GX</td><td>SLES_537.64</td><td>Atelier Iris - Eternal Mana</td></tr>
+<tr><td>GX</td><td>SLUS_211.13</td><td>Atelier Iris - Eternal Mana</td></tr>
+<tr><td>GX</td><td>SLPM_664.36</td><td>Atelier Iris - Grand Fantasm</td></tr>
+<tr><td>GX</td><td>SLPM_659.85</td><td>Atelier Iris 2 - Eternal Mana</td></tr>
+<tr><td>GX</td><td>SLES_543.85</td><td>Atelier Iris 2 - The Azoth of Destiny</td></tr>
+<tr><td>GX</td><td>SLUS_213.27</td><td>Atelier Iris 2 - The Azoth of Destiny</td></tr>
+<tr><td>GX</td><td>SLES_548.22</td><td>Atelier Iris 3 - Grand Phantasm</td></tr>
+<tr><td>GX</td><td>SLUS_215.64</td><td>Atelier Iris 3 - Grand Phantasm</td></tr>
+<tr><td>GX</td><td>SLPM_651.31</td><td>Atelier Judie - Gramnad no Renkinjutsushi</td></tr>
+<tr><td>GX</td><td>SLPS_250.45</td><td>Atelier Lilie</td></tr>
+<tr><td>GX</td><td>SLPM_655.94</td><td>Atelier no Iris - Eternal Mana</td></tr>
+<tr><td>GX</td><td>SLES_508.50</td><td>ATV Off-Road 2</td></tr>
+<tr><td>GX</td><td>SLUS_205.70</td><td>ATV Quad Power Racing 2</td></tr>
+<tr><td>GX</td><td>SLES_506.72</td><td>Baldur's Gate - Dark Alliance</td></tr>
+<tr><td>GX</td><td>SLUS_200.35</td><td>Baldur's Gate - Dark Alliance</td></tr>
+<tr><td>GX</td><td>SLES_521.87</td><td>Baldur's Gate - Dark Alliance 2</td></tr>
+<tr><td>GX</td><td>SLUS_206.75</td><td>Baldur's Gate - Dark Alliance 2</td></tr>
+<tr><td>GX</td><td>SLES_555.78</td><td>Band Hero</td></tr>
+<tr><td>GX</td><td>SLUS_218.98</td><td>Band Hero</td></tr>
+<tr><td>GX</td><td>SLES_509.72</td><td>Barbarian</td></tr>
+<tr><td>GX</td><td>SLKA_150.01</td><td>Barbarian</td></tr>
+<tr><td>GX</td><td>SLUS_201.36</td><td>Barbarian</td></tr>
+<tr><td>GX</td><td>SLES_553.71</td><td>Barbie Horse Adventures - Riding Camp</td></tr>
+<tr><td>GX</td><td>SLUS_210.26</td><td>Battlefield 2 - Mordern Combat</td></tr>
+<tr><td>GX</td><td>SLES_513.55</td><td>Big Mutha Truckers</td></tr>
+<tr><td>GX</td><td>SLUS_202.91</td><td>Big Mutha Truckers</td></tr>
+<tr><td>GX</td><td>SLES_529.80</td><td>Big Mutha Truckers 2</td></tr>
+<tr><td>GX</td><td>SLUS_210.86</td><td>Big Mutha Truckers 2</td></tr>
+<tr><td>GX</td><td>SLES_502.03</td><td>Bloody Roar 3</td></tr>
+<tr><td>GX</td><td>SLPM_620.55</td><td>Bloody Roar 3</td></tr>
+<tr><td>GX</td><td>SLUS_202.12</td><td>Bloody Roar 3</td></tr>
+<tr><td>GX</td><td>SLUS_212.69</td><td>Bully</td></tr>
+<tr><td>GX</td><td>SLES_510.44</td><td>Burnout 2 - Point of Impact</td></tr>
+<tr><td>GX</td><td>SLUS_204.97</td><td>Burnout 2 - Point of Impact</td></tr>
+<tr><td>GX</td><td>SLES_525.84</td><td>Burnout 3 - Takedown</td></tr>
+<tr><td>GX</td><td>SLES_525.85</td><td>Burnout 3 - Takedown</td></tr>
+<tr><td>GX</td><td>SLUS_210.50</td><td>Burnout 3 - Takedown</td></tr>
+<tr><td>GX</td><td>SLAJ_250.94</td><td>Burnout Dominator</td></tr>
+<tr><td>GX</td><td>SLPM_667.39</td><td>Burnout Dominator</td></tr>
+<tr><td>GX</td><td>SLPM_620.98</td><td>Busin - Wizardry Alternative</td></tr>
+<tr><td>GX</td><td>SCUS_976.02</td><td>Buzz! Jr. Jungle Party [Game Only]</td></tr>
+<tr><td>GX</td><td>SCES_542.19</td><td>Buzz! Junior Jungle Party</td></tr>
+<tr><td>GX</td><td>SCES_542.20</td><td>Buzz! Junior Jungle Party</td></tr>
+<tr><td>GX</td><td>SCES_545.24</td><td>Buzz! Junior Jungle Party</td></tr>
+<tr><td>GX</td><td>SLUS_201.41</td><td>CART Fury - Championship Racing</td></tr>
+<tr><td>GX</td><td>SLES_502.67</td><td>CART Fury Championship Racing</td></tr>
+<tr><td>GX</td><td>SLUS_209.62</td><td>Castle of Shikigami 2</td></tr>
+<tr><td>GX</td><td>SLES_535.18</td><td>Castle Shikigami II</td></tr>
+<tr><td>GX</td><td>SLUS_211.68</td><td>Castlevania - Curse of Dakness</td></tr>
+<tr><td>GX</td><td>SLES_537.55</td><td>Castlevania - Curse Of Darkness</td></tr>
+<tr><td>GX</td><td>SLKA_253.28</td><td>Castlevania - Curse of Darkness</td></tr>
+<tr><td>GX</td><td>SLES_530.39</td><td>Champions - Return to Arms</td></tr>
+<tr><td>GX</td><td>SLUS_209.73</td><td>Champions - Return to Arms</td></tr>
+<tr><td>GX</td><td>SLUS_205.65</td><td>Champions of Norrath</td></tr>
+<tr><td>GX</td><td>SLES_523.25</td><td>Champions of Norrath - Realms of EverQuest</td></tr>
+<tr><td>GX</td><td>SLES_527.68</td><td>Commandos - Strike Force</td></tr>
+<tr><td>GX</td><td>SLUS_211.03</td><td>Commandos Strike Force</td></tr>
+<tr><td>GX</td><td>SLES_525.73</td><td>Conflict - Global Storm</td></tr>
+<tr><td>GX</td><td>SLUS_211.72</td><td>Conflict - Global Terror</td></tr>
+<tr><td>GX</td><td>SLPM_658.01</td><td>Crash Bandicoot 5</td></tr>
+<tr><td>GX</td><td>SLUS_209.09</td><td>Crash Bandicoot Twinsanity</td></tr>
+<tr><td>GX</td><td>SLES_525.68</td><td>Crash Twinsanity</td></tr>
+<tr><td>GX</td><td>SLPM_621.02</td><td>Crazy Taxi</td></tr>
+<tr><td>GX</td><td>SLPM_624.27</td><td>Dance Dance Revolution - Party Collection</td></tr>
+<tr><td>GX</td><td>SLPM_653.58</td><td>Dance Dance Revolution Extreme</td></tr>
+<tr><td>GX</td><td>SLUS_209.16</td><td>Dance Dance Revolution Extreme</td></tr>
+<tr><td>GX</td><td>SLUS_204.37</td><td>Dance Dance Revolution MAX</td></tr>
+<tr><td>GX</td><td>SLUS_207.11</td><td>Dance Dance Revolution MAX 2</td></tr>
+<tr><td>GX</td><td>SLES_530.09</td><td>Dance Factory</td></tr>
+<tr><td>GX</td><td>SLUS_212.96</td><td>Dance Factory</td></tr>
+<tr><td>GX</td><td>SLES_517.57</td><td>Dancing Stage Fever</td></tr>
+<tr><td>GX</td><td>SLES_515.10</td><td>Dancing Stage Fever MegaMix</td></tr>
+<tr><td>GX</td><td>SLES_525.98</td><td>Dancing Stage Fusion</td></tr>
+<tr><td>GX</td><td>SCPS_150.04</td><td>Dark Cloud</td></tr>
+<tr><td>GX</td><td>SLUS_215.74</td><td>Dawn of Mana</td></tr>
+<tr><td>GX</td><td>SLPM_621.54</td><td>DDR Max - Dance Dance Revolution - 6th Mix</td></tr>
+<tr><td>GX</td><td>SLPM_652.77</td><td>DDR Max 2 - Dance Dance Revolution - 7th Mix</td></tr>
+<tr><td>GX</td><td>SLPS_250.02</td><td>Dead or Alive 2</td></tr>
+<tr><td>GX</td><td>SLUS_200.71</td><td>Dead or Alive 2</td></tr>
+<tr><td>GX</td><td>SCES_500.03</td><td>Dead or Alive 2 - Hardcore</td></tr>
+<tr><td>GX</td><td>SLPS_250.26</td><td>Dead or Alive 2 - Hardcore</td></tr>
+<tr><td>GX</td><td>SLES_503.58</td><td>Devil May Cry</td></tr>
+<tr><td>GX</td><td>SLPM_650.38</td><td>Devil May Cry</td></tr>
+<tr><td>GX</td><td>SLPM_675.02</td><td>Devil May Cry</td></tr>
+<tr><td>GX</td><td>SLUS_202.16</td><td>Devil May Cry</td></tr>
+<tr><td>GX</td><td>SLKA_252.65</td><td>Devil May Cry 3</td></tr>
+<tr><td>GX</td><td>SLUS_209.64</td><td>Devil May Cry 3</td></tr>
+<tr><td>GX</td><td>SLES_530.38</td><td>Devil May Cry 3 - Dante's Awakening</td></tr>
+<tr><td>GX</td><td>SLES_541.86</td><td>Devil May Cry 3 - Dante's Awakening [Special Edition]</td></tr>
+<tr><td>GX</td><td>SLUS_213.61</td><td>Devil May Cry 3 - Dante's Awakening [Special Edition]</td></tr>
+<tr><td>GX</td><td>SLPM_661.60</td><td>Devil May Cry 3 [Special Edition]</td></tr>
+<tr><td>GX</td><td>SLES_517.20</td><td>Disney's Extreme Skate Adventure</td></tr>
+<tr><td>GX</td><td>SLES_517.21</td><td>Disney's Extreme Skate Adventure</td></tr>
+<tr><td>GX</td><td>SLUS_206.07</td><td>Disney's Extreme Skate Adventure</td></tr>
+<tr><td>GX</td><td>SLUS_206.28</td><td>Disney's Finding Nemo</td></tr>
+<tr><td>GX</td><td>SLUS_204.78</td><td>Disney's PK - Out of the Shadows</td></tr>
+<tr><td>GX</td><td>SCES_511.76</td><td>Disney's Treasure Planet</td></tr>
+<tr><td>GX</td><td>SCES_511.77</td><td>Disney's Treasure Planet</td></tr>
+<tr><td>GX</td><td>SCUS_971.46</td><td>Disney's Treasure Planet</td></tr>
+<tr><td>GX</td><td>SLES_517.55</td><td>Disney-Pixar's Finding Nemo</td></tr>
+<tr><td>GX</td><td>SLES_518.71</td><td>Disney-Pixar's Finding Nemo</td></tr>
+<tr><td>GX</td><td>SLES_519.07</td><td>Disney/Pixar Alla Ricerca di Nemo</td></tr>
+<tr><td>GX</td><td>SLES_518.70</td><td>Disney/Pixar Finding Nemo</td></tr>
+<tr><td>GX</td><td>SLES_518.72</td><td>Disney/Pixar Finding Nemo</td></tr>
+<tr><td>GX</td><td>SLES_519.60</td><td>Disney/Pixar À Procura de Nemo</td></tr>
+<tr><td>GX</td><td>SLES_507.73</td><td>Donald Duck - Phantomias Platyrhynchos Kineticus</td></tr>
+<tr><td>GX</td><td>SLUS_212.58</td><td>dot Hack - G.U. Vol.1 - Rebirth</td></tr>
+<tr><td>GX</td><td>SLUS_214.88</td><td>dot Hack - G.U. Vol.2 - Reminisce</td></tr>
+<tr><td>GX</td><td>SLPS_256.56</td><td>dot Hack - G.U. Vol.3 - Aruku Youna Hayasa de</td></tr>
+<tr><td>GX</td><td>SLUS_214.89</td><td>dot Hack - G.U. Vol.3 - Redemption</td></tr>
+<tr><td>GX</td><td>SLES_522.37</td><td>dot Hack - Part 1 - Infection</td></tr>
+<tr><td>GX</td><td>SLUS_202.67</td><td>dot Hack - Part 1 - Infection</td></tr>
+<tr><td>GX</td><td>SLES_524.67</td><td>dot Hack - Part 2 - Mutation</td></tr>
+<tr><td>GX</td><td>SLUS_205.62</td><td>dot Hack - Part 2 - Mutation</td></tr>
+<tr><td>GX</td><td>SLES_524.69</td><td>dot Hack - Part 3 - Outbreak</td></tr>
+<tr><td>GX</td><td>SLUS_205.63</td><td>dot Hack - Part 3 - Outbreak</td></tr>
+<tr><td>GX</td><td>SLES_524.68</td><td>dot Hack - Part 4 - Quarantine</td></tr>
+<tr><td>GX</td><td>SLUS_205.64</td><td>dot Hack - Part 4 - Quarantine</td></tr>
+<tr><td>GX</td><td>SLPS_251.58</td><td>dot Hack - Vol.3 - Erosion Pollution</td></tr>
+<tr><td>GX</td><td>SLPS_252.02</td><td>dot Hack - Vol.4 - Zettai Houi</td></tr>
+<tr><td>GX</td><td>SLPS_256.51</td><td>dot Hack G.U. Vol.1 - Saitan</td></tr>
+<tr><td>GX</td><td>SLPS_256.55</td><td>dot Hack G.U. Vol.2 - Kimi Omou Koe</td></tr>
+<tr><td>GX</td><td>SLKA_250.80</td><td>Dot Hack Vol. 1 - Infection</td></tr>
+<tr><td>GX</td><td>SLKA_251.38</td><td>Dot Hack Vol. 2 - Mutation</td></tr>
+<tr><td>GX</td><td>SLKA_251.45</td><td>Dot Hack Vol. 3 - Outbreak</td></tr>
+<tr><td>GX</td><td>SLPS_251.21</td><td>dot Hack Vol.1</td></tr>
+<tr><td>GX</td><td>SLPS_251.43</td><td>dot Hack Vol.2 - Mutation</td></tr>
+<tr><td>GX</td><td>SLPM_663.63</td><td>Dragon Quest - Shounen Yangus no Fushigi na Daibouken</td></tr>
+<tr><td>GX</td><td>SLKA_251.74</td><td>DragonBall Z - Budokai</td></tr>
+<tr><td>GX</td><td>SLES_512.13</td><td>DragonBall Z - Budokai</td></tr>
+<tr><td>GX</td><td>SCES_500.06</td><td>Drakan - The Ancients' Gates</td></tr>
+<tr><td>GX</td><td>SCUS_971.28</td><td>Drakan - The Ancients' Gates</td></tr>
+<tr><td>GX</td><td>SLES_539.86</td><td>DreamWorks La Gang del Bosco</td></tr>
+<tr><td>GX</td><td>SLUS_201.13</td><td>Driving Emotion Type S</td></tr>
+<tr><td>GX</td><td>SLES_500.73</td><td>Driving Emotion Type-S</td></tr>
+<tr><td>GX</td><td>SCES_504.59</td><td>Dropship - United Peace Force</td></tr>
+<tr><td>GX</td><td>SLUS_204.63</td><td>Dropship - United Peace Force</td></tr>
+<tr><td>GX</td><td>SLES_503.56</td><td>ESPN International Winter Sports</td></tr>
+<tr><td>GX</td><td>SLPM_622.14</td><td>Ever Blue 2</td></tr>
+<tr><td>GX</td><td>SLES_513.81</td><td>Everblue 2</td></tr>
+<tr><td>GX</td><td>SLUS_205.98</td><td>Everblue 2</td></tr>
+<tr><td>GX</td><td>SCES_545.35</td><td>Everybody's Tennis</td></tr>
+<tr><td>GX</td><td>SLES_535.39</td><td>Fahrenheit</td></tr>
+<tr><td>GX</td><td>SLES_535.40</td><td>Fahrenheit</td></tr>
+<tr><td>GX</td><td>SLPS_200.20</td><td>FIFA 2000 World Championship</td></tr>
+<tr><td>GX</td><td>SLES_500.11</td><td>FIFA 2001</td></tr>
+<tr><td>GX</td><td>SLES_500.12</td><td>FIFA 2001</td></tr>
+<tr><td>GX</td><td>SLES_500.13</td><td>FIFA 2001</td></tr>
+<tr><td>GX</td><td>SLES_500.14</td><td>FIFA 2001</td></tr>
+<tr><td>GX</td><td>SLES_500.15</td><td>FIFA 2001</td></tr>
+<tr><td>GX</td><td>SLES_500.16</td><td>FIFA 2001</td></tr>
+<tr><td>GX</td><td>SLUS_205.24</td><td>Fighter Maker 2</td></tr>
+<tr><td>GX</td><td>SCES_504.90</td><td>Final Fantasy X</td></tr>
+<tr><td>GX</td><td>SCES_504.91</td><td>Final Fantasy X</td></tr>
+<tr><td>GX</td><td>SCES_504.92</td><td>Final Fantasy X</td></tr>
+<tr><td>GX</td><td>SCES_504.93</td><td>Final Fantasy X</td></tr>
+<tr><td>GX</td><td>SCES_504.94</td><td>Final Fantasy X</td></tr>
+<tr><td>GX</td><td>SLPS_250.50</td><td>Final Fantasy X</td></tr>
+<tr><td>GX</td><td>SLUS_203.12</td><td>Final Fantasy X</td></tr>
+<tr><td>GX</td><td>SLPM_675.13</td><td>Final Fantasy X International</td></tr>
+<tr><td>GX</td><td>SLPS_250.88</td><td>Final Fantasy X International</td></tr>
+<tr><td>GX</td><td>SLES_518.15</td><td>Final Fantasy X-2</td></tr>
+<tr><td>GX</td><td>SLES_518.16</td><td>Final Fantasy X-2</td></tr>
+<tr><td>GX</td><td>SLES_518.17</td><td>Final Fantasy X-2</td></tr>
+<tr><td>GX</td><td>SLES_518.18</td><td>Final Fantasy X-2</td></tr>
+<tr><td>GX</td><td>SLES_518.19</td><td>Final Fantasy X-2</td></tr>
+<tr><td>GX</td><td>SLKA_251.44</td><td>Final Fantasy X-2</td></tr>
+<tr><td>GX</td><td>SLPS_252.50</td><td>Final Fantasy X-2</td></tr>
+<tr><td>GX</td><td>SLUS_206.72</td><td>Final Fantasy X-2</td></tr>
+<tr><td>GX</td><td>SLPM_654.78</td><td>Final Fantasy X-2 International</td></tr>
+<tr><td>GX</td><td>SLES_527.53</td><td>FlatOut</td></tr>
+<tr><td>GX</td><td>SLUS_209.01</td><td>FlatOut</td></tr>
+<tr><td>GX</td><td>SLES_540.02</td><td>FlatOut 2</td></tr>
+<tr><td>GX</td><td>SLES_540.03</td><td>FlatOut 2</td></tr>
+<tr><td>GX</td><td>SLKA_254.01</td><td>FlatOut 2</td></tr>
+<tr><td>GX</td><td>SLUS_212.51</td><td>FlatOut 2</td></tr>
+<tr><td>GX</td><td>SCES_538.51</td><td>Forbidden Siren 2</td></tr>
+<tr><td>GX</td><td>SCKA_200.69</td><td>Forbidden Siren 2</td></tr>
+<tr><td>GX</td><td>SLES_532.96</td><td>Ford Mustang - The Legend Lives</td></tr>
+<tr><td>GX</td><td>SLUS_211.62</td><td>Ford Mustang - The Legend Lives</td></tr>
+<tr><td>GX</td><td>SLES_536.98</td><td>Ford vs. Chevy</td></tr>
+<tr><td>GX</td><td>SLUS_212.76</td><td>Ford vs. Chevy</td></tr>
+<tr><td>GX</td><td>SLES_526.69</td><td>Forgotten Realms - Demon Stone</td></tr>
+<tr><td>GX</td><td>SLKA_252.52</td><td>Forgotten Realms - Demon Stone</td></tr>
+<tr><td>GX</td><td>SLUS_208.04</td><td>Forgotten Realms - Demon Stone</td></tr>
+<tr><td>GX</td><td>SLES_545.59</td><td>Free Running</td></tr>
+<tr><td>GX</td><td>SLES_514.67</td><td>Freedom Fighters</td></tr>
+<tr><td>GX</td><td>SLES_514.68</td><td>Freedom Fighters</td></tr>
+<tr><td>GX</td><td>SLES_514.69</td><td>Freedom Fighters</td></tr>
+<tr><td>GX</td><td>SLES_514.70</td><td>Freedom Fighters</td></tr>
+<tr><td>GX</td><td>SLES_514.71</td><td>Freedom Fighters</td></tr>
+<tr><td>GX</td><td>SLPM_655.48</td><td>Freedom Fighters</td></tr>
+<tr><td>GX</td><td>SLUS_206.58</td><td>Freedom Fighters - The Battle for Liberty Island</td></tr>
+<tr><td>GX</td><td>SLUS_213.93</td><td>Gallop Racer 2006</td></tr>
+<tr><td>GX</td><td>SCKA_200.27</td><td>Ghost in the Shell - Stand Alone Complex</td></tr>
+<tr><td>GX</td><td>SCPS_150.64</td><td>Ghost in the Shell - Stand Alone Complex</td></tr>
+<tr><td>GX</td><td>SLUS_210.06</td><td>Ghost in the Shell - Stane Alone Complex</td></tr>
+<tr><td>GX</td><td>SLUS_209.93</td><td>Ghosthunter</td></tr>
+<tr><td>GX</td><td>SCES_514.63</td><td>Ghosthunter</td></tr>
+<tr><td>GX</td><td>SCES_521.56</td><td>Ghosthunter - Hunter on the spectres</td></tr>
+<tr><td>GX</td><td>SLPM_657.01</td><td>Ghosthunter</td></tr>
+<tr><td>GX</td><td>SCES_531.33</td><td>God of War</td></tr>
+<tr><td>GX</td><td>SCKA_300.02</td><td>God of War</td></tr>
+<tr><td>GX</td><td>SCUS_973.99</td><td>God of War</td></tr>
+<tr><td>GX</td><td>SCES_542.06</td><td>God of War II</td></tr>
+<tr><td>GX</td><td>SCKA_300.06</td><td>God of War II</td></tr>
+<tr><td>GX</td><td>SCUS_974.81</td><td>God of War II</td></tr>
+<tr><td>GX</td><td>SCES_517.19</td><td>Gran Turismo 4</td></tr>
+<tr><td>GX</td><td>SCKA_300.01</td><td>Gran Turismo 4</td></tr>
+<tr><td>GX</td><td>SCPS_170.01</td><td>Gran Turismo 4</td></tr>
+<tr><td>GX</td><td>SCUS_973.28</td><td>Gran Turismo 4</td></tr>
+<tr><td>GX</td><td>SLES_541.35</td><td>Grand Theft Auto - Liberty City Stories</td></tr>
+<tr><td>GX</td><td>SLES_541.36</td><td>Grand Theft Auto - Liberty City Stories</td></tr>
+<tr><td>GX</td><td>SLUS_214.23</td><td>Grand Theft Auto - Liberty City Stories</td></tr>
+<tr><td>GX</td><td>SLES_525.41</td><td>Grand Theft Auto - San Andreas</td></tr>
+<tr><td>GX</td><td>SLES_529.27</td><td>Grand Theft Auto - San Andreas</td></tr>
+<tr><td>GX</td><td>SLPM_659.84</td><td>Grand Theft Auto - San Andreas</td></tr>
+<tr><td>GX</td><td>SLUS_209.46</td><td>Grand Theft Auto - San Andreas</td></tr>
+<tr><td>GX</td><td>SLUS_205.52</td><td>Grand Theft Auto - Vice City</td></tr>
+<tr><td>GX</td><td>SLES_546.22</td><td>Grand Theft Auto - Vice City Stories</td></tr>
+<tr><td>GX</td><td>SLES_546.23</td><td>Grand Theft Auto - Vice City Stories</td></tr>
+<tr><td>GX</td><td>SLUS_215.90</td><td>Grand Theft Auto - Vice City Stories</td></tr>
+<tr><td>GX</td><td>SLES_503.30</td><td>Grand Theft Auto III</td></tr>
+<tr><td>GX</td><td>SLES_507.93</td><td>Grand Theft Auto III</td></tr>
+<tr><td>GX</td><td>SLUS_200.62</td><td>Grand Theft Auto III</td></tr>
+<tr><td>GX</td><td>SLPM_621.08</td><td>Growlanser 3 - The Duel Darkness</td></tr>
+<tr><td>GX</td><td>SLUS_207.58</td><td>Growlanser Generations [Disc1of2]</td></tr>
+<tr><td>GX</td><td>SLUS_207.59</td><td>Growlanser Generations [Disc2of2]</td></tr>
+<tr><td>GX</td><td>SLKA_150.07</td><td>Growlanser II - The Sense of Justice</td></tr>
+<tr><td>GX</td><td>SLPS_201.06</td><td>Growlanser II - The Sense of Justice</td></tr>
+<tr><td>GX</td><td>SLES_551.91</td><td>Guitar Hero - Aerosmith</td></tr>
+<tr><td>GX</td><td>SLES_552.00</td><td>Guitar Hero - Aerosmith</td></tr>
+<tr><td>GX</td><td>SLUS_217.40</td><td>Guitar Hero - Aerosmith</td></tr>
+<tr><td>GX</td><td>SLES_555.44</td><td>Guitar Hero - Greatest Hits</td></tr>
+<tr><td>GX</td><td>SLES_554.72</td><td>Guitar Hero - Metallica</td></tr>
+<tr><td>GX</td><td>SLUS_218.43</td><td>Guitar Hero - Metallica</td></tr>
+<tr><td>GX</td><td>SLUS_218.66</td><td>Guitar Hero - Smash Hits</td></tr>
+<tr><td>GX</td><td>SLES_555.18</td><td>Guitar Hero - Van Halen</td></tr>
+<tr><td>GX</td><td>SLUS_218.67</td><td>Guitar Hero - Van Halen</td></tr>
+<tr><td>GX</td><td>SLUS_217.81</td><td>Guitar Hero - World Tour</td></tr>
+<tr><td>GX</td><td>SLES_555.33</td><td>Guitar Hero 5</td></tr>
+<tr><td>GX</td><td>SLUS_218.65</td><td>Guitar Hero 5 [Game Only]</td></tr>
+<tr><td>GX</td><td>SLES_549.62</td><td>Guitar Hero III - Legends of Rock</td></tr>
+<tr><td>GX</td><td>SLES_549.74</td><td>Guitar Hero III - Legends of Rock</td></tr>
+<tr><td>GX</td><td>SLKA_253.63</td><td>Guitar Hero III - Legends of Rock</td></tr>
+<tr><td>GX</td><td>SLUS_216.72</td><td>Guitar Hero III - Legends of Rock</td></tr>
+<tr><td>GX</td><td>SLES_553.55</td><td>Guitar Hero World Tour</td></tr>
+<tr><td>GX</td><td>SLES_509.84</td><td>Gumball 3000</td></tr>
+<tr><td>GX</td><td>SLES_535.23</td><td>Gun</td></tr>
+<tr><td>GX</td><td>SLES_536.47</td><td>Gun</td></tr>
+<tr><td>GX</td><td>SLUS_211.39</td><td>Gun</td></tr>
+<tr><td>GX</td><td>SLKA_150.21</td><td>Harry Potter - Quidditch World Cup</td></tr>
+<tr><td>GX</td><td>SLUS_207.69</td><td>Harry Potter - Quidditch World Cup</td></tr>
+<tr><td>GX</td><td>SLES_511.92</td><td>Harry Potter and the Chamber of Secrets</td></tr>
+<tr><td>GX</td><td>SLPM_645.28</td><td>Harry Potter and the Chamber of Secrets</td></tr>
+<tr><td>GX</td><td>SLUS_205.76</td><td>Harry Potter and The Chamber of Secrets</td></tr>
+<tr><td>GX</td><td>SLES_524.40</td><td>Harry Potter and the Prisoner of Azkaban</td></tr>
+<tr><td>GX</td><td>SLES_526.00</td><td>Harry Potter and The Prisoner of Azkaban</td></tr>
+<tr><td>GX</td><td>SLKA_251.72</td><td>Harry Potter and the Prisoner of Azkaban</td></tr>
+<tr><td>GX</td><td>SLPM_656.12</td><td>Harry Potter and The Prisoner of Azkaban</td></tr>
+<tr><td>GX</td><td>SLUS_209.26</td><td>Harry Potter and The Prisoner of Azkaban</td></tr>
+<tr><td>GX</td><td>SLES_525.27</td><td>Harry Potter og Fangen fra Azkaban</td></tr>
+<tr><td>GX</td><td>SLPS_202.34</td><td>Harry Potter to Himitsu no Heya</td></tr>
+<tr><td>GX</td><td>SLPM_621.22</td><td>Hermina to Culus - Lilie no Atelier Mou Hitotsu no Monogatari</td></tr>
+<tr><td>GX</td><td>SLES_521.32</td><td>Hitman - Contracts</td></tr>
+<tr><td>GX</td><td>SLES_521.33</td><td>Hitman - Contracts</td></tr>
+<tr><td>GX</td><td>SLES_521.34</td><td>Hitman - Contracts</td></tr>
+<tr><td>GX</td><td>SLES_521.35</td><td>Hitman - Contracts</td></tr>
+<tr><td>GX</td><td>SLES_521.36</td><td>Hitman - Contracts</td></tr>
+<tr><td>GX</td><td>SLKA_252.18</td><td>Hitman - Contracts</td></tr>
+<tr><td>GX</td><td>SLPS_254.06</td><td>Hitman - Contracts</td></tr>
+<tr><td>GX</td><td>SLUS_208.82</td><td>Hitman - Contracts</td></tr>
+<tr><td>GX</td><td>SLPS_252.69</td><td>Hitman - Silent Assasin</td></tr>
+<tr><td>GX</td><td>SLES_509.92</td><td>Hitman 2 - Silent Assassin</td></tr>
+<tr><td>GX</td><td>SLES_511.07</td><td>Hitman 2 - Silent Assassin</td></tr>
+<tr><td>GX</td><td>SLES_511.08</td><td>Hitman 2 - Silent Assassin</td></tr>
+<tr><td>GX</td><td>SLES_511.09</td><td>Hitman 2 - Silent Assassin</td></tr>
+<tr><td>GX</td><td>SLES_511.10</td><td>Hitman 2 - Silent Assassin</td></tr>
+<tr><td>GX</td><td>SLKA_250.55</td><td>Hitman 2 - Silent Assassin</td></tr>
+<tr><td>GX</td><td>SLUS_203.74</td><td>Hitman 2 - Silent Assassin</td></tr>
+<tr><td>GX</td><td>SCUS_976.10</td><td>Hot Shots Tennis</td></tr>
+<tr><td>GX</td><td>SLUS_216.28</td><td>Hot Wheels - Beat That</td></tr>
+<tr><td>GX</td><td>SLES_549.71</td><td>Hot Wheels - Beat That!</td></tr>
+<tr><td>GX</td><td>SLES_541.58</td><td>Hummer Badlands</td></tr>
+<tr><td>GX</td><td>SLUS_213.57</td><td>Hummer Badlands</td></tr>
+<tr><td>GX</td><td>SLES_518.23</td><td>Hunter - The Reckoning Wayward</td></tr>
+<tr><td>GX</td><td>SLPM_650.05</td><td>I am the Coach</td></tr>
+<tr><td>GX</td><td>SLES_539.84</td><td>Ice Age 2 - The Meltdown</td></tr>
+<tr><td>GX</td><td>SLUS_213.07</td><td>Ice Age 2 - The Meltdown</td></tr>
+<tr><td>GX</td><td>SLES_541.47</td><td>Ice Age 2 - The Meltdown [RUS]</td></tr>
+<tr><td>GX</td><td>SCES_507.60</td><td>Ico</td></tr>
+<tr><td>GX</td><td>SCPS_560.01</td><td>Ico</td></tr>
+<tr><td>GX</td><td>SLKA_253.09</td><td>INDIGO PROPHECY</td></tr>
+<tr><td>GX</td><td>SLUS_211.96</td><td>Indigo Prophecy</td></tr>
+<tr><td>GX</td><td>SLES_500.39</td><td>International Superstar Soccer</td></tr>
+<tr><td>GX</td><td>SCES_532.86</td><td>Jak X - Combat Racing</td></tr>
+<tr><td>GX</td><td>SCUS_974.29</td><td>Jak X - Combat Racing</td></tr>
+<tr><td>GX</td><td>SLUS_202.45</td><td>Jeremy McGrath - Supercross World 2002</td></tr>
+<tr><td>GX</td><td>SLES_505.44</td><td>Jet Ion GP</td></tr>
+<tr><td>GX</td><td>SCUS_972.79</td><td>Jet Li - Rise to Honor</td></tr>
+<tr><td>GX</td><td>SLPM_660.61</td><td>Jikkyou Powerful Pro Baseball 12</td></tr>
+<tr><td>GX</td><td>SLPM_656.30</td><td>Jikkyou Powerful Pro Baseball XI</td></tr>
+<tr><td>GX</td><td>SLPM_658.25</td><td>Jikkyou Powerful Pro Yakyuu 11 Chou Ketteiban</td></tr>
+<tr><td>GX</td><td>SLPM_665.90</td><td>Jikkyou Powerful Pro Yakyuu 13 Chou Ketteiban</td></tr>
+<tr><td>GX</td><td>SLPM_621.92</td><td>Jikkyou Powerful Pro Yakyuu 9</td></tr>
+<tr><td>GX</td><td>SLPS_201.31</td><td>Jissen Pachi-Slot Hisshouhou! Juuou</td></tr>
+<tr><td>GX</td><td>SLES_544.23</td><td>Justice League Heroes</td></tr>
+<tr><td>GX</td><td>SLUS_213.04</td><td>Justice League Heroes</td></tr>
+<tr><td>GX</td><td>SLES_521.79</td><td>Kaan Barbarian Blade</td></tr>
+<tr><td>GX</td><td>SLUS_210.89</td><td>Karaoke Revolution Vol.3</td></tr>
+<tr><td>GX</td><td>SCKA_200.25</td><td>Katamari Damacy</td></tr>
+<tr><td>GX</td><td>SLUS_210.08</td><td>Katamari Damacy</td></tr>
+<tr><td>GX</td><td>SLPM_650.15</td><td>Kessen 2</td></tr>
+<tr><td>GX</td><td>SLUS_202.75</td><td>Kessen 2</td></tr>
+<tr><td>GX</td><td>SLES_505.78</td><td>Kessen 2</td></tr>
+<tr><td>GX</td><td>SLPS_255.69</td><td>Kidou Senshi Gundam SEED - Rengou vs. Z.A.F.T.</td></tr>
+<tr><td>GX</td><td>SLPM_666.76</td><td>Kingdom Hearts - Re:Chain of Memories</td></tr>
+<tr><td>GX</td><td>SLUS_217.99</td><td>Kingdom Hearts - Re:Chain of Memories</td></tr>
+<tr><td>GX</td><td>SLES_541.14</td><td>Kingdom Hearts II</td></tr>
+<tr><td>GX</td><td>SLES_542.32</td><td>Kingdom Hearts II</td></tr>
+<tr><td>GX</td><td>SLES_542.33</td><td>Kingdom Hearts II</td></tr>
+<tr><td>GX</td><td>SLES_542.34</td><td>Kingdom Hearts II</td></tr>
+<tr><td>GX</td><td>SLES_542.35</td><td>Kingdom Hearts II</td></tr>
+<tr><td>GX</td><td>SLUS_210.05</td><td>Kingdom Hearts II</td></tr>
+<tr><td>GX</td><td>SLES_510.11</td><td>Knight Rider - The Game</td></tr>
+<tr><td>GX</td><td>SLKA_150.06</td><td>Knight Rider - The Game</td></tr>
+<tr><td>GX</td><td>SLPM_651.16</td><td>Lilie no Atelier Plus - Salburg no Renkinjutsushi 3</td></tr>
+<tr><td>GX</td><td>SLPM_620.02</td><td>Live World Soccer 2000</td></tr>
+<tr><td>GX</td><td>SLUS_210.15</td><td>Madagascar</td></tr>
+<tr><td>GX</td><td>SLUS_212.13</td><td>Madden NFL '06</td></tr>
+<tr><td>GX</td><td>SLES_522.78</td><td>Mafia</td></tr>
+<tr><td>GX</td><td>SLES_522.79</td><td>Mafia</td></tr>
+<tr><td>GX</td><td>SLES_522.80</td><td>Mafia</td></tr>
+<tr><td>GX</td><td>SLES_522.81</td><td>Mafia</td></tr>
+<tr><td>GX</td><td>SLES_522.82</td><td>Mafia</td></tr>
+<tr><td>GX</td><td>SLUS_206.71</td><td>Mafia</td></tr>
+<tr><td>GX</td><td>SLUS_217.35</td><td>Mana Khemia - Alchemists of Al-Revis</td></tr>
+<tr><td>GX</td><td>SLES_535.85</td><td>Marvel Nemesis - Rise of the Imperfects</td></tr>
+<tr><td>GX</td><td>SLUS_212.81</td><td>Marvel Nemesis - Rise of the Imperfects</td></tr>
+<tr><td>GX</td><td>SLES_503.25</td><td>Max Payne</td></tr>
+<tr><td>GX</td><td>SLES_503.26</td><td>Max Payne</td></tr>
+<tr><td>GX</td><td>SLPS_252.44</td><td>Max Payne</td></tr>
+<tr><td>GX</td><td>SLUS_202.30</td><td>Max Payne</td></tr>
+<tr><td>GX</td><td>SLPM_621.27</td><td>Maximo</td></tr>
+<tr><td>GX</td><td>SLES_518.73</td><td>Medal of Honor - Rising Sun</td></tr>
+<tr><td>GX</td><td>SLES_518.74</td><td>Medal of Honor - Rising Sun</td></tr>
+<tr><td>GX</td><td>SLES_518.75</td><td>Medal of Honor - Rising Sun</td></tr>
+<tr><td>GX</td><td>SLES_518.76</td><td>Medal of Honor - Rising Sun</td></tr>
+<tr><td>GX</td><td>SLUS_207.53</td><td>Medal of Honor - Rising Sun</td></tr>
+<tr><td>GX</td><td>SLES_503.83</td><td>Metal Gear Solid 2 - Sons of Liberty</td></tr>
+<tr><td>GX</td><td>SLES_503.85</td><td>Metal Gear Solid 2 - Sons of Liberty</td></tr>
+<tr><td>GX</td><td>SLUS_201.44</td><td>Metal Gear Solid 2 - Sons of Liberty</td></tr>
+<tr><td>GX</td><td>SLES_820.13</td><td>Metal Gear Solid 3 - Snake Eater</td></tr>
+<tr><td>GX</td><td>SLES_820.24</td><td>Metal Gear Solid 3 - Snake Eater</td></tr>
+<tr><td>GX</td><td>SLES_820.26</td><td>Metal Gear Solid 3 - Snake Eater</td></tr>
+<tr><td>GX</td><td>SLES_820.32</td><td>Metal Gear Solid 3 - Snake Eater</td></tr>
+<tr><td>GX</td><td>SLKA_252.51</td><td>Metal Gear Solid 3 - Snake Eater</td></tr>
+<tr><td>GX</td><td>SLPM_657.90</td><td>Metal Gear Solid 3 - Snake Eater</td></tr>
+<tr><td>GX</td><td>SLUS_209.15</td><td>Metal Gear Solid 3 - Snake Eater</td></tr>
+<tr><td>GX</td><td>SLES_820.42</td><td>Metal Gear Solid 3 - Subsistance [Disc1of2]</td></tr>
+<tr><td>GX</td><td>SLES_820.44</td><td>Metal Gear Solid 3 - Subsistance [Disc1of2]</td></tr>
+<tr><td>GX</td><td>SLES_820.46</td><td>Metal Gear Solid 3 - Subsistance [Disc1of2]</td></tr>
+<tr><td>GX</td><td>SLES_820.48</td><td>Metal Gear Solid 3 - Subsistance [Disc1of2]</td></tr>
+<tr><td>GX</td><td>SLES_820.43</td><td>Metal Gear Solid 3 - Subsistance [Disc2of2]</td></tr>
+<tr><td>GX</td><td>SLES_820.45</td><td>Metal Gear Solid 3 - Subsistance [Disc2of2]</td></tr>
+<tr><td>GX</td><td>SLES_820.47</td><td>Metal Gear Solid 3 - Subsistance [Disc2of2]</td></tr>
+<tr><td>GX</td><td>SLES_820.49</td><td>Metal Gear Solid 3 - Subsistance [Disc2of2]</td></tr>
+<tr><td>GX</td><td>SLKA_253.53</td><td>Metal Gear Solid 3 - Subsistance [Limited Edition] [Disc1of2]</td></tr>
+<tr><td>GX</td><td>SLKA_253.54</td><td>Metal Gear Solid 3 - Subsistance [Limited Edition] [Disc2of2]</td></tr>
+<tr><td>GX</td><td>SLUS_212.43</td><td>Metal Gear Solid 3 - Subsistence</td></tr>
+<tr><td>GX</td><td>SLPM_662.20</td><td>Metal Gear Solid 3 - Subsistence [First Print Limited Edition] [Disc1of3]</td></tr>
+<tr><td>GX</td><td>SLPM_662.21</td><td>Metal Gear Solid 3 - Subsistence [First Print Limited Edition] [Disc2of3]</td></tr>
+<tr><td>GX</td><td>SLUS_213.59</td><td>Metal Gear Solid 3 - Subsistence [Limited Edition] [Disc2of3]</td></tr>
+<tr><td>GX</td><td>SLUS_215.50</td><td>Metal Slug Anthology</td></tr>
+<tr><td>GX</td><td>SLPM_625.55</td><td>Momotaro Densetsu</td></tr>
+<tr><td>GX</td><td>SLES_507.17</td><td>Mortal Kombat - Deadly Alliance</td></tr>
+<tr><td>GX</td><td>SLES_514.39</td><td>Mortal Kombat - Deadly Alliance</td></tr>
+<tr><td>GX</td><td>SLUS_204.23</td><td>Mortal Kombat - Deadly Alliance</td></tr>
+<tr><td>GX</td><td>SLES_524.04</td><td>MTV Music Generator 3</td></tr>
+<tr><td>GX</td><td>SLUS_208.61</td><td>MTV Music Generator 3 - This is the Remix</td></tr>
+<tr><td>GX</td><td>SLES_522.89</td><td>MTX Mototrax</td></tr>
+<tr><td>GX</td><td>SLES_522.90</td><td>MTX Mototrax</td></tr>
+<tr><td>GX</td><td>SLUS_203.99</td><td>MTX Mototrax</td></tr>
+<tr><td>GX</td><td>SLUS_213.67</td><td>MVP '06 - NCAA Baseball</td></tr>
+<tr><td>GX</td><td>SLUS_207.67</td><td>MX Unleashed</td></tr>
+<tr><td>GX</td><td>SLES_520.43</td><td>MX Unleashed Migrated</td></tr>
+<tr><td>GX</td><td>SLES_531.06</td><td>MX vs. ATV Unleashed</td></tr>
+<tr><td>GX</td><td>SLKA_252.82</td><td>MX vs. ATV Unleashed</td></tr>
+<tr><td>GX</td><td>SLUS_211.04</td><td>MX vs. ATV Unleashed</td></tr>
+<tr><td>GX</td><td>SCES_516.77</td><td>My Street</td></tr>
+<tr><td>GX</td><td>SCUS_972.12</td><td>My Street (Online)</td></tr>
+<tr><td>GX</td><td>SLKA_252.32</td><td>Naruto - Narutimate Hero</td></tr>
+<tr><td>GX</td><td>SLPS_252.93</td><td>Naruto - Narutimett Hero</td></tr>
+<tr><td>GX</td><td>SLPS_253.98</td><td>Naruto - Narutimett Hero 2</td></tr>
+<tr><td>GX</td><td>SLES_541.63</td><td>Naruto - Ultimate Ninja</td></tr>
+<tr><td>GX</td><td>SLUS_213.58</td><td>Naruto - Ultimate Ninja</td></tr>
+<tr><td>GX</td><td>SLES_548.78</td><td>Naruto - Ultimate Ninja 2</td></tr>
+<tr><td>GX</td><td>SLUS_215.75</td><td>Naruto - Ultimate Ninja 2</td></tr>
+<tr><td>GX</td><td>SLES_552.37</td><td>Naruto - Ultimate Ninja 3</td></tr>
+<tr><td>GX</td><td>SLUS_217.27</td><td>Naruto - Ultimate Ninja 3</td></tr>
+<tr><td>GX</td><td>SLES_547.27</td><td>Naruto - Uzumaki Chronicles</td></tr>
+<tr><td>GX</td><td>SLUS_214.98</td><td>Naruto - Uzumaki Chronicles</td></tr>
+<tr><td>GX</td><td>SLES_550.90</td><td>Naruto - Uzumaki Chronicles 2</td></tr>
+<tr><td>GX</td><td>SLUS_215.94</td><td>Naruto - Uzumaki Chronicles 2</td></tr>
+<tr><td>GX</td><td>SLPS_255.89</td><td>Naruto Narutimett Hero 3</td></tr>
+<tr><td>GX</td><td>SLES_554.81</td><td>Naruto Shippuden - Ultimate Ninja 4</td></tr>
+<tr><td>GX</td><td>SLUS_218.62</td><td>Naruto Shippuden - Ultimate Ninja 4</td></tr>
+<tr><td>GX</td><td>SCUS_975.89</td><td>NBA '08 featuring The Life Vol.3</td></tr>
+<tr><td>GX</td><td>SLUS_214.94</td><td>Need for Speed - Carbon [Collector's Edition]</td></tr>
+<tr><td>GX</td><td>SLUS_203.62</td><td>Need for Speed - Hot Pursuit 2</td></tr>
+<tr><td>GX</td><td>SLPS_253.50</td><td>Netsu Chu! Pro Baseball 2004</td></tr>
+<tr><td>GX</td><td>SLES_515.47</td><td>Next Generation Tennis 2003</td></tr>
+<tr><td>GX</td><td>SLES_534.98</td><td>Nickelodeon Bob Esponja - ¡Luces, Cámara, Esponja!</td></tr>
+<tr><td>GX</td><td>SLES_534.95</td><td>Nickelodeon Bob L'éponge - Silence on Tourne!</td></tr>
+<tr><td>GX</td><td>SLES_534.97</td><td>Nickelodeon SpongeBob Schwammkopf - Film ab!</td></tr>
+<tr><td>GX</td><td>SLES_534.99</td><td>Nickelodeon SpongeBob Squarepants - Licht uit, Camera aan!</td></tr>
+<tr><td>GX</td><td>SLES_535.00</td><td>Nickelodeon Svampbob Fyrkant - Tystnad, Tagning, Tvaettsvamp</td></tr>
+<tr><td>GX</td><td>SLES_505.92</td><td>No One Lives Forever</td></tr>
+<tr><td>GX</td><td>SLUS_200.28</td><td>No One Lives Forever</td></tr>
+<tr><td>GX</td><td>SCUS_973.40</td><td>Official U.S. PlayStation Magazine Demo Disc 087</td></tr>
+<tr><td>GX</td><td>SCUS_973.41</td><td>Official U.S. PlayStation Magazine Demo Disc 088</td></tr>
+<tr><td>GX</td><td>SCUS_973.42</td><td>Official U.S. PlayStation Magazine Demo Disc 089</td></tr>
+<tr><td>GX</td><td>SCUS_974.42</td><td>Official U.S. PlayStation Magazine Demo Disc 090</td></tr>
+<tr><td>GX</td><td>SLES_544.39</td><td>Okami</td></tr>
+<tr><td>GX</td><td>SLUS_211.15</td><td>Okami</td></tr>
+<tr><td>GX</td><td>SLES_501.34</td><td>Oni</td></tr>
+<tr><td>GX</td><td>SLES_501.76</td><td>Oni</td></tr>
+<tr><td>GX</td><td>SLES_501.77</td><td>Oni</td></tr>
+<tr><td>GX</td><td>SLES_501.78</td><td>Oni</td></tr>
+<tr><td>GX</td><td>SLES_501.79</td><td>Oni</td></tr>
+<tr><td>GX</td><td>SLUS_200.64</td><td>Oni</td></tr>
+<tr><td>GX</td><td>SLPM_650.10</td><td>Onimusha</td></tr>
+<tr><td>GX</td><td>SLES_820.38</td><td>Onimusha - Dawn of Dreams</td></tr>
+<tr><td>GX</td><td>SLUS_211.80</td><td>Onimusha - Dawn of Dreams</td></tr>
+<tr><td>GX</td><td>SLUS_213.62</td><td>Onimusha - Dawn of Dreams</td></tr>
+<tr><td>GX</td><td>SLES_820.39</td><td>Onimusha - Dawn of Dreams (Disc 2)</td></tr>
+<tr><td>GX</td><td>SLUS_200.18</td><td>Onimusha - Warlords</td></tr>
+<tr><td>GX</td><td>SLPM_651.00</td><td>Onimusha 2</td></tr>
+<tr><td>GX</td><td>SLES_509.78</td><td>Onimusha 2 - Samurai's Destiny</td></tr>
+<tr><td>GX</td><td>SLPM_675.18</td><td>Onimusha 2 - Samurai's Destiny</td></tr>
+<tr><td>GX</td><td>SLUS_203.93</td><td>Onimusha 2 - Samurai's Destiny</td></tr>
+<tr><td>GX</td><td>SLPM_654.13</td><td>Onimusha 3</td></tr>
+<tr><td>GX</td><td>SLES_519.14</td><td>Onimusha 3 - Demon Siege</td></tr>
+<tr><td>GX</td><td>SLKA_250.93</td><td>Onimusha 3 - Demon Siege</td></tr>
+<tr><td>GX</td><td>SLUS_206.94</td><td>Onimusha 3 - Demon Siege</td></tr>
+<tr><td>GX</td><td>SLPM_675.07</td><td>Onimusha Wsrlords</td></tr>
+<tr><td>GX</td><td>SLPM_650.56</td><td>Orega Kantoku da Vol.2 - Getitou Pennent Race</td></tr>
+<tr><td>GX</td><td>SLES_538.66</td><td>Over the Hedge</td></tr>
+<tr><td>GX</td><td>SLES_539.87</td><td>Over the Hedge</td></tr>
+<tr><td>GX</td><td>SLES_539.88</td><td>Over the Hedge</td></tr>
+<tr><td>GX</td><td>SLES_539.89</td><td>Over the Hedge</td></tr>
+<tr><td>GX</td><td>SLUS_213.00</td><td>Over the Hedge</td></tr>
+<tr><td>GX</td><td>SLES_539.59</td><td>Pac-Man World 3</td></tr>
+<tr><td>GX</td><td>SLUS_212.19</td><td>Pac-Man World 3</td></tr>
+<tr><td>GX</td><td>SCES_504.08</td><td>PaRappa the Rapper 2</td></tr>
+<tr><td>GX</td><td>SCPS_150.17</td><td>PaRappa the Rapper 2</td></tr>
+<tr><td>GX</td><td>SCUS_971.67</td><td>Parappa the Rapper 2</td></tr>
+<tr><td>GX</td><td>SLES_556.36</td><td>PES 2011 - Pro Evolution Soccer</td></tr>
+<tr><td>GX</td><td>SLES_556.37</td><td>PES 2011 - Pro Evolution Soccer</td></tr>
+<tr><td>GX</td><td>SLES_556.38</td><td>PES 2011 - Pro Evolution Soccer</td></tr>
+<tr><td>GX</td><td>SLUS_219.42</td><td>PES 2011 - Pro Evolution Soccer</td></tr>
+<tr><td>GX</td><td>SLES_543.08</td><td>Phantasy Star Universe</td></tr>
+<tr><td>GX</td><td>SLPM_660.31</td><td>Phantasy Star Universe</td></tr>
+<tr><td>GX</td><td>SLUS_211.94</td><td>Phantasy Star Universe</td></tr>
+<tr><td>GX</td><td>SLES_548.92</td><td>Phantasy Star Universe - Ambition of the Illuminus</td></tr>
+<tr><td>GX</td><td>SLUS_216.31</td><td>Phantasy Star Universe - Ambition of the Illuminus</td></tr>
+<tr><td>GX</td><td>SLES_516.67</td><td>Piglet's Big Game</td></tr>
+<tr><td>GX</td><td>SLES_516.68</td><td>Piglet's Big Game</td></tr>
+<tr><td>GX</td><td>SLUS_206.59</td><td>Piglet's Big Game</td></tr>
+<tr><td>GX</td><td>SLES_546.07</td><td>Pimp My Ride</td></tr>
+<tr><td>GX</td><td>SLES_546.32</td><td>Pimp My Ride</td></tr>
+<tr><td>GX</td><td>SLUS_215.80</td><td>Pimp my Ride</td></tr>
+<tr><td>GX</td><td>SLPM_654.45</td><td>Powerful Pro Baseball 10 - Decision</td></tr>
+<tr><td>GX</td><td>SLPM_622.74</td><td>Powerful Pro Baseball 9 - Ketteiban</td></tr>
+<tr><td>GX</td><td>SCES_511.35</td><td>Primal</td></tr>
+<tr><td>GX</td><td>SCES_516.85</td><td>Primal</td></tr>
+<tr><td>GX</td><td>SCUS_971.42</td><td>Primal - Civilization Is Only Skin Deep</td></tr>
+<tr><td>GX</td><td>SLPS_200.13</td><td>Primal Image Vol.01</td></tr>
+<tr><td>GX</td><td>SLKA_252.74</td><td>Princess Maker 4</td></tr>
+<tr><td>GX</td><td>SLES_505.53</td><td>Project Eden</td></tr>
+<tr><td>GX</td><td>SLUS_201.64</td><td>Project Eden</td></tr>
+<tr><td>GX</td><td>SLES_503.84</td><td>Project Zero II</td></tr>
+<tr><td>GX</td><td>SLES_541.73</td><td>På andra sidan häcken</td></tr>
+<tr><td>GX</td><td>SLPM_658.00</td><td>Radiata Stories</td></tr>
+<tr><td>GX</td><td>SLUS_212.62</td><td>Radiata Stories</td></tr>
+<tr><td>GX</td><td>SLPS_202.46</td><td>Rally Shox</td></tr>
+<tr><td>GX</td><td>SCES_509.16</td><td>Ratchet &amp; Clank</td></tr>
+<tr><td>GX</td><td>SCPS_150.37</td><td>Ratchet &amp; Clank</td></tr>
+<tr><td>GX</td><td>SCUS_971.99</td><td>Ratchet &amp; Clank</td></tr>
+<tr><td>GX</td><td>SCPS_150.99</td><td>Ratchet &amp; Clank - Giga Battle</td></tr>
+<tr><td>GX</td><td>SCKA_200.11</td><td>Ratchet &amp; Clank - Going Commando</td></tr>
+<tr><td>GX</td><td>SCUS_972.68</td><td>Ratchet &amp; Clank - Going Commando</td></tr>
+<tr><td>GX</td><td>SCPS_150.56</td><td>Ratchet &amp; Clank 2</td></tr>
+<tr><td>GX</td><td>SCKA_200.37</td><td>Ratchet &amp; Clank 2 - Gagaga! Ginga no Commando-ssu [Big Hit Series]</td></tr>
+<tr><td>GX</td><td>SCES_516.07</td><td>Ratchet &amp; Clank 2 - Locked &amp; Loaded</td></tr>
+<tr><td>GX</td><td>SCES_524.56</td><td>Ratchet &amp; Clank 3</td></tr>
+<tr><td>GX</td><td>SCPS_150.84</td><td>Ratchet &amp; Clank 3</td></tr>
+<tr><td>GX</td><td>SCKA_200.60</td><td>Ratchet - Deadlocked</td></tr>
+<tr><td>GX</td><td>SCUS_974.65</td><td>Ratchet - Deadlocked</td></tr>
+<tr><td>GX</td><td>SCES_532.85</td><td>Ratchet - Gladiator</td></tr>
+<tr><td>GX</td><td>SCUS_973.53</td><td>Ratchet and Clank - Up Your Arsenal</td></tr>
+<tr><td>GX</td><td>SLES_512.22</td><td>Rayman 3 - Hoodlum Havoc</td></tr>
+<tr><td>GX</td><td>SLKA_250.78</td><td>Rayman 3 - Hoodlum Havoc</td></tr>
+<tr><td>GX</td><td>SLUS_206.01</td><td>Rayman 3 - Hoodlum Havoc</td></tr>
+<tr><td>GX</td><td>SLUS_202.72</td><td>Rayman Arena</td></tr>
+<tr><td>GX</td><td>SLES_504.57</td><td>Rayman M</td></tr>
+<tr><td>GX</td><td>SCPS_110.12</td><td>Rimoko Koron</td></tr>
+<tr><td>GX</td><td>SLES_527.61</td><td>Rocky - Legends</td></tr>
+<tr><td>GX</td><td>SLUS_208.90</td><td>Rocky - Legends</td></tr>
+<tr><td>GX</td><td>SLES_501.20</td><td>Rumble Racing</td></tr>
+<tr><td>GX</td><td>SLUS_201.74</td><td>Rumble Racing</td></tr>
+<tr><td>GX</td><td>SLES_513.45</td><td>Run Like Hell</td></tr>
+<tr><td>GX</td><td>SLPM_656.03</td><td>Run Like Hell</td></tr>
+<tr><td>GX</td><td>SLUS_200.37</td><td>Run Like Hell - Hunt or Be Hunted</td></tr>
+<tr><td>GX</td><td>SLES_514.45</td><td>Rygar - The Legendary Adventure</td></tr>
+<tr><td>GX</td><td>SLUS_204.71</td><td>Rygar - The Legendary Adventure</td></tr>
+<tr><td>GX</td><td>SLPS_250.89</td><td>Salt Lake 2002</td></tr>
+<tr><td>GX</td><td>SLUS_203.78</td><td>Salt Lake 2002</td></tr>
+<tr><td>GX</td><td>SLPS_201.78</td><td>Samurai</td></tr>
+<tr><td>GX</td><td>SLPM_653.80</td><td>Samurai Michi 2</td></tr>
+<tr><td>GX</td><td>SLES_525.51</td><td>Samurai Warriors</td></tr>
+<tr><td>GX</td><td>SLES_525.52</td><td>Samurai Warriors</td></tr>
+<tr><td>GX</td><td>SLES_525.54</td><td>Samurai Warriors</td></tr>
+<tr><td>GX</td><td>SLES_525.55</td><td>Samurai Warriors</td></tr>
+<tr><td>GX</td><td>SLUS_208.78</td><td>Samurai Warriors</td></tr>
+<tr><td>GX</td><td>SLES_543.40</td><td>Samurai Warriors 2</td></tr>
+<tr><td>GX</td><td>SLUS_214.62</td><td>Samurai Warriors 2</td></tr>
+<tr><td>GX</td><td>SLUS_204.30</td><td>Savage Skies</td></tr>
+<tr><td>GX</td><td>SLPM_665.76</td><td>Seiken Densetsu 4</td></tr>
+<tr><td>GX</td><td>SLPM_655.17</td><td>Sengoku Musou</td></tr>
+<tr><td>GX</td><td>SLES_504.46</td><td>Shadow Man: 2econd Coming</td></tr>
+<tr><td>GX</td><td>SLES_506.08</td><td>Shadow Man: 2econd Coming</td></tr>
+<tr><td>GX</td><td>SLUS_204.13</td><td>Shadow Man: 2econd Coming</td></tr>
+<tr><td>GX</td><td>SLPM_742.33</td><td>Shin Onimusha - Dawn of Dreams (Disc 2)</td></tr>
+<tr><td>GX</td><td>SLPM_662.75</td><td>Shin Onimusha - Dawn of Dreams [Disc1of2]</td></tr>
+<tr><td>GX</td><td>SLPM_742.32</td><td>Shin Onimusha - Dawn of Dreams [PlayStation 2 The Best]</td></tr>
+<tr><td>GX</td><td>SLPM_653.40</td><td>Shinseiki Evangelion - Ayanami Ikusai Keikaku with Asuka Hokan Keikaku</td></tr>
+<tr><td>GX</td><td>SLES_524.45</td><td>Silent Hill 4 - The Room</td></tr>
+<tr><td>GX</td><td>SLUS_208.73</td><td>Silent Hill 4 - The Room</td></tr>
+<tr><td>GX</td><td>SLKA_250.41</td><td>Silent Line - Armored Core</td></tr>
+<tr><td>GX</td><td>SCES_522.68</td><td>Sing-Star</td></tr>
+<tr><td>GX</td><td>SCES_525.65</td><td>Sing-Star</td></tr>
+<tr><td>GX</td><td>SCES_522.99</td><td>SingStar</td></tr>
+<tr><td>GX</td><td>SCES_525.66</td><td>SingStar</td></tr>
+<tr><td>GX</td><td>SCUS_976.16</td><td>SingStar 80's</td></tr>
+<tr><td>GX</td><td>SCUS_976.26</td><td>SingStar 90's</td></tr>
+<tr><td>GX</td><td>SCES_554.35</td><td>SingStar ABBA</td></tr>
+<tr><td>GX</td><td>SCUS_976.11</td><td>SingStar Amped [with Microphone]</td></tr>
+<tr><td>GX</td><td>SCUS_975.80</td><td>SingStar Pop [with Microphone]</td></tr>
+<tr><td>GX</td><td>SCUS_976.27</td><td>Singstar Pop Volume 2</td></tr>
+<tr><td>GX</td><td>SCUS_975.71</td><td>SingStar Rocks! [with Microphone]</td></tr>
+<tr><td>GX</td><td>SCPS_151.06</td><td>Siren 2</td></tr>
+<tr><td>GX</td><td>SLUS_206.20</td><td>Smash Cars</td></tr>
+<tr><td>GX</td><td>SLES_518.00</td><td>Smash Cars Racing</td></tr>
+<tr><td>GX</td><td>SLES_535.60</td><td>Sonic Riders</td></tr>
+<tr><td>GX</td><td>SLUS_212.16</td><td>Soul Calibur III</td></tr>
+<tr><td>GX</td><td>SLES_534.94</td><td>Spongebob Squarepants - Lights, Camera, PANTS!</td></tr>
+<tr><td>GX</td><td>SLES_534.96</td><td>Spongebob Squarepants - Lights, Camera, PANTS!</td></tr>
+<tr><td>GX</td><td>SLKA_253.19</td><td>SpongeBob SquarePants - Lights, Camera, PANTS!</td></tr>
+<tr><td>GX</td><td>SLUS_212.52</td><td>SpongeBob Squarepants - Lights, Camera, PANTS!</td></tr>
+<tr><td>GX</td><td>SLES_512.85</td><td>Spongebob Squarepants - Revenge of the Flying Dutchman</td></tr>
+<tr><td>GX</td><td>SLUS_204.25</td><td>Spongebob Squarepants - Revenge of the Flying Dutchman</td></tr>
+<tr><td>GX</td><td>SLES_544.63</td><td>Sprint Cars - Road to Knoxville</td></tr>
+<tr><td>GX</td><td>SLUS_214.18</td><td>Sprint Cars - Road to Knoxville</td></tr>
+<tr><td>GX</td><td>SLUS_216.01</td><td>Sprint Cars 2 - Showdown at Eldora</td></tr>
+<tr><td>GX</td><td>SLES_525.05</td><td>Spy Fiction</td></tr>
+<tr><td>GX</td><td>SLKA_250.07</td><td>Spy Fiction</td></tr>
+<tr><td>GX</td><td>SLPS_253.11</td><td>Spy Fiction</td></tr>
+<tr><td>GX</td><td>SLUS_208.56</td><td>Spy Fiction</td></tr>
+<tr><td>GX</td><td>SLES_820.28</td><td>Star Ocean 3 - Till the End of Time [Disc1of2]</td></tr>
+<tr><td>GX</td><td>SLUS_204.88</td><td>Star Ocean 3 - Till the End of Time [Disc1of2]</td></tr>
+<tr><td>GX</td><td>SLES_820.29</td><td>Star Ocean 3 - Till the End of Time [Disc2of2]</td></tr>
+<tr><td>GX</td><td>SLUS_208.91</td><td>Star Ocean 3 - Till the End of Time [Disc2of2]</td></tr>
+<tr><td>GX</td><td>SLPM_654.38</td><td>Star Ocean 3 [Director's Cut] [Disc1of2]</td></tr>
+<tr><td>GX</td><td>SLPM_652.09</td><td>Star Ocean 3 [Limited Edition]</td></tr>
+<tr><td>GX</td><td>SLES_535.01</td><td>Star Wars - Battlefront II</td></tr>
+<tr><td>GX</td><td>SLES_535.02</td><td>Star Wars - Battlefront II</td></tr>
+<tr><td>GX</td><td>SLES_535.03</td><td>Star Wars - Battlefront II</td></tr>
+<tr><td>GX</td><td>SLES_525.45</td><td>Star Wars Battlefront</td></tr>
+<tr><td>GX</td><td>SLES_525.46</td><td>Star Wars Battlefront</td></tr>
+<tr><td>GX</td><td>SLES_525.47</td><td>Star Wars Battlefront</td></tr>
+<tr><td>GX</td><td>SLUS_208.98</td><td>Star Wars Battlefront</td></tr>
+<tr><td>GX</td><td>SLPM_661.90</td><td>Star Wars Battlefront II</td></tr>
+<tr><td>GX</td><td>SLUS_212.40</td><td>Star Wars Battlefront II</td></tr>
+<tr><td>GX</td><td>SLPM_664.85</td><td>State of Emergency - Revenge</td></tr>
+<tr><td>GX</td><td>SLES_540.89</td><td>State of Emergency 2</td></tr>
+<tr><td>GX</td><td>SLES_540.92</td><td>State of Emergency 2</td></tr>
+<tr><td>GX</td><td>SLUS_209.66</td><td>State of Emergency 2</td></tr>
+<tr><td>GX</td><td>SLUS_214.97</td><td>Strawberry Shortcake - Adventures in the Land of Dreams</td></tr>
+<tr><td>GX</td><td>SLES_543.09</td><td>Strawberry Shortcake - The Sweet Dreams Game</td></tr>
+<tr><td>GX</td><td>SLES_530.45</td><td>Street Racing Syndicate</td></tr>
+<tr><td>GX</td><td>SLUS_205.82</td><td>Street Racing Syndicate</td></tr>
+<tr><td>GX</td><td>SLES_820.01</td><td>Summoner</td></tr>
+<tr><td>GX</td><td>SLES_820.03</td><td>Summoner</td></tr>
+<tr><td>GX</td><td>SLES_820.05</td><td>Summoner</td></tr>
+<tr><td>GX</td><td>SLUS_200.74</td><td>Summoner</td></tr>
+<tr><td>GX</td><td>SLES_537.01</td><td>Super Monkey Ball Adventure</td></tr>
+<tr><td>GX</td><td>SLUS_212.72</td><td>Super Monkey Ball Adventure</td></tr>
+<tr><td>GX</td><td>SLES_537.46</td><td>Superman Returns</td></tr>
+<tr><td>GX</td><td>SLES_543.48</td><td>Superman Returns</td></tr>
+<tr><td>GX</td><td>SLES_543.49</td><td>Superman Returns</td></tr>
+<tr><td>GX</td><td>SLES_543.50</td><td>Superman Returns</td></tr>
+<tr><td>GX</td><td>SLES_543.51</td><td>Superman Returns</td></tr>
+<tr><td>GX</td><td>SLKA_253.67</td><td>Superman Returns</td></tr>
+<tr><td>GX</td><td>SLUS_214.34</td><td>Superman Returns - The Video Game</td></tr>
+<tr><td>GX</td><td>SCES_547.94</td><td>Syphon Filter - Dark Mirror</td></tr>
+<tr><td>GX</td><td>SCUS_973.62</td><td>Syphon Filter - Dark Mirror</td></tr>
+<tr><td>GX</td><td>SCUS_976.20</td><td>Syphon Filter - Dark Mirror</td></tr>
+<tr><td>GX</td><td>SCES_520.33</td><td>Syphon Filter - The Omega Strain</td></tr>
+<tr><td>GX</td><td>SCUS_972.64</td><td>Syphon Filter - The Omega Strain</td></tr>
+<tr><td>GX</td><td>SCKA_200.32</td><td>Syphon Filter - The Omega Virus</td></tr>
+<tr><td>GX</td><td>SLKA_251.23</td><td>Taisho Mononoke Ibunroku</td></tr>
+<tr><td>GX</td><td>SLPM_652.28</td><td>Taisho Mononoke Ibunroku</td></tr>
+<tr><td>GX</td><td>SLPS_257.15</td><td>Tales of Destiny</td></tr>
+<tr><td>GX</td><td>SLKA_250.71</td><td>Tantei Jinguuji Saburo - Innocent Black</td></tr>
+<tr><td>GX</td><td>SCES_508.78</td><td>Tekken 4</td></tr>
+<tr><td>GX</td><td>SLUS_203.28</td><td>Tekken 4</td></tr>
+<tr><td>GX</td><td>SLPS_255.10</td><td>Tekken 5</td></tr>
+<tr><td>GX</td><td>SLUS_200.01</td><td>Tekken Tag Tournament</td></tr>
+<tr><td>GX</td><td>SLPS_252.34</td><td>Tenchu 3</td></tr>
+<tr><td>GX</td><td>SLUS_202.13</td><td>Test Drive</td></tr>
+<tr><td>GX</td><td>SLES_544.83</td><td>The Fast and the Furious</td></tr>
+<tr><td>GX</td><td>SLUS_214.49</td><td>The Fast and the Furious - Tokyo Drift</td></tr>
+<tr><td>GX</td><td>SCES_527.58</td><td>The Getaway - Black Monday</td></tr>
+<tr><td>GX</td><td>SCKA_200.18</td><td>The Getaway - Black Monday</td></tr>
+<tr><td>GX</td><td>SCUS_974.08</td><td>The Getaway - Black Monday</td></tr>
+<tr><td>GX</td><td>SLPM_661.83</td><td>The Getaway - Black Monday</td></tr>
+<tr><td>GX</td><td>SLES_502.76</td><td>The Gift</td></tr>
+<tr><td>GX</td><td>SLES_502.96</td><td>The Gift</td></tr>
+<tr><td>GX</td><td>SLES_502.97</td><td>The Gift</td></tr>
+<tr><td>GX</td><td>SLES_502.98</td><td>The Gift</td></tr>
+<tr><td>GX</td><td>SLES_502.99</td><td>The Gift</td></tr>
+<tr><td>GX</td><td>SLES_543.59</td><td>The Legend of Spyro - A New Beginning</td></tr>
+<tr><td>GX</td><td>SLUS_213.72</td><td>The Legend of Spyro - A New Beginning</td></tr>
+<tr><td>GX</td><td>SLUS_216.07</td><td>The Legend of Spyro - The Eternal Night</td></tr>
+<tr><td>GX</td><td>SLUS_205.20</td><td>The Lord of the Rings - The Fellowship of the Ring</td></tr>
+<tr><td>GX</td><td>SLES_509.88</td><td>The Lord of the Rings - The Fellowship of the Ring (Der Herr der Ringe - Die Gefahrten)</td></tr>
+<tr><td>GX</td><td>SLES_512.52</td><td>The Lord of the Rings - The Two Towers</td></tr>
+<tr><td>GX</td><td>SLES_512.55</td><td>The Lord of the Rings - The Two Towers</td></tr>
+<tr><td>GX</td><td>SLPM_675.46</td><td>The Lord of the Rings - The Two Towers</td></tr>
+<tr><td>GX</td><td>SLPS_290.04</td><td>The Lord of the Rings - The Two Towers</td></tr>
+<tr><td>GX</td><td>SLUS_205.78</td><td>The Lord of the Rings - The Two Towers</td></tr>
+<tr><td>GX</td><td>SLES_512.54</td><td>The Lord of the Rings - The Two Towers (Der Herr der Ringe - Die Zwei Turme)</td></tr>
+<tr><td>GX</td><td>SLES_512.56</td><td>The Lord of the Rings - The Two Towers (El Senor de Los Anillos - Las Dos Torres)</td></tr>
+<tr><td>GX</td><td>SLES_512.53</td><td>The Lord of the Rings - The Two Towers (Seigneur des Anneaux - Les Deux Tours)</td></tr>
+<tr><td>GX</td><td>SLPS_290.03</td><td>The Lord of the Rings - The Two Towers [Collector's Box]</td></tr>
+<tr><td>GX</td><td>SLES_516.93</td><td>The Suffering</td></tr>
+<tr><td>GX</td><td>SLES_524.39</td><td>The Suffering</td></tr>
+<tr><td>GX</td><td>SLES_525.31</td><td>The Suffering</td></tr>
+<tr><td>GX</td><td>SLUS_206.36</td><td>The Suffering</td></tr>
+<tr><td>GX</td><td>SLES_535.26</td><td>The Suffering - Ties That Bind</td></tr>
+<tr><td>GX</td><td>SLES_535.27</td><td>The Suffering - Ties that Bind</td></tr>
+<tr><td>GX</td><td>SLES_535.28</td><td>The Suffering - Ties That Bind</td></tr>
+<tr><td>GX</td><td>SLES_536.26</td><td>The Suffering - Ties That Bind</td></tr>
+<tr><td>GX</td><td>SLUS_211.89</td><td>The Suffering - Ties That Bind</td></tr>
+<tr><td>GX</td><td>SLES_518.52</td><td>Thug MOTX [Demo]</td></tr>
+<tr><td>GX</td><td>SLES_542.53</td><td>Tiger Woods PGA Tour '07</td></tr>
+<tr><td>GX</td><td>SLPS_200.92</td><td>Tiger Woods PGA Tour 2001</td></tr>
+<tr><td>GX</td><td>SLUS_207.57</td><td>Tiger Woods PGA Tour 2004</td></tr>
+<tr><td>GX</td><td>SLUS_210.02</td><td>Tiger Woods PGA Tour 2005</td></tr>
+<tr><td>GX</td><td>SLUS_203.14</td><td>TimeSplitters 2</td></tr>
+<tr><td>GX</td><td>SLPS_254.14</td><td>To Heart 2</td></tr>
+<tr><td>GX</td><td>SLUS_206.13</td><td>Tom Clancy's Ghost Recon</td></tr>
+<tr><td>GX</td><td>SLUS_206.52</td><td>Tom Clancy's Splinter Cell</td></tr>
+<tr><td>GX</td><td>SLES_512.27</td><td>Tomb Raider - Angel of Darkness</td></tr>
+<tr><td>GX</td><td>SLKA_250.73</td><td>Tomb Raider - The Angel of Darkness</td></tr>
+<tr><td>GX</td><td>SLPS_252.46</td><td>Tomb Raider - The Angel of Darkness</td></tr>
+<tr><td>GX</td><td>SLUS_204.67</td><td>Tomb Raider - The Angel of Darkness</td></tr>
+<tr><td>GX</td><td>SLES_518.54</td><td>Tony Hawk Underground</td></tr>
+<tr><td>GX</td><td>SLES_535.34</td><td>Tony Hawk's American Wasteland</td></tr>
+<tr><td>GX</td><td>SLES_535.35</td><td>Tony Hawk's American Wasteland</td></tr>
+<tr><td>GX</td><td>SLUS_212.08</td><td>Tony Hawk's American Wasteland</td></tr>
+<tr><td>GX</td><td>SLUS_212.95</td><td>Tony Hawk's American Wasteland [Collector's Edition]</td></tr>
+<tr><td>GX</td><td>SLES_547.14</td><td>Tony Hawk's Downhill Jam</td></tr>
+<tr><td>GX</td><td>SLES_547.15</td><td>Tony Hawk's Downhill Jam</td></tr>
+<tr><td>GX</td><td>SLUS_214.56</td><td>Tony Hawk's Downhill Jam</td></tr>
+<tr><td>GX</td><td>SLPM_654.19</td><td>Tony Hawk's Pro Skater 2003</td></tr>
+<tr><td>GX</td><td>SLES_511.30</td><td>Tony Hawk's Pro Skater 4</td></tr>
+<tr><td>GX</td><td>SLES_511.31</td><td>Tony Hawk's Pro Skater 4</td></tr>
+<tr><td>GX</td><td>SLES_511.32</td><td>Tony Hawk's Pro Skater 4</td></tr>
+<tr><td>GX</td><td>SLUS_205.04</td><td>Tony Hawk's Pro Skater 4</td></tr>
+<tr><td>GX</td><td>SLES_543.89</td><td>Tony Hawk's Project 8</td></tr>
+<tr><td>GX</td><td>SLES_543.90</td><td>Tony Hawk's Project 8</td></tr>
+<tr><td>GX</td><td>SLUS_214.44</td><td>Tony Hawk's Project 8</td></tr>
+<tr><td>GX</td><td>SLES_549.63</td><td>Tony Hawk's Proving Ground</td></tr>
+<tr><td>GX</td><td>SLUS_216.16</td><td>Tony Hawk's Proving Ground</td></tr>
+<tr><td>GX</td><td>SLES_518.48</td><td>Tony Hawk's Underground</td></tr>
+<tr><td>GX</td><td>SLES_518.51</td><td>Tony Hawk's Underground</td></tr>
+<tr><td>GX</td><td>SLES_518.53</td><td>Tony Hawk's Underground</td></tr>
+<tr><td>GX</td><td>SLUS_207.31</td><td>Tony Hawk's Underground</td></tr>
+<tr><td>GX</td><td>SLES_526.21</td><td>Tony Hawk's Underground 2</td></tr>
+<tr><td>GX</td><td>SLES_526.22</td><td>Tony Hawk's Underground 2</td></tr>
+<tr><td>GX</td><td>SLUS_209.65</td><td>Tony Hawk's Underground 2</td></tr>
+<tr><td>GX</td><td>SCUS_975.02</td><td>Tourist Trophy</td></tr>
+<tr><td>GX</td><td>SCES_533.72</td><td>Tourist Trophy - The Real Riding Simulator</td></tr>
+<tr><td>GX</td><td>SCPS_151.05</td><td>Tourist Trophy - The Real Riding Simulator</td></tr>
+<tr><td>GX</td><td>SLKA_251.75</td><td>Transformers</td></tr>
+<tr><td>GX</td><td>SLUS_206.68</td><td>Transformers</td></tr>
+<tr><td>GX</td><td>SLES_523.88</td><td>Transformers Armada - Prelude to Energon [Special Edition]</td></tr>
+<tr><td>GX</td><td>SLES_533.09</td><td>Transformers Director's Cut</td></tr>
+<tr><td>GX</td><td>SLES_536.16</td><td>True Crime - New York City</td></tr>
+<tr><td>GX</td><td>SLES_536.17</td><td>True Crime - New York City</td></tr>
+<tr><td>GX</td><td>SLES_536.18</td><td>True Crime - New York City</td></tr>
+<tr><td>GX</td><td>SLUS_211.06</td><td>True Crime - New York City</td></tr>
+<tr><td>GX</td><td>SLUS_203.33</td><td>Turok - Evolution</td></tr>
+<tr><td>GX</td><td>SLES_504.79</td><td>Turok Evolution</td></tr>
+<tr><td>GX</td><td>SCUS_976.21</td><td>Twisted Metal - Head-On [Extra Twisted Edition]</td></tr>
+<tr><td>GX</td><td>SLES_512.20</td><td>Ty - The Tazmanian Tiger</td></tr>
+<tr><td>GX</td><td>SLUS_205.71</td><td>Ty the Tasmanian Tiger</td></tr>
+<tr><td>GX</td><td>SLES_546.44</td><td>Valkyrie Profile 2 - Silmeria</td></tr>
+<tr><td>GX</td><td>SLES_546.45</td><td>Valkyrie Profile 2 - Silmeria</td></tr>
+<tr><td>GX</td><td>SLES_546.46</td><td>Valkyrie Profile 2 - Silmeria</td></tr>
+<tr><td>GX</td><td>SLES_546.47</td><td>Valkyrie Profile 2 - Silmeria</td></tr>
+<tr><td>GX</td><td>SLES_546.48</td><td>Valkyrie Profile 2 - Silmeria</td></tr>
+<tr><td>GX</td><td>SLPM_664.19</td><td>Valkyrie Profile 2 - Silmeria</td></tr>
+<tr><td>GX</td><td>SLUS_214.52</td><td>Valkyrie Profile 2 - Silmeria</td></tr>
+<tr><td>GX</td><td>SLPM_653.11</td><td>Viorate no Atelier - The Alchemist of Gramnad</td></tr>
+<tr><td>GX</td><td>SLES_511.26</td><td>Whirl Tour</td></tr>
+<tr><td>GX</td><td>SLUS_204.89</td><td>Whirl Tour</td></tr>
+<tr><td>GX</td><td>SLUS_210.84</td><td>Winnie the Pooh's Rumbly Tumbly Adventure</td></tr>
+<tr><td>GX</td><td>SCES_500.05</td><td>Wipeout Fusion</td></tr>
+<tr><td>GX</td><td>SLUS_204.62</td><td>Wipeout Fusion</td></tr>
+<tr><td>GX</td><td>SLES_511.18</td><td>Wizardry - Tales of the Forsaken Land</td></tr>
+<tr><td>GX</td><td>SLUS_202.59</td><td>Wizardry - Tales of the Forsaken Land</td></tr>
+<tr><td>GX</td><td>SLES_506.13</td><td>Woody Woodpecker</td></tr>
+<tr><td>GX</td><td>SLPM_645.19</td><td>Woody Woodpecker - Escape from Buzz Buzzard Park</td></tr>
+<tr><td>GX</td><td>SLUS_203.41</td><td>Woody Woodpecker - Escape from Buzz Buzzard Park</td></tr>
+<tr><td>GX</td><td>SLES_531.30</td><td>World Championship Poker</td></tr>
+<tr><td>GX</td><td>SLUS_210.28</td><td>World Championship Poker</td></tr>
+<tr><td>GX</td><td>SLES_515.09</td><td>World of Outlaws - Sprint Cars</td></tr>
+<tr><td>GX</td><td>SLUS_202.83</td><td>World of Outlaws - Sprint Cars 2002</td></tr>
+<tr><td>GX</td><td>SLPM_652.84</td><td>World Rallt Championship II Extreme</td></tr>
+<tr><td>GX</td><td>SCES_516.84</td><td>World Rally Championship 3</td></tr>
+<tr><td>GX</td><td>SLPM_655.83</td><td>World Rally Championship 3</td></tr>
+<tr><td>GX</td><td>SCES_523.89</td><td>World Rally Championship 4</td></tr>
+<tr><td>GX</td><td>SLPM_659.75</td><td>World Rally Championship 4</td></tr>
+<tr><td>GX</td><td>SCES_509.34</td><td>World Rally Championship II Extreme</td></tr>
+<tr><td>GX</td><td>SLAJ_251.15</td><td>World Soccer Winning Eleven 2011</td></tr>
+<tr><td>GX</td><td>SLKA_254.77</td><td>World Soccer Winning Eleven 2011</td></tr>
+<tr><td>GX</td><td>SLPM_552.76</td><td>World Soccer Winning Eleven 2011</td></tr>
+<tr><td>GX</td><td>SLES_518.43</td><td>Worms 3D</td></tr>
+<tr><td>GX</td><td>SLUS_208.94</td><td>Worms 3D</td></tr>
+<tr><td>GX</td><td>SCES_536.80</td><td>WRC - Rally Evolved</td></tr>
+<tr><td>GX</td><td>SLPS_250.99</td><td>WRC - World Rally Championship</td></tr>
+<tr><td>GX</td><td>SCES_532.47</td><td>WRC - World Rally Championship - Rally Evolved</td></tr>
+<tr><td>GX</td><td>SLPM_666.27</td><td>WWE SmackDown! vs. RAW 2007</td></tr>
+<tr><td>GX</td><td>SLES_504.77</td><td>WWF Smackdown! - Just Bring It</td></tr>
+<tr><td>GX</td><td>SLPS_250.87</td><td>WWF SmackDown! - Just Bring It</td></tr>
+<tr><td>GX</td><td>SLUS_203.16</td><td>WWF SmackDown! - Just Bring It!</td></tr>
+<tr><td>GX</td><td>SLUS_200.94</td><td>X Squad</td></tr>
+<tr><td>GX</td><td>SLES_500.31</td><td>X-Squad</td></tr>
+<tr><td>GX</td><td>SLPM_651.90</td><td>zzz_unknown_japanese_title</td></tr>
+<tr><td>GX</td><td>SCKA_200.88</td><td>zzz_unknown_korean_title</td></tr>
+<tr><td>GX</td><td>SLKA_252.60</td><td>zzz_unknown_korean_title</td></tr>
+<tr><td>GX</td><td>SLKA_253.14</td><td>zzz_unknown_korean_title</td></tr>
+<tr><td>GX</td><td>SLKA_254.02</td><td>zzz_unknown_korean_title</td></tr>
+<tr><td>SOFT</td><td>SCES_533.58</td><td>24 - The Game</td></tr>
+<tr><td>SOFT</td><td>SLUS_212.68</td><td>24 - The Game</td></tr>
+<tr><td>SOFT</td><td>SCES_504.10</td><td>Ace Combat - Distant Thunder</td></tr>
+<tr><td>SOFT</td><td>SCES_524.24</td><td>Ace Combat - Squadron Leader</td></tr>
+<tr><td>SOFT</td><td>SCES_540.41</td><td>Ace Combat - The Belkan War</td></tr>
+<tr><td>SOFT</td><td>SLPS_250.52</td><td>Ace Combat 4 - Shattered Skies</td></tr>
+<tr><td>SOFT</td><td>SLUS_201.52</td><td>Ace Combat 4 - Shattered Skies</td></tr>
+<tr><td>SOFT</td><td>SLPS_254.18</td><td>Ace Combat 5 - The Unsung War</td></tr>
+<tr><td>SOFT</td><td>SLUS_208.51</td><td>Ace Combat 5 - The Unsung War</td></tr>
+<tr><td>SOFT</td><td>SLPS_256.29</td><td>Ace Combat Zero - The Belkan War</td></tr>
+<tr><td>SOFT</td><td>SLUS_213.46</td><td>Ace Combat Zero - The Belkan War</td></tr>
+<tr><td>SOFT</td><td>SLUS_212.05</td><td>Aeon Flux</td></tr>
+<tr><td>SOFT</td><td>SLES_509.19</td><td>Akira Psycho Ball</td></tr>
+<tr><td>SOFT</td><td>SLPM_661.75</td><td>Akumajo Dracula - Yami no Juin</td></tr>
+<tr><td>SOFT</td><td>SLES_525.42</td><td>All Music Dance!</td></tr>
+<tr><td>SOFT</td><td>SLUS_205.69</td><td>All-Star Baseball 2004</td></tr>
+<tr><td>SOFT</td><td>SLES_523.66</td><td>America's 10 Most Wanted</td></tr>
+<tr><td>SOFT</td><td>SLES_523.67</td><td>America's 10 Most Wanted</td></tr>
+<tr><td>SOFT</td><td>SLES_531.08</td><td>American Chopper</td></tr>
+<tr><td>SOFT</td><td>SLUS_210.69</td><td>American Chopper</td></tr>
+<tr><td>SOFT</td><td>SLUS_212.88</td><td>American Chopper 2</td></tr>
+<tr><td>SOFT</td><td>SLES_537.79</td><td>American Chopper 2 - Full Throttle</td></tr>
+<tr><td>SOFT</td><td>SCES_517.06</td><td>Amplitude</td></tr>
+<tr><td>SOFT</td><td>SCUS_972.58</td><td>Amplitude</td></tr>
+<tr><td>SOFT</td><td>SLES_540.16</td><td>and 1 Streetball</td></tr>
+<tr><td>SOFT</td><td>SCES_536.42</td><td>Ape Escape 3</td></tr>
+<tr><td>SOFT</td><td>SCUS_975.01</td><td>Ape Escape 3</td></tr>
+<tr><td>SOFT</td><td>SLPS_256.04</td><td>Ar tonelico - Melody of Elemia</td></tr>
+<tr><td>SOFT</td><td>SLUS_211.65</td><td>Arc the Lad - End of Darkness</td></tr>
+<tr><td>SOFT</td><td>SCPS_150.58</td><td>Arc the Lad - Generation</td></tr>
+<tr><td>SOFT</td><td>SCES_519.10</td><td>Arc the Lad - Twilight of the Spirits</td></tr>
+<tr><td>SOFT</td><td>SLPS_251.78</td><td>Argus no Senshi</td></tr>
+<tr><td>SOFT</td><td>SLES_538.20</td><td>Armored Core - Last Raven</td></tr>
+<tr><td>SOFT</td><td>SLES_537.64</td><td>Atelier Iris - Eternal Mana</td></tr>
+<tr><td>SOFT</td><td>SLUS_211.13</td><td>Atelier Iris - Eternal Mana</td></tr>
+<tr><td>SOFT</td><td>SLPM_664.36</td><td>Atelier Iris - Grand Fantasm</td></tr>
+<tr><td>SOFT</td><td>SLPM_659.85</td><td>Atelier Iris 2 - Eternal Mana</td></tr>
+<tr><td>SOFT</td><td>SLES_543.85</td><td>Atelier Iris 2 - The Azoth of Destiny</td></tr>
+<tr><td>SOFT</td><td>SLUS_213.27</td><td>Atelier Iris 2 - The Azoth of Destiny</td></tr>
+<tr><td>SOFT</td><td>SLUS_215.64</td><td>Atelier Iris 3 - Grand Phantasm</td></tr>
+<tr><td>SOFT</td><td>SLPM_651.31</td><td>Atelier Judie - Gramnad no Renkinjutsushi</td></tr>
+<tr><td>SOFT</td><td>SLPS_250.45</td><td>Atelier Lilie</td></tr>
+<tr><td>SOFT</td><td>SLPM_655.94</td><td>Atelier no Iris - Eternal Mana</td></tr>
+<tr><td>SOFT</td><td>SLES_508.50</td><td>ATV Off-Road 2</td></tr>
+<tr><td>SOFT</td><td>SCUS_974.05</td><td>ATV Off-Road Fury 3</td></tr>
+<tr><td>SOFT</td><td>SCUS_974.79</td><td>ATV Off-Road Fury 4</td></tr>
+<tr><td>SOFT</td><td>SLUS_205.70</td><td>ATV Quad Power Racing 2</td></tr>
+<tr><td>SOFT</td><td>SLES_506.72</td><td>Baldur's Gate - Dark Alliance</td></tr>
+<tr><td>SOFT</td><td>SLUS_200.35</td><td>Baldur's Gate - Dark Alliance</td></tr>
+<tr><td>SOFT</td><td>SLES_521.87</td><td>Baldur's Gate - Dark Alliance 2</td></tr>
+<tr><td>SOFT</td><td>SLUS_206.75</td><td>Baldur's Gate - Dark Alliance 2</td></tr>
+<tr><td>SOFT</td><td>SLUS_210.26</td><td>Battlefield 2 - Mordern Combat</td></tr>
+<tr><td>SOFT</td><td>SLUS_215.78</td><td>Biker Mice from Mars</td></tr>
+<tr><td>SOFT</td><td>SLES_538.86</td><td>Black</td></tr>
+<tr><td>SOFT</td><td>SLES_540.30</td><td>Black</td></tr>
+<tr><td>SOFT</td><td>SLUS_213.76</td><td>Black</td></tr>
+<tr><td>SOFT</td><td>SLPM_620.55</td><td>Bloody Roar 3</td></tr>
+<tr><td>SOFT</td><td>SLUS_212.69</td><td>Bully</td></tr>
+<tr><td>SOFT</td><td>SLUS_215.96</td><td>Burnout - Dominator</td></tr>
+<tr><td>SOFT</td><td>SLUS_215.96</td><td>Burnout - Dominator</td></tr>
+<tr><td>SOFT</td><td>SLES_510.44</td><td>Burnout 2 - Point of Impact</td></tr>
+<tr><td>SOFT</td><td>SLUS_204.97</td><td>Burnout 2 - Point of Impact</td></tr>
+<tr><td>SOFT</td><td>SLES_525.84</td><td>Burnout 3 - Takedown</td></tr>
+<tr><td>SOFT</td><td>SLES_525.85</td><td>Burnout 3 - Takedown</td></tr>
+<tr><td>SOFT</td><td>SLUS_210.50</td><td>Burnout 3 - Takedown</td></tr>
+<tr><td>SOFT</td><td>SLAJ_250.94</td><td>Burnout Dominator</td></tr>
+<tr><td>SOFT</td><td>SLPM_667.39</td><td>Burnout Dominator</td></tr>
+<tr><td>SOFT</td><td>SLES_535.06</td><td>Burnout Revenge</td></tr>
+<tr><td>SOFT</td><td>SLES_535.07</td><td>Burnout Revenge</td></tr>
+<tr><td>SOFT</td><td>SLUS_212.42</td><td>Burnout Revenge</td></tr>
+<tr><td>SOFT</td><td>SLPM_620.98</td><td>Busin - Wizardry Alternative</td></tr>
+<tr><td>SOFT</td><td>SCES_542.19</td><td>Buzz! Junior Jungle Party</td></tr>
+<tr><td>SOFT</td><td>SCES_542.20</td><td>Buzz! Junior Jungle Party</td></tr>
+<tr><td>SOFT</td><td>SCES_545.24</td><td>Buzz! Junior Jungle Party</td></tr>
+<tr><td>SOFT</td><td>SLUS_213.79</td><td>Cabela's African Safari</td></tr>
+<tr><td>SOFT</td><td>SLUS_213.84</td><td>Cabela's Alaskan Adventures</td></tr>
+<tr><td>SOFT</td><td>SLUS_213.50</td><td>Cabela's Dangerous Hunts 2</td></tr>
+<tr><td>SOFT</td><td>SLUS_210.21</td><td>Cabela's Deer Hunt - 2005 Season</td></tr>
+<tr><td>SOFT</td><td>SLUS_211.92</td><td>Cabela's Outdoor Adventures 2006</td></tr>
+<tr><td>SOFT</td><td>SLUS_201.41</td><td>CART Fury - Championship Racing</td></tr>
+<tr><td>SOFT</td><td>SLUS_209.62</td><td>Castle of Shikigami 2</td></tr>
+<tr><td>SOFT</td><td>SLES_535.18</td><td>Castle Shikigami II</td></tr>
+<tr><td>SOFT</td><td>SLUS_211.68</td><td>Castlevania - Curse of Dakness</td></tr>
+<tr><td>SOFT</td><td>SLES_537.55</td><td>Castlevania - Curse Of Darkness</td></tr>
+<tr><td>SOFT</td><td>SLES_530.39</td><td>Champions - Return to Arms</td></tr>
+<tr><td>SOFT</td><td>SLUS_209.73</td><td>Champions - Return to Arms</td></tr>
+<tr><td>SOFT</td><td>SLUS_205.65</td><td>Champions of Norrath</td></tr>
+<tr><td>SOFT</td><td>SLES_523.25</td><td>Champions of Norrath - Realms of EverQuest</td></tr>
+<tr><td>SOFT</td><td>SLES_533.86</td><td>Charlie and the Chocolate Factory</td></tr>
+<tr><td>SOFT</td><td>SLUS_206.33</td><td>Clock Tower 3</td></tr>
+<tr><td>SOFT</td><td>SLES_527.68</td><td>Commandos - Strike Force</td></tr>
+<tr><td>SOFT</td><td>SLUS_211.03</td><td>Commandos Strike Force</td></tr>
+<tr><td>SOFT</td><td>SLES_525.73</td><td>Conflict - Global Storm</td></tr>
+<tr><td>SOFT</td><td>SLUS_211.72</td><td>Conflict - Global Terror</td></tr>
+<tr><td>SOFT</td><td>SLPM_658.01</td><td>Crash Bandicoot 5</td></tr>
+<tr><td>SOFT</td><td>SLUS_209.09</td><td>Crash Bandicoot Twinsanity</td></tr>
+<tr><td>SOFT</td><td>SLES_525.68</td><td>Crash Twinsanity</td></tr>
+<tr><td>SOFT</td><td>SLPM_621.02</td><td>Crazy Taxi</td></tr>
+<tr><td>SOFT</td><td>SLES_536.33</td><td>Dance - UK XL Lite</td></tr>
+<tr><td>SOFT</td><td>SLES_536.32</td><td>Dance - UK XL Party</td></tr>
+<tr><td>SOFT</td><td>SLPM_624.27</td><td>Dance Dance Revolution - Party Collection</td></tr>
+<tr><td>SOFT</td><td>SLPM_653.58</td><td>Dance Dance Revolution Extreme</td></tr>
+<tr><td>SOFT</td><td>SLUS_209.16</td><td>Dance Dance Revolution Extreme</td></tr>
+<tr><td>SOFT</td><td>SLUS_204.37</td><td>Dance Dance Revolution MAX</td></tr>
+<tr><td>SOFT</td><td>SLUS_207.11</td><td>Dance Dance Revolution MAX 2</td></tr>
+<tr><td>SOFT</td><td>SLUS_213.77</td><td>Dance Dance Revolution SuperNOVA</td></tr>
+<tr><td>SOFT</td><td>SLES_521.07</td><td>Dance Europe</td></tr>
+<tr><td>SOFT</td><td>SLES_530.09</td><td>Dance Factory</td></tr>
+<tr><td>SOFT</td><td>SLUS_212.96</td><td>Dance Factory</td></tr>
+<tr><td>SOFT</td><td>SLES_543.32</td><td>Dance Fest</td></tr>
+<tr><td>SOFT</td><td>SLES_519.91</td><td>Dance UK</td></tr>
+<tr><td>SOFT</td><td>SLES_524.90</td><td>Dance UK - Extra Trax</td></tr>
+<tr><td>SOFT</td><td>SLES_526.15</td><td>DANCE UK - Extra Trax</td></tr>
+<tr><td>SOFT</td><td>SLES_526.40</td><td>DANCE UK XL</td></tr>
+<tr><td>SOFT</td><td>SLES_517.57</td><td>Dancing Stage Fever</td></tr>
+<tr><td>SOFT</td><td>SLES_515.10</td><td>Dancing Stage Fever MegaMix</td></tr>
+<tr><td>SOFT</td><td>SLES_525.98</td><td>Dancing Stage Fusion</td></tr>
+<tr><td>SOFT</td><td>SCPS_150.04</td><td>Dark Cloud</td></tr>
+<tr><td>SOFT</td><td>SLUS_215.74</td><td>Dawn of Mana</td></tr>
+<tr><td>SOFT</td><td>SLPM_621.54</td><td>DDR Max - Dance Dance Revolution - 6th Mix</td></tr>
+<tr><td>SOFT</td><td>SLPM_652.77</td><td>DDR Max 2 - Dance Dance Revolution - 7th Mix</td></tr>
+<tr><td>SOFT</td><td>SLPS_250.02</td><td>Dead or Alive 2</td></tr>
+<tr><td>SOFT</td><td>SLUS_200.71</td><td>Dead or Alive 2</td></tr>
+<tr><td>SOFT</td><td>SCES_500.03</td><td>Dead or Alive 2 - Hardcore</td></tr>
+<tr><td>SOFT</td><td>SLPS_250.26</td><td>Dead or Alive 2 - Hardcore</td></tr>
+<tr><td>SOFT</td><td>SLES_503.58</td><td>Devil May Cry</td></tr>
+<tr><td>SOFT</td><td>SLPM_650.38</td><td>Devil May Cry</td></tr>
+<tr><td>SOFT</td><td>SLUS_202.16</td><td>Devil May Cry</td></tr>
+<tr><td>SOFT</td><td>SLES_530.38</td><td>Devil May Cry 3 - Dante's Awakening</td></tr>
+<tr><td>SOFT</td><td>SLES_541.86</td><td>Devil May Cry 3 - Dante's Awakening [Special Edition]</td></tr>
+<tr><td>SOFT</td><td>SLPM_661.60</td><td>Devil May Cry 3 [Special Edition]</td></tr>
+<tr><td>SOFT</td><td>SLUS_206.07</td><td>Disney's Extreme Skate Adventure</td></tr>
+<tr><td>SOFT</td><td>SLUS_206.28</td><td>Disney's Finding Nemo</td></tr>
+<tr><td>SOFT</td><td>SLUS_204.78</td><td>Disney's PK - Out of the Shadows</td></tr>
+<tr><td>SOFT</td><td>SLES_522.14</td><td>Disney's The Haunted Mansion</td></tr>
+<tr><td>SOFT</td><td>SLES_522.16</td><td>Disney's The Haunted Mansion</td></tr>
+<tr><td>SOFT</td><td>SCUS_971.46</td><td>Disney's Treasure Planet</td></tr>
+<tr><td>SOFT</td><td>SLES_517.55</td><td>Disney-Pixar's Finding Nemo</td></tr>
+<tr><td>SOFT</td><td>SLES_518.71</td><td>Disney-Pixar's Finding Nemo</td></tr>
+<tr><td>SOFT</td><td>SLES_519.07</td><td>Disney/Pixar Alla Ricerca di Nemo</td></tr>
+<tr><td>SOFT</td><td>SLES_518.70</td><td>Disney/Pixar Finding Nemo</td></tr>
+<tr><td>SOFT</td><td>SLES_518.72</td><td>Disney/Pixar Finding Nemo</td></tr>
+<tr><td>SOFT</td><td>SLES_519.60</td><td>Disney/Pixar À Procura de Nemo</td></tr>
+<tr><td>SOFT</td><td>SLUS_212.58</td><td>dot Hack - G.U. Vol.1 - Rebirth</td></tr>
+<tr><td>SOFT</td><td>SLUS_214.88</td><td>dot Hack - G.U. Vol.2 - Reminisce</td></tr>
+<tr><td>SOFT</td><td>SLPS_256.56</td><td>dot Hack - G.U. Vol.3 - Aruku Youna Hayasa de</td></tr>
+<tr><td>SOFT</td><td>SLES_522.37</td><td>dot Hack - Part 1 - Infection</td></tr>
+<tr><td>SOFT</td><td>SLUS_202.67</td><td>dot Hack - Part 1 - Infection</td></tr>
+<tr><td>SOFT</td><td>SLES_524.67</td><td>dot Hack - Part 2 - Mutation</td></tr>
+<tr><td>SOFT</td><td>SLUS_205.62</td><td>dot Hack - Part 2 - Mutation</td></tr>
+<tr><td>SOFT</td><td>SLES_524.69</td><td>dot Hack - Part 3 - Outbreak</td></tr>
+<tr><td>SOFT</td><td>SLUS_205.63</td><td>dot Hack - Part 3 - Outbreak</td></tr>
+<tr><td>SOFT</td><td>SLES_524.68</td><td>dot Hack - Part 4 - Quarantine</td></tr>
+<tr><td>SOFT</td><td>SLUS_205.64</td><td>dot Hack - Part 4 - Quarantine</td></tr>
+<tr><td>SOFT</td><td>SLPS_251.58</td><td>dot Hack - Vol.3 - Erosion Pollution</td></tr>
+<tr><td>SOFT</td><td>SLPS_252.02</td><td>dot Hack - Vol.4 - Zettai Houi</td></tr>
+<tr><td>SOFT</td><td>SLPS_256.51</td><td>dot Hack G.U. Vol.1 - Saitan</td></tr>
+<tr><td>SOFT</td><td>SLPS_256.55</td><td>dot Hack G.U. Vol.2 - Kimi Omou Koe</td></tr>
+<tr><td>SOFT</td><td>SLPS_251.21</td><td>dot Hack Vol.1</td></tr>
+<tr><td>SOFT</td><td>SLPS_251.43</td><td>dot Hack Vol.2 - Mutation</td></tr>
+<tr><td>SOFT</td><td>SLPM_663.63</td><td>Dragon Quest - Shounen Yangus no Fushigi na Daibouken</td></tr>
+<tr><td>SOFT</td><td>SLUS_201.13</td><td>Driving Emotion Type S</td></tr>
+<tr><td>SOFT</td><td>SLES_500.73</td><td>Driving Emotion Type-S</td></tr>
+<tr><td>SOFT</td><td>SCES_504.59</td><td>Dropship - United Peace Force</td></tr>
+<tr><td>SOFT</td><td>SLUS_204.63</td><td>Dropship - United Peace Force</td></tr>
+<tr><td>SOFT</td><td>SLES_528.84</td><td>Duel Masters</td></tr>
+<tr><td>SOFT</td><td>SLPM_622.14</td><td>Ever Blue 2</td></tr>
+<tr><td>SOFT</td><td>SLES_513.81</td><td>Everblue 2</td></tr>
+<tr><td>SOFT</td><td>SLUS_205.98</td><td>Everblue 2</td></tr>
+<tr><td>SOFT</td><td>SCES_545.35</td><td>Everybody's Tennis</td></tr>
+<tr><td>SOFT</td><td>SLES_500.46</td><td>F1 Racing Championship</td></tr>
+<tr><td>SOFT</td><td>SLES_500.47</td><td>F1 Racing Championship</td></tr>
+<tr><td>SOFT</td><td>SLPS_200.20</td><td>FIFA 2000 World Championship</td></tr>
+<tr><td>SOFT</td><td>SLUS_205.24</td><td>Fighter Maker 2</td></tr>
+<tr><td>SOFT</td><td>SCES_504.90</td><td>Final Fantasy X</td></tr>
+<tr><td>SOFT</td><td>SLPS_250.50</td><td>Final Fantasy X</td></tr>
+<tr><td>SOFT</td><td>SLUS_203.12</td><td>Final Fantasy X</td></tr>
+<tr><td>SOFT</td><td>SLPS_250.88</td><td>Final Fantasy X International</td></tr>
+<tr><td>SOFT</td><td>SLPS_252.50</td><td>Final Fantasy X-2</td></tr>
+<tr><td>SOFT</td><td>SLUS_206.72</td><td>Final Fantasy X-2</td></tr>
+<tr><td>SOFT</td><td>SLPM_654.78</td><td>Final Fantasy X-2 International</td></tr>
+<tr><td>SOFT</td><td>SLES_543.54</td><td>Final Fantasy XII</td></tr>
+<tr><td>SOFT</td><td>SLES_543.55</td><td>Final Fantasy XII</td></tr>
+<tr><td>SOFT</td><td>SLES_543.56</td><td>Final Fantasy XII</td></tr>
+<tr><td>SOFT</td><td>SLES_543.57</td><td>Final Fantasy XII</td></tr>
+<tr><td>SOFT</td><td>SLES_543.58</td><td>Final Fantasy XII</td></tr>
+<tr><td>SOFT</td><td>SCES_538.51</td><td>Forbidden Siren 2</td></tr>
+<tr><td>SOFT</td><td>SLPM_655.48</td><td>Freedom Fighters</td></tr>
+<tr><td>SOFT</td><td>SLUS_206.58</td><td>Freedom Fighters - The Battle for Liberty Island</td></tr>
+<tr><td>SOFT</td><td>SLUS_213.93</td><td>Gallop Racer 2006</td></tr>
+<tr><td>SOFT</td><td>SCPS_150.64</td><td>Ghost in the Shell - Stand Alone Complex</td></tr>
+<tr><td>SOFT</td><td>SLUS_210.06</td><td>Ghost in the Shell - Stane Alone Complex</td></tr>
+<tr><td>SOFT</td><td>SLUS_209.93</td><td>Ghosthunter</td></tr>
+<tr><td>SOFT</td><td>SCES_531.33</td><td>God of War</td></tr>
+<tr><td>SOFT</td><td>SCUS_973.99</td><td>God of War</td></tr>
+<tr><td>SOFT</td><td>SCES_542.06</td><td>God of War II</td></tr>
+<tr><td>SOFT</td><td>SCUS_974.81</td><td>God of War II</td></tr>
+<tr><td>SOFT</td><td>SLES_527.66</td><td>Godzilla - Save The Earth</td></tr>
+<tr><td>SOFT</td><td>SCES_517.19</td><td>Gran Turismo 4</td></tr>
+<tr><td>SOFT</td><td>SCPS_170.01</td><td>Gran Turismo 4</td></tr>
+<tr><td>SOFT</td><td>SCUS_973.28</td><td>Gran Turismo 4</td></tr>
+<tr><td>SOFT</td><td>SLES_541.35</td><td>Grand Theft Auto - Liberty City Stories</td></tr>
+<tr><td>SOFT</td><td>SLES_541.36</td><td>Grand Theft Auto - Liberty City Stories</td></tr>
+<tr><td>SOFT</td><td>SLUS_214.23</td><td>Grand Theft Auto - Liberty City Stories</td></tr>
+<tr><td>SOFT</td><td>SLES_525.41</td><td>Grand Theft Auto - San Andreas</td></tr>
+<tr><td>SOFT</td><td>SLES_529.27</td><td>Grand Theft Auto - San Andreas</td></tr>
+<tr><td>SOFT</td><td>SLPM_659.84</td><td>Grand Theft Auto - San Andreas</td></tr>
+<tr><td>SOFT</td><td>SLUS_209.46</td><td>Grand Theft Auto - San Andreas</td></tr>
+<tr><td>SOFT</td><td>SLUS_205.52</td><td>Grand Theft Auto - Vice City</td></tr>
+<tr><td>SOFT</td><td>SLES_546.22</td><td>Grand Theft Auto - Vice City Stories</td></tr>
+<tr><td>SOFT</td><td>SLES_546.23</td><td>Grand Theft Auto - Vice City Stories</td></tr>
+<tr><td>SOFT</td><td>SLUS_215.90</td><td>Grand Theft Auto - Vice City Stories</td></tr>
+<tr><td>SOFT</td><td>SLES_503.30</td><td>Grand Theft Auto III</td></tr>
+<tr><td>SOFT</td><td>SLES_507.93</td><td>Grand Theft Auto III</td></tr>
+<tr><td>SOFT</td><td>SLUS_200.62</td><td>Grand Theft Auto III</td></tr>
+<tr><td>SOFT</td><td>SLPM_621.08</td><td>Growlanser 3 - The Duel Darkness</td></tr>
+<tr><td>SOFT</td><td>SLPS_201.06</td><td>Growlanser II - The Sense of Justice</td></tr>
+<tr><td>SOFT</td><td>SLUS_212.24</td><td>Guitar Hero</td></tr>
+<tr><td>SOFT</td><td>SLES_535.23</td><td>Gun</td></tr>
+<tr><td>SOFT</td><td>SLES_536.47</td><td>Gun</td></tr>
+<tr><td>SOFT</td><td>SLUS_211.39</td><td>Gun</td></tr>
+<tr><td>SOFT</td><td>SLES_501.58</td><td>Gungriffon Blaze</td></tr>
+<tr><td>SOFT</td><td>SLES_501.59</td><td>Gungriffon Blaze</td></tr>
+<tr><td>SOFT</td><td>SLES_501.60</td><td>Gungriffon Blaze</td></tr>
+<tr><td>SOFT</td><td>SLUS_200.80</td><td>GunGriffon Blaze</td></tr>
+<tr><td>SOFT</td><td>SCES_526.77</td><td>Hardware - Online Arena</td></tr>
+<tr><td>SOFT</td><td>SLUS_207.69</td><td>Harry Potter - Quidditch World Cup</td></tr>
+<tr><td>SOFT</td><td>SLES_511.92</td><td>Harry Potter and the Chamber of Secrets</td></tr>
+<tr><td>SOFT</td><td>SLUS_205.76</td><td>Harry Potter and The Chamber of Secrets</td></tr>
+<tr><td>SOFT</td><td>SLES_524.40</td><td>Harry Potter and the Prisoner of Azkaban</td></tr>
+<tr><td>SOFT</td><td>SLES_526.00</td><td>Harry Potter and The Prisoner of Azkaban</td></tr>
+<tr><td>SOFT</td><td>SLPM_656.12</td><td>Harry Potter and The Prisoner of Azkaban</td></tr>
+<tr><td>SOFT</td><td>SLUS_209.26</td><td>Harry Potter and The Prisoner of Azkaban</td></tr>
+<tr><td>SOFT</td><td>SLES_525.27</td><td>Harry Potter og Fangen fra Azkaban</td></tr>
+<tr><td>SOFT</td><td>SLPS_202.34</td><td>Harry Potter to Himitsu no Heya</td></tr>
+<tr><td>SOFT</td><td>SLUS_215.70</td><td>Heatseeker</td></tr>
+<tr><td>SOFT</td><td>SLPM_621.22</td><td>Hermina to Culus - Lilie no Atelier Mou Hitotsu no Monogatari</td></tr>
+<tr><td>SOFT</td><td>SLES_530.28</td><td>Hitman - Blood Money</td></tr>
+<tr><td>SOFT</td><td>SLES_530.29</td><td>Hitman - Blood Money</td></tr>
+<tr><td>SOFT</td><td>SLES_530.30</td><td>Hitman - Blood Money</td></tr>
+<tr><td>SOFT</td><td>SLES_530.31</td><td>Hitman - Blood Money</td></tr>
+<tr><td>SOFT</td><td>SLES_530.32</td><td>Hitman - Blood Money</td></tr>
+<tr><td>SOFT</td><td>SLPS_252.69</td><td>Hitman - Silent Assasin</td></tr>
+<tr><td>SOFT</td><td>SLES_509.92</td><td>Hitman 2 - Silent Assassin</td></tr>
+<tr><td>SOFT</td><td>SLES_511.07</td><td>Hitman 2 - Silent Assassin</td></tr>
+<tr><td>SOFT</td><td>SLES_511.08</td><td>Hitman 2 - Silent Assassin</td></tr>
+<tr><td>SOFT</td><td>SLES_511.09</td><td>Hitman 2 - Silent Assassin</td></tr>
+<tr><td>SOFT</td><td>SLES_511.10</td><td>Hitman 2 - Silent Assassin</td></tr>
+<tr><td>SOFT</td><td>SLUS_203.74</td><td>Hitman 2 - Silent Assassin</td></tr>
+<tr><td>SOFT</td><td>SLES_518.23</td><td>Hunter - The Reckoning Wayward</td></tr>
+<tr><td>SOFT</td><td>SLPM_650.05</td><td>I am the Coach</td></tr>
+<tr><td>SOFT</td><td>SLES_539.84</td><td>Ice Age 2 - The Meltdown</td></tr>
+<tr><td>SOFT</td><td>SLUS_213.07</td><td>Ice Age 2 - The Meltdown</td></tr>
+<tr><td>SOFT</td><td>SCES_507.60</td><td>Ico</td></tr>
+<tr><td>SOFT</td><td>SCES_532.86</td><td>Jak X - Combat Racing</td></tr>
+<tr><td>SOFT</td><td>SCUS_974.29</td><td>Jak X - Combat Racing</td></tr>
+<tr><td>SOFT</td><td>SLES_512.58</td><td>James Bond 007 - Nightfire</td></tr>
+<tr><td>SOFT</td><td>SLES_512.60</td><td>James Bond 007 - Nightfire</td></tr>
+<tr><td>SOFT</td><td>SLUS_205.79</td><td>James Bond 007 - Nightfire</td></tr>
+<tr><td>SOFT</td><td>SLUS_202.45</td><td>Jeremy McGrath - Supercross World 2002</td></tr>
+<tr><td>SOFT</td><td>SCUS_972.79</td><td>Jet Li - Rise to Honor</td></tr>
+<tr><td>SOFT</td><td>SLPM_660.61</td><td>Jikkyou Powerful Pro Baseball 12</td></tr>
+<tr><td>SOFT</td><td>SLPM_656.30</td><td>Jikkyou Powerful Pro Baseball XI</td></tr>
+<tr><td>SOFT</td><td>SLPM_658.25</td><td>Jikkyou Powerful Pro Yakyuu 11 Chou Ketteiban</td></tr>
+<tr><td>SOFT</td><td>SLPM_665.90</td><td>Jikkyou Powerful Pro Yakyuu 13 Chou Ketteiban</td></tr>
+<tr><td>SOFT</td><td>SLPM_621.92</td><td>Jikkyou Powerful Pro Yakyuu 9</td></tr>
+<tr><td>SOFT</td><td>SLPS_201.31</td><td>Jissen Pachi-Slot Hisshouhou! Juuou</td></tr>
+<tr><td>SOFT</td><td>SLUS_213.04</td><td>Justice League Heroes</td></tr>
+<tr><td>SOFT</td><td>SLUS_210.89</td><td>Karaoke Revolution Vol.3</td></tr>
+<tr><td>SOFT</td><td>SLUS_210.08</td><td>Katamari Damacy</td></tr>
+<tr><td>SOFT</td><td>SLES_500.18</td><td>Kessen</td></tr>
+<tr><td>SOFT</td><td>SLES_500.19</td><td>Kessen</td></tr>
+<tr><td>SOFT</td><td>SLES_500.20</td><td>Kessen</td></tr>
+<tr><td>SOFT</td><td>SLPM_650.15</td><td>Kessen 2</td></tr>
+<tr><td>SOFT</td><td>SLPM_666.76</td><td>Kingdom Hearts - Re:Chain of Memories</td></tr>
+<tr><td>SOFT</td><td>SLES_541.14</td><td>Kingdom Hearts II</td></tr>
+<tr><td>SOFT</td><td>SLES_542.32</td><td>Kingdom Hearts II</td></tr>
+<tr><td>SOFT</td><td>SLES_542.33</td><td>Kingdom Hearts II</td></tr>
+<tr><td>SOFT</td><td>SLES_542.34</td><td>Kingdom Hearts II</td></tr>
+<tr><td>SOFT</td><td>SLES_542.35</td><td>Kingdom Hearts II</td></tr>
+<tr><td>SOFT</td><td>SLUS_210.05</td><td>Kingdom Hearts II</td></tr>
+<tr><td>SOFT</td><td>SLES_531.94</td><td>LEGO Star Wars</td></tr>
+<tr><td>SOFT</td><td>SLUS_210.83</td><td>LEGO Star Wars</td></tr>
+<tr><td>SOFT</td><td>SLES_542.21</td><td>LEGO Star Wars II - The Original Trilogy</td></tr>
+<tr><td>SOFT</td><td>SLUS_214.09</td><td>LEGO Star Wars II - The Original Trilogy</td></tr>
+<tr><td>SOFT</td><td>SLES_526.43</td><td>Leisure Suit Larry - Magna Cum Laude</td></tr>
+<tr><td>SOFT</td><td>SLES_526.44</td><td>Leisure Suit Larry - Magna Cum Laude</td></tr>
+<tr><td>SOFT</td><td>SLES_526.41</td><td>Leisure Suit Larry - Magna Cum Laude - Uncut</td></tr>
+<tr><td>SOFT</td><td>SLES_526.42</td><td>Leisure Suit Larry - Magne cum Laude</td></tr>
+<tr><td>SOFT</td><td>SLES_526.45</td><td>Leisure Suit Larry - Magne cum Laude</td></tr>
+<tr><td>SOFT</td><td>SLPM_651.16</td><td>Lilie no Atelier Plus - Salburg no Renkinjutsushi 3</td></tr>
+<tr><td>SOFT</td><td>SLPM_620.02</td><td>Live World Soccer 2000</td></tr>
+<tr><td>SOFT</td><td>SLUS_210.15</td><td>Madagascar</td></tr>
+<tr><td>SOFT</td><td>SLUS_212.13</td><td>Madden NFL '06</td></tr>
+<tr><td>SOFT</td><td>SLES_522.78</td><td>Mafia</td></tr>
+<tr><td>SOFT</td><td>SLES_522.79</td><td>Mafia</td></tr>
+<tr><td>SOFT</td><td>SLES_522.80</td><td>Mafia</td></tr>
+<tr><td>SOFT</td><td>SLES_522.81</td><td>Mafia</td></tr>
+<tr><td>SOFT</td><td>SLES_522.82</td><td>Mafia</td></tr>
+<tr><td>SOFT</td><td>SLUS_206.71</td><td>Mafia</td></tr>
+<tr><td>SOFT</td><td>SLUS_212.81</td><td>Marvel Nemesis - Rise of the Imperfects</td></tr>
+<tr><td>SOFT</td><td>SLES_503.25</td><td>Max Payne</td></tr>
+<tr><td>SOFT</td><td>SLES_503.26</td><td>Max Payne</td></tr>
+<tr><td>SOFT</td><td>SLPS_252.44</td><td>Max Payne</td></tr>
+<tr><td>SOFT</td><td>SLUS_202.30</td><td>Max Payne</td></tr>
+<tr><td>SOFT</td><td>SLPM_621.27</td><td>Maximo</td></tr>
+<tr><td>SOFT</td><td>SLES_518.73</td><td>Medal of Honor - Rising Sun</td></tr>
+<tr><td>SOFT</td><td>SLES_518.74</td><td>Medal of Honor - Rising Sun</td></tr>
+<tr><td>SOFT</td><td>SLES_518.75</td><td>Medal of Honor - Rising Sun</td></tr>
+<tr><td>SOFT</td><td>SLES_518.76</td><td>Medal of Honor - Rising Sun</td></tr>
+<tr><td>SOFT</td><td>SLUS_207.53</td><td>Medal of Honor - Rising Sun</td></tr>
+<tr><td>SOFT</td><td>SLES_503.83</td><td>Metal Gear Solid 2 - Sons of Liberty</td></tr>
+<tr><td>SOFT</td><td>SLUS_201.44</td><td>Metal Gear Solid 2 - Sons of Liberty</td></tr>
+<tr><td>SOFT</td><td>SLES_820.13</td><td>Metal Gear Solid 3 - Snake Eater</td></tr>
+<tr><td>SOFT</td><td>SLES_820.24</td><td>Metal Gear Solid 3 - Snake Eater</td></tr>
+<tr><td>SOFT</td><td>SLES_820.26</td><td>Metal Gear Solid 3 - Snake Eater</td></tr>
+<tr><td>SOFT</td><td>SLES_820.32</td><td>Metal Gear Solid 3 - Snake Eater</td></tr>
+<tr><td>SOFT</td><td>SLPM_657.90</td><td>Metal Gear Solid 3 - Snake Eater</td></tr>
+<tr><td>SOFT</td><td>SLUS_209.15</td><td>Metal Gear Solid 3 - Snake Eater</td></tr>
+<tr><td>SOFT</td><td>SLES_820.42</td><td>Metal Gear Solid 3 - Subsistance [Disc1of2]</td></tr>
+<tr><td>SOFT</td><td>SLES_820.44</td><td>Metal Gear Solid 3 - Subsistance [Disc1of2]</td></tr>
+<tr><td>SOFT</td><td>SLES_820.46</td><td>Metal Gear Solid 3 - Subsistance [Disc1of2]</td></tr>
+<tr><td>SOFT</td><td>SLES_820.48</td><td>Metal Gear Solid 3 - Subsistance [Disc1of2]</td></tr>
+<tr><td>SOFT</td><td>SLES_820.43</td><td>Metal Gear Solid 3 - Subsistance [Disc2of2]</td></tr>
+<tr><td>SOFT</td><td>SLES_820.45</td><td>Metal Gear Solid 3 - Subsistance [Disc2of2]</td></tr>
+<tr><td>SOFT</td><td>SLES_820.47</td><td>Metal Gear Solid 3 - Subsistance [Disc2of2]</td></tr>
+<tr><td>SOFT</td><td>SLES_820.49</td><td>Metal Gear Solid 3 - Subsistance [Disc2of2]</td></tr>
+<tr><td>SOFT</td><td>SLUS_212.43</td><td>Metal Gear Solid 3 - Subsistence</td></tr>
+<tr><td>SOFT</td><td>SLPM_662.20</td><td>Metal Gear Solid 3 - Subsistence [First Print Limited Edition] [Disc1of3]</td></tr>
+<tr><td>SOFT</td><td>SLPM_662.21</td><td>Metal Gear Solid 3 - Subsistence [First Print Limited Edition] [Disc2of3]</td></tr>
+<tr><td>SOFT</td><td>SLUS_213.59</td><td>Metal Gear Solid 3 - Subsistence [Limited Edition] [Disc2of3]</td></tr>
+<tr><td>SOFT</td><td>SLUS_215.50</td><td>Metal Slug Anthology</td></tr>
+<tr><td>SOFT</td><td>SLPM_625.55</td><td>Momotaro Densetsu</td></tr>
+<tr><td>SOFT</td><td>SLPS_250.35</td><td>Monster Farm 3</td></tr>
+<tr><td>SOFT</td><td>SLPS_252.63</td><td>Monster Farm 4</td></tr>
+<tr><td>SOFT</td><td>SLPS_255.85</td><td>Monster Farm 5</td></tr>
+<tr><td>SOFT</td><td>SLUS_204.23</td><td>Mortal Kombat - Deadly Alliance</td></tr>
+<tr><td>SOFT</td><td>SLUS_208.61</td><td>MTV Music Generator 3 - This is the Remix</td></tr>
+<tr><td>SOFT</td><td>SLUS_213.67</td><td>MVP '06 - NCAA Baseball</td></tr>
+<tr><td>SOFT</td><td>SLPS_252.93</td><td>Naruto - Narutimett Hero</td></tr>
+<tr><td>SOFT</td><td>SLPS_253.98</td><td>Naruto - Narutimett Hero 2</td></tr>
+<tr><td>SOFT</td><td>SLES_541.63</td><td>Naruto - Ultimate Ninja</td></tr>
+<tr><td>SOFT</td><td>SLPS_255.89</td><td>Naruto Narutimett Hero 3</td></tr>
+<tr><td>SOFT</td><td>SCUS_973.48</td><td>NBA '06</td></tr>
+<tr><td>SOFT</td><td>SCUS_975.44</td><td>NBA '07 featuring The Life Vol.2</td></tr>
+<tr><td>SOFT</td><td>SLUS_201.87</td><td>NBA Street</td></tr>
+<tr><td>SOFT</td><td>SLUS_214.94</td><td>Need for Speed - Carbon [Collector's Edition]</td></tr>
+<tr><td>SOFT</td><td>SLUS_203.62</td><td>Need for Speed - Hot Pursuit 2</td></tr>
+<tr><td>SOFT</td><td>SLUS_210.65</td><td>Need for Speed - Underground 2</td></tr>
+<tr><td>SOFT</td><td>SLPS_253.50</td><td>Netsu Chu! Pro Baseball 2004</td></tr>
+<tr><td>SOFT</td><td>SCES_515.78</td><td>Network Access Disc [Original, v4.02 &amp; v4.03]</td></tr>
+<tr><td>SOFT</td><td>SLES_544.39</td><td>Okami</td></tr>
+<tr><td>SOFT</td><td>SLUS_211.15</td><td>Okami</td></tr>
+<tr><td>SOFT</td><td>SLES_501.34</td><td>Oni</td></tr>
+<tr><td>SOFT</td><td>SLES_501.76</td><td>Oni</td></tr>
+<tr><td>SOFT</td><td>SLES_501.77</td><td>Oni</td></tr>
+<tr><td>SOFT</td><td>SLES_501.78</td><td>Oni</td></tr>
+<tr><td>SOFT</td><td>SLES_501.79</td><td>Oni</td></tr>
+<tr><td>SOFT</td><td>SLUS_200.64</td><td>Oni</td></tr>
+<tr><td>SOFT</td><td>SLPM_650.10</td><td>Onimusha</td></tr>
+<tr><td>SOFT</td><td>SLUS_200.18</td><td>Onimusha - Warlords</td></tr>
+<tr><td>SOFT</td><td>SLPM_651.00</td><td>Onimusha 2</td></tr>
+<tr><td>SOFT</td><td>SLPM_654.13</td><td>Onimusha 3</td></tr>
+<tr><td>SOFT</td><td>SLUS_206.94</td><td>Onimusha 3 - Demon Siege</td></tr>
+<tr><td>SOFT</td><td>SLPM_650.56</td><td>Orega Kantoku da Vol.2 - Getitou Pennent Race</td></tr>
+<tr><td>SOFT</td><td>SLUS_213.00</td><td>Over the Hedge</td></tr>
+<tr><td>SOFT</td><td>SCES_504.08</td><td>PaRappa the Rapper 2</td></tr>
+<tr><td>SOFT</td><td>SCPS_150.17</td><td>PaRappa the Rapper 2</td></tr>
+<tr><td>SOFT</td><td>SCUS_971.67</td><td>Parappa the Rapper 2</td></tr>
+<tr><td>SOFT</td><td>SLES_543.08</td><td>Phantasy Star Universe</td></tr>
+<tr><td>SOFT</td><td>SLPM_660.31</td><td>Phantasy Star Universe</td></tr>
+<tr><td>SOFT</td><td>SLUS_211.94</td><td>Phantasy Star Universe</td></tr>
+<tr><td>SOFT</td><td>SLES_516.67</td><td>Piglet's Big Game</td></tr>
+<tr><td>SOFT</td><td>SLES_516.68</td><td>Piglet's Big Game</td></tr>
+<tr><td>SOFT</td><td>SLUS_206.59</td><td>Piglet's Big Game</td></tr>
+<tr><td>SOFT</td><td>SLPM_654.45</td><td>Powerful Pro Baseball 10 - Decision</td></tr>
+<tr><td>SOFT</td><td>SLPM_622.74</td><td>Powerful Pro Baseball 9 - Ketteiban</td></tr>
+<tr><td>SOFT</td><td>SCES_511.35</td><td>Primal</td></tr>
+<tr><td>SOFT</td><td>SCUS_971.42</td><td>Primal - Civilization Is Only Skin Deep</td></tr>
+<tr><td>SOFT</td><td>SLPS_200.13</td><td>Primal Image Vol.01</td></tr>
+<tr><td>SOFT</td><td>SLES_505.53</td><td>Project Eden</td></tr>
+<tr><td>SOFT</td><td>SLUS_201.64</td><td>Project Eden</td></tr>
+<tr><td>SOFT</td><td>SLPM_658.00</td><td>Radiata Stories</td></tr>
+<tr><td>SOFT</td><td>SLUS_212.62</td><td>Radiata Stories</td></tr>
+<tr><td>SOFT</td><td>SLPS_202.46</td><td>Rally Shox</td></tr>
+<tr><td>SOFT</td><td>SCES_509.16</td><td>Ratchet &amp; Clank</td></tr>
+<tr><td>SOFT</td><td>SCPS_150.37</td><td>Ratchet &amp; Clank</td></tr>
+<tr><td>SOFT</td><td>SCUS_971.99</td><td>Ratchet &amp; Clank</td></tr>
+<tr><td>SOFT</td><td>SCPS_150.99</td><td>Ratchet &amp; Clank - Giga Battle</td></tr>
+<tr><td>SOFT</td><td>SCUS_972.68</td><td>Ratchet &amp; Clank - Going Commando</td></tr>
+<tr><td>SOFT</td><td>SCPS_150.56</td><td>Ratchet &amp; Clank 2</td></tr>
+<tr><td>SOFT</td><td>SCES_516.07</td><td>Ratchet &amp; Clank 2 - Locked &amp; Loaded</td></tr>
+<tr><td>SOFT</td><td>SCES_524.56</td><td>Ratchet &amp; Clank 3</td></tr>
+<tr><td>SOFT</td><td>SCPS_150.84</td><td>Ratchet &amp; Clank 3</td></tr>
+<tr><td>SOFT</td><td>SCUS_974.65</td><td>Ratchet - Deadlocked</td></tr>
+<tr><td>SOFT</td><td>SCES_532.85</td><td>Ratchet - Gladiator</td></tr>
+<tr><td>SOFT</td><td>SCUS_973.53</td><td>Ratchet and Clank - Up Your Arsenal</td></tr>
+<tr><td>SOFT</td><td>SLES_512.22</td><td>Rayman 3 - Hoodlum Havoc</td></tr>
+<tr><td>SOFT</td><td>SLUS_206.01</td><td>Rayman 3 - Hoodlum Havoc</td></tr>
+<tr><td>SOFT</td><td>SLUS_202.72</td><td>Rayman Arena</td></tr>
+<tr><td>SOFT</td><td>SLES_504.57</td><td>Rayman M</td></tr>
+<tr><td>SOFT</td><td>SCPS_110.12</td><td>Rimoko Koron</td></tr>
+<tr><td>SOFT</td><td>SLUS_208.90</td><td>Rocky - Legends</td></tr>
+<tr><td>SOFT</td><td>SLES_501.20</td><td>Rumble Racing</td></tr>
+<tr><td>SOFT</td><td>SLUS_201.74</td><td>Rumble Racing</td></tr>
+<tr><td>SOFT</td><td>SLES_514.45</td><td>Rygar - The Legendary Adventure</td></tr>
+<tr><td>SOFT</td><td>SLUS_204.71</td><td>Rygar - The Legendary Adventure</td></tr>
+<tr><td>SOFT</td><td>SLPS_201.78</td><td>Samurai</td></tr>
+<tr><td>SOFT</td><td>SLPM_653.80</td><td>Samurai Michi 2</td></tr>
+<tr><td>SOFT</td><td>SLUS_204.30</td><td>Savage Skies</td></tr>
+<tr><td>SOFT</td><td>SLPM_665.76</td><td>Seiken Densetsu 4</td></tr>
+<tr><td>SOFT</td><td>SLPM_655.17</td><td>Sengoku Musou</td></tr>
+<tr><td>SOFT</td><td>SLES_504.46</td><td>Shadow Man: 2econd Coming</td></tr>
+<tr><td>SOFT</td><td>SLES_506.08</td><td>Shadow Man: 2econd Coming</td></tr>
+<tr><td>SOFT</td><td>SLUS_204.13</td><td>Shadow Man: 2econd Coming</td></tr>
+<tr><td>SOFT</td><td>SCES_533.26</td><td>Shadow of the Colossus</td></tr>
+<tr><td>SOFT</td><td>SCUS_974.72</td><td>Shadow of the Colossus</td></tr>
+<tr><td>SOFT</td><td>SLPM_662.75</td><td>Shin Onimusha - Dawn of Dreams [Disc1of2]</td></tr>
+<tr><td>SOFT</td><td>SLPM_651.70</td><td>Shin Sangoku Musou 2 - Mushouden</td></tr>
+<tr><td>SOFT</td><td>SLPM_653.40</td><td>Shinseiki Evangelion - Ayanami Ikusai Keikaku with Asuka Hokan Keikaku</td></tr>
+<tr><td>SOFT</td><td>SLES_524.45</td><td>Silent Hill 4 - The Room</td></tr>
+<tr><td>SOFT</td><td>SLUS_208.73</td><td>Silent Hill 4 - The Room</td></tr>
+<tr><td>SOFT</td><td>SCPS_151.06</td><td>Siren 2</td></tr>
+<tr><td>SOFT</td><td>SLUS_206.20</td><td>Smash Cars</td></tr>
+<tr><td>SOFT</td><td>SLES_518.00</td><td>Smash Cars Racing</td></tr>
+<tr><td>SOFT</td><td>SLUS_212.31</td><td>Sniper Elite</td></tr>
+<tr><td>SOFT</td><td>SLES_535.60</td><td>Sonic Riders</td></tr>
+<tr><td>SOFT</td><td>SLES_525.05</td><td>Spy Fiction</td></tr>
+<tr><td>SOFT</td><td>SLPS_253.11</td><td>Spy Fiction</td></tr>
+<tr><td>SOFT</td><td>SLUS_208.56</td><td>Spy Fiction</td></tr>
+<tr><td>SOFT</td><td>SLES_516.97</td><td>SSX 3</td></tr>
+<tr><td>SOFT</td><td>SLUS_207.72</td><td>SSX 3</td></tr>
+<tr><td>SOFT</td><td>SLES_535.51</td><td>SSX On Tour</td></tr>
+<tr><td>SOFT</td><td>SLES_535.52</td><td>SSX On Tour</td></tr>
+<tr><td>SOFT</td><td>SLES_820.28</td><td>Star Ocean 3 - Till the End of Time [Disc1of2]</td></tr>
+<tr><td>SOFT</td><td>SLUS_204.88</td><td>Star Ocean 3 - Till the End of Time [Disc1of2]</td></tr>
+<tr><td>SOFT</td><td>SLUS_208.91</td><td>Star Ocean 3 - Till the End of Time [Disc2of2]</td></tr>
+<tr><td>SOFT</td><td>SLPM_654.38</td><td>Star Ocean 3 [Director's Cut] [Disc1of2]</td></tr>
+<tr><td>SOFT</td><td>SLPM_652.09</td><td>Star Ocean 3 [Limited Edition]</td></tr>
+<tr><td>SOFT</td><td>SLES_535.01</td><td>Star Wars - Battlefront II</td></tr>
+<tr><td>SOFT</td><td>SLES_535.02</td><td>Star Wars - Battlefront II</td></tr>
+<tr><td>SOFT</td><td>SLES_535.03</td><td>Star Wars - Battlefront II</td></tr>
+<tr><td>SOFT</td><td>SLPM_661.90</td><td>Star Wars Battlefront II</td></tr>
+<tr><td>SOFT</td><td>SLUS_212.40</td><td>Star Wars Battlefront II</td></tr>
+<tr><td>SOFT</td><td>SLES_543.31</td><td>Street Dance</td></tr>
+<tr><td>SOFT</td><td>SLUS_205.82</td><td>Street Racing Syndicate</td></tr>
+<tr><td>SOFT</td><td>SLUS_200.74</td><td>Summoner</td></tr>
+<tr><td>SOFT</td><td>SCUS_973.62</td><td>Syphon Filter - Dark Mirror</td></tr>
+<tr><td>SOFT</td><td>SCUS_976.20</td><td>Syphon Filter - Dark Mirror</td></tr>
+<tr><td>SOFT</td><td>SCES_520.33</td><td>Syphon Filter - The Omega Strain</td></tr>
+<tr><td>SOFT</td><td>SCUS_972.64</td><td>Syphon Filter - The Omega Strain</td></tr>
+<tr><td>SOFT</td><td>SLPM_652.28</td><td>Taisho Mononoke Ibunroku</td></tr>
+<tr><td>SOFT</td><td>SLPS_257.15</td><td>Tales of Destiny</td></tr>
+<tr><td>SOFT</td><td>SCES_508.78</td><td>Tekken 4</td></tr>
+<tr><td>SOFT</td><td>SLUS_203.28</td><td>Tekken 4</td></tr>
+<tr><td>SOFT</td><td>SLPS_255.10</td><td>Tekken 5</td></tr>
+<tr><td>SOFT</td><td>SLUS_210.59</td><td>Tekken 5</td></tr>
+<tr><td>SOFT</td><td>SLUS_211.60</td><td>Tekken 5 [Demo]</td></tr>
+<tr><td>SOFT</td><td>SLUS_200.01</td><td>Tekken Tag Tournament</td></tr>
+<tr><td>SOFT</td><td>SLPS_252.34</td><td>Tenchu 3</td></tr>
+<tr><td>SOFT</td><td>SLUS_202.13</td><td>Test Drive</td></tr>
+<tr><td>SOFT</td><td>SCES_527.58</td><td>The Getaway - Black Monday</td></tr>
+<tr><td>SOFT</td><td>SCUS_974.08</td><td>The Getaway - Black Monday</td></tr>
+<tr><td>SOFT</td><td>SLPM_661.83</td><td>The Getaway - Black Monday</td></tr>
+<tr><td>SOFT</td><td>SLES_543.59</td><td>The Legend of Spyro - A New Beginning</td></tr>
+<tr><td>SOFT</td><td>SLUS_213.72</td><td>The Legend of Spyro - A New Beginning</td></tr>
+<tr><td>SOFT</td><td>SLES_520.17</td><td>The Lord of the Rings - Return of the King</td></tr>
+<tr><td>SOFT</td><td>SLES_520.19</td><td>The Lord of the Rings - Return of the King</td></tr>
+<tr><td>SOFT</td><td>SLES_520.18</td><td>The Lord of the Rings - Return of the King (Der Herr der Ringe, Die Ruckkehr des Konigs)</td></tr>
+<tr><td>SOFT</td><td>SLUS_205.20</td><td>The Lord of the Rings - The Fellowship of the Ring</td></tr>
+<tr><td>SOFT</td><td>SLES_509.88</td><td>The Lord of the Rings - The Fellowship of the Ring (Der Herr der Ringe - Die Gefahrten)</td></tr>
+<tr><td>SOFT</td><td>SLES_520.20</td><td>The Lord of the Rings - The Return of the King</td></tr>
+<tr><td>SOFT</td><td>SLES_520.21</td><td>The Lord of the Rings - The Return of the King</td></tr>
+<tr><td>SOFT</td><td>SLUS_207.70</td><td>The Lord of the Rings - The Return of the King</td></tr>
+<tr><td>SOFT</td><td>SLES_528.01</td><td>The Lord of the Rings - The Third Age</td></tr>
+<tr><td>SOFT</td><td>SLES_528.02</td><td>The Lord of the Rings - The Third Age</td></tr>
+<tr><td>SOFT</td><td>SLES_528.04</td><td>The Lord of the Rings - The Third Age</td></tr>
+<tr><td>SOFT</td><td>SLES_528.05</td><td>The Lord of the Rings - The Third Age</td></tr>
+<tr><td>SOFT</td><td>SLUS_210.27</td><td>The Lord of the Rings - The Third Age</td></tr>
+<tr><td>SOFT</td><td>SLES_528.03</td><td>The Lord of the Rings - The Third Age (Der Herr der Ringe - Das dritte Zeitalter)</td></tr>
+<tr><td>SOFT</td><td>SLES_512.52</td><td>The Lord of the Rings - The Two Towers</td></tr>
+<tr><td>SOFT</td><td>SLES_512.55</td><td>The Lord of the Rings - The Two Towers</td></tr>
+<tr><td>SOFT</td><td>SLPS_290.04</td><td>The Lord of the Rings - The Two Towers</td></tr>
+<tr><td>SOFT</td><td>SLUS_205.78</td><td>The Lord of the Rings - The Two Towers</td></tr>
+<tr><td>SOFT</td><td>SLES_512.54</td><td>The Lord of the Rings - The Two Towers (Der Herr der Ringe - Die Zwei Turme)</td></tr>
+<tr><td>SOFT</td><td>SLES_512.56</td><td>The Lord of the Rings - The Two Towers (El Senor de Los Anillos - Las Dos Torres)</td></tr>
+<tr><td>SOFT</td><td>SLES_512.53</td><td>The Lord of the Rings - The Two Towers (Seigneur des Anneaux - Les Deux Tours)</td></tr>
+<tr><td>SOFT</td><td>SLPS_290.03</td><td>The Lord of the Rings - The Two Towers [Collector's Box]</td></tr>
+<tr><td>SOFT</td><td>SLES_518.52</td><td>Thug MOTX [Demo]</td></tr>
+<tr><td>SOFT</td><td>SLES_542.53</td><td>Tiger Woods PGA Tour '07</td></tr>
+<tr><td>SOFT</td><td>SLPS_200.92</td><td>Tiger Woods PGA Tour 2001</td></tr>
+<tr><td>SOFT</td><td>SLUS_207.57</td><td>Tiger Woods PGA Tour 2004</td></tr>
+<tr><td>SOFT</td><td>SLUS_210.02</td><td>Tiger Woods PGA Tour 2005</td></tr>
+<tr><td>SOFT</td><td>SLUS_203.14</td><td>TimeSplitters 2</td></tr>
+<tr><td>SOFT</td><td>SLPS_254.14</td><td>To Heart 2</td></tr>
+<tr><td>SOFT</td><td>SLUS_213.94</td><td>Tokyo Xtreme Racer DRIFT 2 / TXR Drift 2</td></tr>
+<tr><td>SOFT</td><td>SLUS_206.13</td><td>Tom Clancy's Ghost Recon</td></tr>
+<tr><td>SOFT</td><td>SLUS_206.52</td><td>Tom Clancy's Splinter Cell</td></tr>
+<tr><td>SOFT</td><td>SLES_512.27</td><td>Tomb Raider - Angel of Darkness</td></tr>
+<tr><td>SOFT</td><td>SLPS_252.46</td><td>Tomb Raider - The Angel of Darkness</td></tr>
+<tr><td>SOFT</td><td>SLUS_204.67</td><td>Tomb Raider - The Angel of Darkness</td></tr>
+<tr><td>SOFT</td><td>SLES_518.54</td><td>Tony Hawk Underground</td></tr>
+<tr><td>SOFT</td><td>SLES_535.34</td><td>Tony Hawk's American Wasteland</td></tr>
+<tr><td>SOFT</td><td>SLES_535.35</td><td>Tony Hawk's American Wasteland</td></tr>
+<tr><td>SOFT</td><td>SLUS_212.08</td><td>Tony Hawk's American Wasteland</td></tr>
+<tr><td>SOFT</td><td>SLUS_212.95</td><td>Tony Hawk's American Wasteland [Collector's Edition]</td></tr>
+<tr><td>SOFT</td><td>SLES_547.14</td><td>Tony Hawk's Downhill Jam</td></tr>
+<tr><td>SOFT</td><td>SLES_547.15</td><td>Tony Hawk's Downhill Jam</td></tr>
+<tr><td>SOFT</td><td>SLUS_214.56</td><td>Tony Hawk's Downhill Jam</td></tr>
+<tr><td>SOFT</td><td>SLPM_654.19</td><td>Tony Hawk's Pro Skater 2003</td></tr>
+<tr><td>SOFT</td><td>SLES_511.30</td><td>Tony Hawk's Pro Skater 4</td></tr>
+<tr><td>SOFT</td><td>SLES_511.31</td><td>Tony Hawk's Pro Skater 4</td></tr>
+<tr><td>SOFT</td><td>SLES_511.32</td><td>Tony Hawk's Pro Skater 4</td></tr>
+<tr><td>SOFT</td><td>SLUS_205.04</td><td>Tony Hawk's Pro Skater 4</td></tr>
+<tr><td>SOFT</td><td>SLES_543.89</td><td>Tony Hawk's Project 8</td></tr>
+<tr><td>SOFT</td><td>SLUS_214.44</td><td>Tony Hawk's Project 8</td></tr>
+<tr><td>SOFT</td><td>SLES_518.48</td><td>Tony Hawk's Underground</td></tr>
+<tr><td>SOFT</td><td>SLES_518.51</td><td>Tony Hawk's Underground</td></tr>
+<tr><td>SOFT</td><td>SLES_518.53</td><td>Tony Hawk's Underground</td></tr>
+<tr><td>SOFT</td><td>SLUS_207.31</td><td>Tony Hawk's Underground</td></tr>
+<tr><td>SOFT</td><td>SLES_526.21</td><td>Tony Hawk's Underground 2</td></tr>
+<tr><td>SOFT</td><td>SLES_526.22</td><td>Tony Hawk's Underground 2</td></tr>
+<tr><td>SOFT</td><td>SLUS_209.65</td><td>Tony Hawk's Underground 2</td></tr>
+<tr><td>SOFT</td><td>SCUS_975.02</td><td>Tourist Trophy</td></tr>
+<tr><td>SOFT</td><td>SCES_533.72</td><td>Tourist Trophy - The Real Riding Simulator</td></tr>
+<tr><td>SOFT</td><td>SCPS_151.05</td><td>Tourist Trophy - The Real Riding Simulator</td></tr>
+<tr><td>SOFT</td><td>SLUS_206.68</td><td>Transformers</td></tr>
+<tr><td>SOFT</td><td>SLES_523.88</td><td>Transformers Armada - Prelude to Energon [Special Edition]</td></tr>
+<tr><td>SOFT</td><td>SLES_533.09</td><td>Transformers Director's Cut</td></tr>
+<tr><td>SOFT</td><td>SLES_546.44</td><td>Valkyrie Profile 2 - Silmeria</td></tr>
+<tr><td>SOFT</td><td>SLES_546.45</td><td>Valkyrie Profile 2 - Silmeria</td></tr>
+<tr><td>SOFT</td><td>SLES_546.46</td><td>Valkyrie Profile 2 - Silmeria</td></tr>
+<tr><td>SOFT</td><td>SLES_546.47</td><td>Valkyrie Profile 2 - Silmeria</td></tr>
+<tr><td>SOFT</td><td>SLES_546.48</td><td>Valkyrie Profile 2 - Silmeria</td></tr>
+<tr><td>SOFT</td><td>SLPM_664.19</td><td>Valkyrie Profile 2 - Silmeria</td></tr>
+<tr><td>SOFT</td><td>SLUS_214.52</td><td>Valkyrie Profile 2 - Silmeria</td></tr>
+<tr><td>SOFT</td><td>SLPM_653.11</td><td>Viorate no Atelier - The Alchemist of Gramnad</td></tr>
+<tr><td>SOFT</td><td>SLUS_210.84</td><td>Winnie the Pooh's Rumbly Tumbly Adventure</td></tr>
+<tr><td>SOFT</td><td>SCES_500.05</td><td>Wipeout Fusion</td></tr>
+<tr><td>SOFT</td><td>SLUS_204.62</td><td>Wipeout Fusion</td></tr>
+<tr><td>SOFT</td><td>SLES_531.30</td><td>World Championship Poker</td></tr>
+<tr><td>SOFT</td><td>SLUS_210.28</td><td>World Championship Poker</td></tr>
+<tr><td>SOFT</td><td>SLUS_202.83</td><td>World of Outlaws - Sprint Cars 2002</td></tr>
+<tr><td>SOFT</td><td>SLPM_652.84</td><td>World Rallt Championship II Extreme</td></tr>
+<tr><td>SOFT</td><td>SCES_516.84</td><td>World Rally Championship 3</td></tr>
+<tr><td>SOFT</td><td>SLPM_655.83</td><td>World Rally Championship 3</td></tr>
+<tr><td>SOFT</td><td>SCES_523.89</td><td>World Rally Championship 4</td></tr>
+<tr><td>SOFT</td><td>SLPM_659.75</td><td>World Rally Championship 4</td></tr>
+<tr><td>SOFT</td><td>SCES_509.34</td><td>World Rally Championship II Extreme</td></tr>
+<tr><td>SOFT</td><td>SLES_518.43</td><td>Worms 3D</td></tr>
+<tr><td>SOFT</td><td>SLUS_208.94</td><td>Worms 3D</td></tr>
+<tr><td>SOFT</td><td>SLPS_250.99</td><td>WRC - World Rally Championship</td></tr>
+<tr><td>SOFT</td><td>SCES_532.47</td><td>WRC - World Rally Championship - Rally Evolved</td></tr>
+<tr><td>SOFT</td><td>SLPM_666.27</td><td>WWE SmackDown! vs. RAW 2007</td></tr>
+<tr><td>SOFT</td><td>SLES_504.77</td><td>WWF Smackdown! - Just Bring It</td></tr>
+<tr><td>SOFT</td><td>SLUS_203.16</td><td>WWF SmackDown! - Just Bring It!</td></tr>
+<tr><td>SOFT</td><td>SLPS_250.87</td><td>WWF SmackDown! Just Bring It</td></tr>
+<tr><td>SOFT</td><td>SLPM_651.90</td><td>zzz_unknown_japanese_title</td></tr>
+</tbody>
+</table>
+
+<script>
+function $(id){return document.getElementById(id);}
+
+var table = $("dbTable");
+var input = $("txtSrchDB");
+var tbody = table.getElementsByTagName('tbody')[0];
+var tr = tbody.getElementsByTagName('tr');
+var i, count = tr.length, classics = 0;
+
+
+var category = urlParams.get('cat');
+if (category == null) 
+	category = "ALL";
+$("category").value = category.toUpperCase();
+doSearch();
+
+function doSearch() {
+
+	// Declare variables
+	var td, txtValue, cols, cat = category;
+	var filter = input.value.replace(/\s/g, '.+').replace(/\*/g, '.+').replace(/seco/g, '2eco');
+	var filter2 = input.value.replace(".", "").replace(/\s/g, '.+').replace(/[-_]/g, '').replace(/\*/g, '.+');
+	var dolike = (input.value.indexOf('*')>=0);
+	if (dolike)
+	{
+		if(input.value.substr(0,1)!='*')filter="^"+filter;
+		if(input.value.substr(input.value.length-1,1)!='*')filter=filter+"$";
+	}
+
+	var reg1 = new RegExp(filter, "i");
+	var reg2 = new RegExp(filter2, "i");
+
+	// Loop through all table rows, and hide those who don't match the search query
+	for (count = i = 0; i < tr.length; i++) {
+		cols = tr[i].children;
+		if(cat != "ALL") {
+			td = cols[0];
+			if (td) {
+				txtValue = td.textContent || td.innerText;
+				if(txtValue != category)
+				{
+					tr[i].style.display = "none";
+					continue;
+				}
+			}
+		}
+
+		td = cols[2];
+		if (td) {
+			txtValue = td.textContent || td.innerText;
+			if (txtValue.search(reg1) > -1) {
+				tr[i].style.display = ""; count++;
+			} else if(dolike) {
+				tr[i].style.display = "none";
+			} else {
+				td = cols[1];
+				if (td) {
+					txtValue = td.textContent || td.innerText;
+					if (txtValue.replace("_", "").replace(".", "").search(reg2) > -1) {
+						tr[i].style.display = ""; count++;
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
+			}
+		}
+	}
+	cols = table.getElementsByTagName("th");
+	if(count == 1) cols[2].innerText="Title"; else cols[2].innerText=count.toLocaleString() + " Titles"
+	input.focus();
+}
+
+function dbLinks() {
+	if (!document.getElementsByTagName || !document.createTextNode) return;
+	for (i = 0; i < tr.length; i++) {
+		tr[i].onclick = function() {
+			//alert(this.rowIndex + 1);
+			var cols = this.getElementsByTagName('td');
+			var url = "https://github.com/Zarh/ManaGunZ/raw/master/pkgfiles/USRDIR/sys/CONFIG/" + cols[0].innerText+"/"+cols[1].innerText;
+			url += (cols[0].innerText=="ENC") ? ".ENC" : ".CONFIG";
+			self.location = url;
+		}
+	}
+}
+
+input.addEventListener('paste', (e) => {
+	e.preventDefault();
+	const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+	window.document.execCommand('insertText', false, text);
+	doSearch();
+});
+
+window.addEventListener('keydown',kd,false);
+function kd(e)
+{
+	e=e||window.event;
+	var kc=e.keyCode;
+	if(kc==27) { // Esc
+		input.value='';
+		setTimeout(doSearch, 0);
+	}
+	if(kc==115) { // F4
+		$("category").focus();
+	}
+}
+
+function sortTable(colID) {
+	if(count <= 1) return;
+
+	if(count > 100) $("sorting").style.display="block";
+
+	setTimeout(function(){
+		var r, i, x, y, len, b = 0;
+		var rows = tbody.rows;
+		len = rows.length;
+		if(PS2Classics) b = classics; else len = classics;
+
+		{while(len > b && rows[len-1].style.display=='none') --len; len++;}
+
+		for (r = b; r < len - 1; r++) {
+			rows[r].lc = rows[r].children[colID].innerHTML.toLowerCase();
+		}
+
+		for (r = b; r < len - 1; r++) {
+			if(rows[r].style.display=='none') continue;
+			x = rows[r].lc;
+			for (i = r + 1; i < len; i++) {
+				y = rows[i].lc;
+				if (x > y) {
+					tbody.insertBefore(rows[i], rows[r]);
+					x = y;
+				}
+			}
+		}
+		$("sorting").style.display="none";
+	}, 0);
+}
+</script>
+</body>
+</html>

@@ -1760,7 +1760,8 @@ var SwipeView = (function (window, document) {
 
 			this.masterPages[this.currentMasterPage].className = this.masterPages[this.currentMasterPage].className.replace(/(^|\s)swipeview-active(\s|$)/, '');
 
-			if(numberOfImages == 2) {this.directionX = 1; this.x++;}
+			if(numberOfImages <= 1) {this.directionX = -1; this.x++;}
+			if(numberOfImages == 2) {this.directionX =  1; this.x++;}
 
 			// Flip the page
 			if (this.directionX > 0)
@@ -1976,7 +1977,7 @@ function navigate()
 </div>
 
 <div id="menu" style="display:none;">
-	<div id="header"><a id="nav-close" href="javascript:void(0)" onclick="hideMenu();"><span style="position:absolute;left:10px">&#9664;</span> webMAN MOD 1.47.30</a></div>
+	<div id="header"><a id="nav-close" href="javascript:void(0)" onclick="hideMenu();"><span style="position:absolute;left:10px">&#9664;</span> webMAN MOD 1.47.31</a></div>
 	<div id="wrapper-menu">
 		<div id="scroller">
 			<ul id="thelist">

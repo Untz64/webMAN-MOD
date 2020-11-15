@@ -95,7 +95,29 @@ static void ps3mapi_find_peek_poke_hexview(char *buffer, char *templn, char *par
 
 	u8 data[HEXVIEW_SIZE]; struct CellFsStat s;
 	bool is_file = islike(param, "/hexview.ps3/");
-	if(is_file) address = (u64)get_valuen64(param, "&offset=");
+	if(is_file)
+	{
+		char *fname = param + 12;
+		address = (u64)get_valuen64(fname, "&offset=");
+
+		char *pos = strstr(fname, "&data=");
+		if(pos)
+		{
+			if(ISDIGIT(pos[6]))
+				flen = Hex2Bin(pos + 6, templn);
+			else
+			{
+				flen = sprintf(templn, "%s", pos + 6);
+				// convert pipes to line breaks
+				for(pos = templn; *pos; ++pos) if(*pos == '|') *pos = '\n';
+			}
+
+			get_flag(fname, "&");
+			found_address = address, found = true;
+			write_file(fname, CELL_FS_O_WRONLY, templn, address, flen, false);
+			goto view_file;
+		}
+	}
 
 	get_flag(param + 10, "&");
 
@@ -187,6 +209,9 @@ static void ps3mapi_find_peek_poke_hexview(char *buffer, char *templn, char *par
 
 view_file:
 
+	address &= 0xFFFFFFFFFFFFFFF0ULL;
+	addr = address;
+
 	if(is_file)
 	{
 		param += 12; cellFsStat(param, &s);
@@ -206,9 +231,8 @@ view_file:
 
 	if(address + HEXVIEW_SIZE > (upper_memory + 8)) address = 0;
 
-	flen = (bits8) ? 1 : (bits16) ? 2 : (bits32) ? 4 : 8;
-	address &= 0xFFFFFFFFFFFFFFF0ULL;
-	addr = address;
+	if(!is_file)
+		flen = (bits8) ? 1 : (bits16) ? 2 : (bits32) ? 4 : 8;
 
 #ifdef COBRA_ONLY
 	if(lv1) { system_call_1(SC_COBRA_SYSCALL8, SYSCALL8_OPCODE_DISABLE_COBRA); }

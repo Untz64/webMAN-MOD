@@ -13,9 +13,11 @@
 
 #define TITLEID_LEN		10
 
+static int8_t check_multipsx = NONE;
+
 static u8 mount_app_home = false; // force mount JB folder in /app_home (false = use webman_config->app_home)
 
-#ifdef PKG_LAUNCHER
+#ifdef MOUNT_GAMEI
 static char map_title_id[TITLEID_LEN];
 #endif
 
@@ -39,7 +41,7 @@ typedef struct
 #define MOUNT_NORMAL	1	// mount game/folder + store last game + show msg + allow Auto-enable external gameDATA
 // MOUNT_EXT_GDATA		2	// mount /dev_usb/GAMEI as /dev_hdd0/game on non-Cobra edition
 // EXPLORE_CLOSE_ALL	3	// MOUNT_NORMAL + close all first
-
+#define MOUNT_NEXT_CD	4	// MOUNT_NORMAL + mount next CD (PSXISO)
 
 // /mount_ps3/<path>[?random=<x>[&emu={ ps1_netemu.self / ps1_emu.self / ps2_netemu.self / ps2_emu.self }][offline={0/1}]
 // /mount.ps3/<path>[?random=<x>[&emu={ ps1_netemu.self / ps1_emu.self / ps2_netemu.self / ps2_emu.self }][offline={0/1}]
@@ -95,7 +97,7 @@ static void auto_play(char *param, u8 play_ps3)
 			}
 		}
 		else
- #if defined(FAKEISO) || defined(PKG_LAUNCHER)
+ #ifdef COBRA_ONLY
 		if(!l2 && ((strstr(param, "/PSPISO") != NULL) || (strstr(param, ".ntfs[PSPISO]") != NULL)))
 		{
 			if(mount_ps3 && XMB_GROUPS && webman_config->pspl && (isDir(PSP_LAUNCHER_MINIS) || isDir(PSP_LAUNCHER_REMASTERS)))
@@ -103,17 +105,6 @@ static void auto_play(char *param, u8 play_ps3)
 				if(explore_exec_push(250000, true))	// move to psp_launcher folder and open it
 				if(autoplay && !explore_exec_push(500000, false))	// start psp_launcher
 					autoplay = false;
-			}
-		}
-		else
- #endif
- #ifdef PKG_LAUNCHER
-		if(strstr(param, "/GAMEI/"))
-		{
-			if(XMB_GROUPS && webman_config->ps3l)
-			{
-				exec_xmb_command("focus_index pkg_launcher");
-				explore_exec_push(200000, true); // open pkg_launcher folder
 			}
 		}
 		else
@@ -619,20 +610,35 @@ static bool game_mount(char *buffer, char *templn, char *param, char *tempstr, b
 						{
 							{system_call_1(36, (u64) "/dev_bdvd");} // decrypt dev_bdvd files
 
-							sprintf(target, "%s/%s", "/dev_hdd0/GAMES", "My Disc Backup");
+							int cnt = 0;
+							do {
+								sprintf(target, "%s/%s %i", "/dev_hdd0/GAMES", "My Disc Backup", ++cnt);
+							} while (isDir(target));
 
-							char title[80];
+							char title[128];
 							sprintf(title, "/dev_bdvd/PS3_GAME/PARAM.SFO"); check_ps3_game(title);
 							if(file_exists(title))
 							{
 								char title_id[TITLEID_LEN];
 								getTitleID(title, title_id, GET_TITLE_AND_ID);
+
+								u8 n = 0; unsigned char c;
+								for(u8 i = 0; title[i]; i++)
+								{
+									c = (unsigned char)title[i];
+									if((c < 0x20) || (c > 0x7F)) continue;
+									if(!strchr("\\\"/<|>:*?", title[i])) title[n++] = title[i];
+								}
+								title[n] = 0;
+
 								if(*title_id && (title_id[8] >= '0'))
 								{
 									if(strstr(title, " ["))
 										sprintf(target + 16, "%s", title);
-									else
+									else if(*title)
 										sprintf(target + 16, "%s [%s]", title, title_id);
+									else if(*title)
+										sprintf(target + 16, "%s", title_id);
 								}
 							}
 						}
@@ -679,7 +685,6 @@ static bool game_mount(char *buffer, char *templn, char *param, char *tempstr, b
 			// ------------------
 			{
 				size_t mlen;
-				bool is_gamei = false;
 				bool is_movie = strstr(param, "/BDISO") || strstr(param, "/DVDISO") || !extcmp(param, ".ntfs[BDISO]", 12) || !extcmp(param, ".ntfs[DVDISO]", 13);
 
 #ifndef ENGLISH_ONLY
@@ -694,9 +699,7 @@ static bool game_mount(char *buffer, char *templn, char *param, char *tempstr, b
 				strcat(buffer, is_movie ? STR_MOVIETOM : STR_GAMETOM); strcat(buffer, ": "); add_breadcrumb_trail(buffer, source);
 
 				//if(strstr(param, "PSX")) {sprintf(tempstr, " <font size=2>[CD %i • %s]</font>", CD_SECTOR_SIZE_2352, (webman_config->ps1emu) ? "ps1_netemu.self" : "ps1_emu.self"); strcat(buffer, tempstr);}
-#ifdef PKG_LAUNCHER
-				is_gamei = strstr(param, "/GAMEI/");
-#endif
+
 				if(is_movie)
 				{
 #ifndef ENGLISH_ONLY
@@ -719,20 +722,13 @@ static bool game_mount(char *buffer, char *templn, char *param, char *tempstr, b
 					mlen = sprintf(tempstr, "<hr><img src=\"%s\" onerror=\"this.src='%s';\" height=%i>"
 											"<hr>%s", enc_dir_name, wm_icons[iPS2], 300, mounted ? STR_PS2LOADED : STR_ERROR);
 				}
-				else if(((strstr(param, "/PSPISO") || strstr(param, "/ISO/")) && is_ext(param, ".iso")) || is_gamei)
+				else if((strstr(param, "/PSPISO") || strstr(param, "/ISO/")) && is_ext(param, ".iso"))
 				{
 #ifndef ENGLISH_ONLY
 					char *STR_PSPLOADED = buf; //[232]; //	= "Game loaded successfully. Start the game using <b>PSP Launcher</b>.<hr>";
 					sprintf(STR_PSPLOADED,   "Game %s%s%s</b>.<hr>",
 											 "loaded successfully. Start the ", "game using <b>", "PSP Launcher");
 					language("STR_PSPLOADED", STR_PSPLOADED, STR_PSPLOADED);
-
-#endif
-#ifdef PKG_LAUNCHER
-					if(is_gamei)
-					{
-						char *pos = strstr(STR_PSPLOADED, "PSP Launcher"); if(pos) strcpy(pos, "PKG Launcher");
-					}
 #endif
 					mlen = sprintf(tempstr, "<hr><img src=\"%s\" onerror=\"this.src='%s';\" height=%i>"
 											"<hr>%s", enc_dir_name, wm_icons[iPSP], strcasestr(enc_dir_name,".png") ? 200 : 300, mounted ? STR_PSPLOADED : STR_ERROR);
@@ -897,8 +893,8 @@ static void set_app_home(const char *game_path)
 		sys_map_path("/app_home", isDir("/dev_hdd0/packages") ?
 										"/dev_hdd0/packages" : NULL); // Enable install all packages on HDD when game is unmounted
 
+	sys_map_path(APP_HOME_DIR, game_path);
 	sys_map_path("/app_home/USRDIR", NULL);
-	sys_map_path("/app_home/PS3_GAME", game_path);
 }
 
 static void do_umount_iso(void)
@@ -941,6 +937,8 @@ static void do_umount(bool clean)
 	root_check = true;
 #endif
 
+	check_multipsx = NONE;
+
 	cellFsUnlink("/dev_hdd0/tmp/game/ICON0.PNG"); // remove XMB disc icon
 
 	if(fan_ps2_mode) reset_fan_mode(); // restore normal fan mode
@@ -950,7 +948,9 @@ static void do_umount(bool clean)
 		{ PS3MAPI_ENABLE_ACCESS_SYSCALL8 }
 
 		cobra_unset_psp_umd(); // eject PSPISO
-
+ #ifndef LITE_EDITION
+		swap_file("/dev_blind/pspemu/", "psp_emulator.self", "psp_emulator.self.dec_edat", "psp_emulator.self.original"); // restore original psp_emulator.self
+ #endif
 		do_umount_iso();	// unmount iso
  #ifdef PS2_DISC
 		do_umount_ps2disc(false); // unmount ps2disc
@@ -977,13 +977,14 @@ static void do_umount(bool clean)
 		set_app_home(NULL); // unmap app_home
 
 		// unmap GAMEI & PKGLAUNCH
- #ifdef PKG_LAUNCHER
+ #ifdef MOUNT_GAMEI
 		if(*map_title_id)
 		{
 			char gamei_mapping[32];
 			sprintf(gamei_mapping, HDD0_GAME_DIR "%s", map_title_id);
 			sys_map_path(gamei_mapping, NULL);
 			sys_map_path(PKGLAUNCH_DIR, NULL);
+			*map_title_id = NULL;
 		}
  #endif
 
@@ -1242,6 +1243,18 @@ static void mount_on_insert_usb(bool on_xmb, char *msg)
 	{
 		automount = 0; enable_fan_control(PS2_MODE_OFF);
 	}
+	else if((check_multipsx >= 0) && IS_INGAME)
+	{
+		if(isDir("/dev_usb000") == check_multipsx)
+		{
+			check_multipsx = NONE;
+			show_msg(STR_GAMEUM); play_rco_sound("snd_trophy");
+
+			wait_for("/dev_usb000", 5); // wait for user reinsert the USB device
+
+			mount_game("_next", MOUNT_NEXT_CD);
+		}
+	}
 }
 #endif
 
@@ -1325,6 +1338,7 @@ static bool mount_ret = false;
 static void mount_thread(u64 action)
 {
 	bool ret = false;
+	bool multiCD = false; // mount_lastgames.h
 
 	automount = 0;
 
@@ -1404,7 +1418,7 @@ static void mount_thread(u64 action)
 
 		if(IS_ON_XMB)
 		{
-			while(View_Find("explore_plugin") == 0) sys_ppu_thread_sleep(1); // wait for explore_plugin
+			wait_for_xmb(); // wait for explore_plugin
 
 			do_umount(false);
 			open_browser(url, 0);

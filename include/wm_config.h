@@ -39,7 +39,7 @@ typedef struct
 	u8 use_filename;  // 0=use title in PARAM.SFO, 1=show filename as name
 	u8 launchpad_xml; // 0=none, 1=use launchpad / PhotoGUI
 	u8 launchpad_grp; // 0=sort launchpad by type/name, 1=sort launchpad by name (disable grouping)
-	u8 ps3l;   // 0=none, 1=PKG Launcher
+	u8 gamei;   // 0=none, 1=scan GAMEI folder
 	u8 roms;   // 0=none, 1=ROMS group
 	u8 noused; // formerly mc_app
 	u8 info;   // info level: 0=Path, 1=Path + ID, 2=ID, 3=None

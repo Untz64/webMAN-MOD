@@ -30,7 +30,7 @@
 	</div>
 
 	<span style="position:absolute;float:right;right:-5px;top:10px;">
-	<a onclick="if(self.location.toString().indexOf('/cpursx.ps3')>0){self.location='/cpursx.html';}else{var s=prompt('Search:','');if(s){$('rhtm').style.display='block';self.location+='?'+escape(s)}}"><span id="ngames"></span> &nbsp; &#x1F50D;</a></font>
+	<a onclick="if(self.location.href.indexOf('/cpursx.ps3')>0){self.location='/cpursx.html';}else{var s=prompt('Search:','');if(s){$('rhtm').style.display='block';self.location+='?'+escape(s)}}"><span id="ngames"></span> &nbsp; &#x1F50D;</a></font>
 	</span>
 </div>
 
@@ -40,7 +40,7 @@
 	<a onclick="self.location='/games.ps3';" class="b_cflow">Coverflow</a>
 	<a onclick="self.location='/home.ps3mapi/sman.ps3';" class="b_ps3mapi">PS3MAPI</a>
 	<a onclick="self.location='/setup.ps3/sman.ps3';" class="b_setup" style="color:#0FF;"><span id="setup">Setup</span></a>
-	<a onclick="self.location='/cpursx.ps3?/sman.ps3';" class="b_cpursx">CPU/RSX</a>
+	<a onclick="self.location=(self.location.href.indexOf('/cpursx.ps3')>0)?'/tempc.html':'/cpursx.ps3?/sman.ps3';" class="b_cpursx">CPU/RSX</a>
 </div>
 </font>
 

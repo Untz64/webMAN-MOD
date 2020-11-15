@@ -66,14 +66,12 @@ static void show_status(const char *label, const char *status)
 	show_msg(msg);
 }
 
-#ifndef LITE_EDITION
 static void play_rco_sound(const char *sound)
 {
 	char *system_plugin = (char*)"system_plugin";
 	char *sep = strchr(sound, '|'); if(sep) {*sep = NULL, system_plugin = sep + 1;}
 	PlayRCOSound((View_Find(system_plugin)), sound, 1, 0);
 }
-#endif
 
 static explore_plugin_interface *get_explore_interface(void)
 {
@@ -296,7 +294,7 @@ static bool is_app_home_onxmb(void)
 {
 	if(has_app_home >= 0) return (bool)has_app_home; has_app_home = false;
 
-	sys_addr_t sysmem = NULL;
+	sys_addr_t sysmem = NULL; has_app_home = 0;
 	if(sys_memory_allocate(_64KB_, SYS_MEMORY_PAGE_SIZE_64K, &sysmem) == CELL_OK)
 	{
 		char *buffer = (char*)sysmem;
@@ -305,7 +303,7 @@ static bool is_app_home_onxmb(void)
 		sys_memory_free(sysmem);
 	}
 
-	return has_app_home;
+	return (bool)has_app_home;
 }
 
 static void launch_disc(bool exec)

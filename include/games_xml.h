@@ -121,8 +121,9 @@ static void make_fb_xml(void)
 static bool add_custom_xml(char *query_xmb)
 {
 	char *custom_xml = query_xmb + 800;
-	for(u8 d = 0; d < 7; d++)
+	for(u8 d = 0; d < MAX_DRIVES; d++)
 	{
+		if(d == NET) d = NTFS + 1;
 		sprintf(custom_xml,  "%s/wm_custom.xml", drives[d]);
 		if(file_exists(custom_xml))
 		{
@@ -261,7 +262,7 @@ static bool scan_mygames_xml(u64 conn_s_p)
 
 	make_fb_xml();
 
-	#if defined(PKG_LAUNCHER) || defined(MOUNT_ROMS)
+	#if defined(MOUNT_ROMS)
 	bool c_roms = webman_config->roms;
 	char *RETROARCH_DIR = NULL;
 	if(c_roms)
@@ -274,9 +275,8 @@ static bool scan_mygames_xml(u64 conn_s_p)
 	u16 key;
 	int fdxml; char *xml_file = (char*)MY_GAMES_XML;
 
-	#ifdef PKG_LAUNCHER
-	bool pkg_launcher = webman_config->ps3l && isDir(PKGLAUNCH_DIR);
-	#endif
+	if(!is_app_home_onxmb()) webman_config->gamei = 0; // do not scan GAMEI if app_home/PS3_GAME icon is not on XMB
+
 	bool ps2_launcher = webman_config->ps2l && isDir(PS2_CLASSIC_PLACEHOLDER);
 	#ifdef COBRA_ONLY
 	bool psp_launcher = webman_config->pspl && (isDir(PSP_LAUNCHER_MINIS) || isDir(PSP_LAUNCHER_REMASTERS));
@@ -288,8 +288,8 @@ static bool scan_mygames_xml(u64 conn_s_p)
 	check_cover_folders(templn);
 
 	#ifdef MOUNT_ROMS
-	#define ROM_PATHS	70
-	const char roms_path[ROM_PATHS][12] = { "2048", "CAP32", "MAME", "MAME078", "MAME2000", "MAME2003", "FBA", "FBA2012", "FBNEO", "ATARI", "ATARI2600", "ATARI5200", "ATARI7800", "JAGUAR", "LYNX", "HANDY", "HATARI", "BOMBER", "NXENGINE", "AMIGA", "VICE", "DOSBOX", "GW", "DOOM", "QUAKE", "QUAKE2", "JAVAME", "LUA", "O2EM", "INTV", "BMSX", "FMSX", "NEOCD", "PCE", "PCFX", "SGX", "NGP", "NES", "FCEUMM", "NESTOPIA", "QNES", "GB", "GBC", "GAMBATTE", "TGBDUAL", "GBA", "GPSP", "VBOY", "VBA", "MGBA", "PALM", "POKEMINI", "GENESIS", "GEN", "MEGAD", "PICO", "GG", "GEARBOY", "ZX81", "FUSE", "SNES", "MSNES", "SNES9X", "SNES9X2005", "SNES9X2010", "SNES9X_NEXT", "THEODORE", "UZEM", "VECX", "WSWAM" };
+	#define ROM_PATHS	72
+	const char roms_path[ROM_PATHS][12] = { "2048", "CAP32", "MAME", "MAME078", "MAME2000", "MAME2003", "MAMEPLUS", "FBA", "FBA2012", "FBNEO", "ATARI", "ATARI2600", "STELLA", "ATARI5200", "ATARI7800", "JAGUAR", "LYNX", "HANDY", "HATARI", "BOMBER", "NXENGINE", "AMIGA", "VICE", "DOSBOX", "GW", "DOOM", "QUAKE", "QUAKE2", "JAVAME", "LUA", "O2EM", "INTV", "BMSX", "FMSX", "NEOCD", "PCE", "PCFX", "SGX", "NGP", "NES", "FCEUMM", "NESTOPIA", "QNES", "GB", "GBC", "GAMBATTE", "TGBDUAL", "GBA", "GPSP", "VBOY", "VBA", "MGBA", "PALM", "POKEMINI", "GENESIS", "GEN", "MEGAD", "PICO", "GG", "GEARBOY", "ZX81", "FUSE", "SNES", "MSNES", "SNES9X", "SNES9X2005", "SNES9X2010", "SNES9X_NEXT", "THEODORE", "UZEM", "VECX", "WSWAM" };
 	u16 roms_count[ROM_PATHS];
 	u8 roms_index = 0;
 	#endif
@@ -322,16 +322,6 @@ scan_roms:
 		if(!(webman_config->cmask & PS3))
 		{
 			_concat(&myxml_ps3, "<View id=\"seg_wm_ps3_items\"><Attributes>");
-			#ifdef PKG_LAUNCHER
-			if(pkg_launcher)
-			{
-				sprintf(templn, "<Table key=\"pkg_launcher\">"
-								XML_PAIR("icon", PKGLAUNCH_ICON)
-								XML_PAIR("title","PKG Launcher")
-								XML_PAIR("info","%s") "%s",
-								"PKG Launcher", "</Table>"); _concat(&myxml_ps3, templn);
-			}
-			#endif
 		}
 		if(!(webman_config->cmask & PS2))
 		{
@@ -400,8 +390,8 @@ scan_roms:
 	if((cobra_version > 0) && file_exists(WM_RES_PATH "/wm_proxy.sprx") && !(webman_config->wm_proxy)) {proxy_plugin = (char*)XAI_LINK_PAIR, *localhost = NULL;}
 	#endif
 
-	#if defined(PKG_LAUNCHER) || defined(MOUNT_ROMS)
-	f1_len = ((webman_config->nogrp && c_roms) ? id_ROMS : webman_config->ps3l ? id_GAMEI : id_VIDEO) + 1;
+	#if defined(MOUNT_GAMEI) || defined(MOUNT_ROMS)
+	f1_len = ((webman_config->nogrp && c_roms) ? id_ROMS : webman_config->gamei ? id_GAMEI : id_VIDEO) + 1;
 	#endif
 
 	int ns = NONE; u8 uprofile = profile;
@@ -413,7 +403,7 @@ scan_roms:
 	if(g_socket >= 0 && open_remote_dir(g_socket, "/", &abort_connection) < 0) do_umount(false);
 	#endif
 
-	for(u8 f0 = 0; f0 < 16; f0++)  // drives: 0="/dev_hdd0", 1="/dev_usb000", 2="/dev_usb001", 3="/dev_usb002", 4="/dev_usb003", 5="/dev_usb006", 6="/dev_usb007", 7="/net0", 8="/net1", 9="/net2", 10="/net3", 11="/net4", 12="/ext", 13="/dev_sd", 14="/dev_ms", 15="/dev_cf"
+	for(u8 f0 = 0; f0 < MAX_DRIVES; f0++)  // drives: 0="/dev_hdd0", 1="/dev_usb000", 2="/dev_usb001", 3="/dev_usb002", 4="/dev_usb003", 5="/dev_usb006", 6="/dev_usb007", 7="/net0", 8="/net1", 9="/net2", 10="/net3", 11="/net4", 12="/ext", 13="/dev_sd", 14="/dev_ms", 15="/dev_cf"
 	{
 		if(check_drive(f0)) continue;
 
@@ -452,9 +442,7 @@ scan_roms:
 				if(key >= max_xmb_items) break;
 
 				//if(IS_PS2_FOLDER && f0>0)  continue; // PS2ISO is supported only from /dev_hdd0
-#ifdef PKG_LAUNCHER
-				if(IS_GAMEI_FOLDER) {if(is_net || (IS_HDD0) || (IS_NTFS)) continue;}
-#endif
+				if(IS_GAMEI_FOLDER) {if((!webman_config->gamei) || (IS_HDD0) || (IS_NTFS)) continue;}
 				if(IS_VIDEO_FOLDER) {if(is_net) continue; else strcpy(paths[id_VIDEO], (IS_HDD0) ? "video" : "GAMES_DUP");}
 				if(IS_NTFS)  {if(f1 >= id_ISO) break; else if(IS_JB_FOLDER || (f1 == id_PSXGAMES)) continue;} // 0="GAMES", 1="GAMEZ", 7="PSXGAMES", 9="ISO", 10="video", 11="GAMEI", 12="ROMS"
 
@@ -463,15 +451,15 @@ scan_roms:
 #ifdef NET_SUPPORT
 				if(is_net)
 				{
-					if(f1 >= id_ISO) break; // ignore 9="ISO", 10="video", 11="GAMEI"
+					if(f1 >= id_ISO) f1 = id_GAMEI; // ignore 9="ISO", 10="video"
 				}
 #endif
 				if(check_content_type(f1)) continue;
 			}
 
 #ifdef NET_SUPPORT
-			if(is_net && (netiso_svrid == (f0-7)) && (g_socket != -1)) ns = g_socket; /* reuse current server connection */ else
-			if(is_net && (ns<0)) ns = connect_to_remote_server(f0-7);
+			if(is_net && (netiso_svrid == (f0-NET)) && (g_socket != -1)) ns = g_socket; /* reuse current server connection */ else
+			if(is_net && (ns<0)) ns = connect_to_remote_server(f0-NET);
 #endif
 			if(is_net && (ns<0)) break;
 
@@ -530,7 +518,7 @@ scan_roms:
 				{
 					v3_entries = read_remote_dir(ns, &data2, &abort_connection);
 					if(!data2) goto continue_reading_folder_xml; //continue;
-					data = (netiso_read_dir_result_data*)data2; sprintf(neth, "/net%i", (f0-7));
+					data = (netiso_read_dir_result_data*)data2; sprintf(neth, "/net%i", (f0-NET));
 				}
 #endif
 				if(!is_net && isDir(param) == false) goto continue_reading_folder_xml; //continue;
@@ -622,7 +610,7 @@ next_xml_entry:
 
 						if(IS_JB_FOLDER)
 						{
-#ifdef PKG_LAUNCHER
+#ifdef MOUNT_GAMEI
 							if(IS_GAMEI_FOLDER)
 							{
 								// create game folder in /dev_hdd0/game and copy PARAM.SFO to prevent deletion of XMB icon when gameDATA is disabled
@@ -634,10 +622,11 @@ next_xml_entry:
 									sprintf(_param_sfo, "%s/%s/PARAM.SFO", param, entry.entry_name.d_name);
 									mkdir_tree(param_sfo); file_copy(_param_sfo, param_sfo, COPY_WHOLE_FILE);
 								}
+								if(!webman_config->gamei) continue;
 
-								if(!webman_config->ps3l) continue;
+								sprintf(templn, "%s/%s/USRDIR/EBOOT.BIN", param, entry.entry_name.d_name);
+								if(not_exists(templn)) continue;
 
-								sprintf(templn, "%s/%s/USRDIR/EBOOT.BIN", param, entry.entry_name.d_name); if(not_exists(templn)) continue;
 								sprintf(templn, "%s/%s/PARAM.SFO", param, entry.entry_name.d_name);
 							}
 							else
@@ -748,11 +737,7 @@ continue_reading_folder_xml:
 
 	if( !scanning_roms && XMB_GROUPS )
 	{
-#ifndef PKG_LAUNCHER
 		if(!(webman_config->cmask & PS3)) {_concat(&myxml_ps3, "</Attributes><Items>");}
-#else
-		if(!(webman_config->cmask & PS3)) {_concat(&myxml_ps3, "</Attributes><Items>"); if(pkg_launcher) _concat(&myxml_ps3, QUERY_XMB("pkg_launcher", "xcb://localhost/query?limit=1&cond=Ae+Game:Common.dirPath /dev_hdd0//game+Ae+Game:Common.fileName " PKGLAUNCH_ID));}
-#endif
 		if(!(webman_config->cmask & PS2)) {_concat(&myxml_ps2, "</Attributes><Items>"); if(ps2_launcher) _concat(&myxml_ps2, QUERY_XMB("ps2_classic_launcher", "xcb://127.0.0.1/query?limit=1&cond=Ae+Game:Game.titleId PS2U10000"));}
 
 #ifdef COBRA_ONLY
@@ -1224,7 +1209,7 @@ static void update_xml_thread(u64 conn_s_p)
 	refreshing_xml = 1;
 
 	if(IS_ON_XMB)
-		while(View_Find("explore_plugin") == 0) sys_ppu_thread_sleep(1); // wait for explore_plugin
+		wait_for_xmb(); // wait for explore_plugin
 
 	if(scan_mygames_xml(conn_s_p)) mount_autoboot();
 

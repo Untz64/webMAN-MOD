@@ -44,7 +44,7 @@ ICON0		:=	$(CURDIR)/ICON0.PNG
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
-LIBS		:=	-luntar -lzip -lz -lun7zip -lstdc++ -lsimdmath -lgcm_sys -lio -lsysutil -lrt -llv2 -lsysmodule -lm -lsysfs
+LIBS		:=	-ltinytar -lzip -lz -lun7zip -lstdc++ -lsimdmath -lgcm_sys -lio -lsysutil -lrt -llv2 -lsysmodule -lm -lsysfs
 
 
 #---------------------------------------------------------------------------------

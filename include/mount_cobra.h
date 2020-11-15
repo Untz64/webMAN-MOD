@@ -114,11 +114,13 @@
 				if(islike(ntfs_ext, ".ntfs[PSXISO]") || (!strstr(_path, "[raw]")))
 	#endif
 				{
-					u8 n;
+					if(multiCD) check_multipsx = !isDir("/dev_usb000"); // check eject/insert USB000 in mount_on_insert_usb()
+
 					const char *rawseciso_sprx[4] = { WM_RES_PATH "/raw_iso.sprx",
 													  VSH_MODULE_DIR "raw_iso.sprx",
 													  WMTMP "/res/sman.ntf" };
 
+					u8 n;
 					for(n = 0; n < 4; n++)
 						if(file_exists(rawseciso_sprx[n])) break;
 
@@ -407,6 +409,18 @@
 																				RETROARCH_DIR1 "/USRDIR/cores" :
 																				RETROARCH_DIR2 "/USRDIR/cores" );
 					}
+
+					else if(islike(netpath, "/GAMEI/"))
+					{
+						wait_for("/dev_bdvd", 15);
+						sys_map_path(APP_HOME_DIR, "/dev_bdvd");
+
+						sys_ppu_thread_sleep(1);
+						launch_app_home_icon();
+
+						mount_unk = EMU_GAMEI;
+						goto exit_mount;
+					}
 #ifdef PKG_HANDLER
 					else if(!(webman_config->auto_install_pkg) && (pkg_slash != NULL))
 					{
@@ -470,18 +484,63 @@
 
 					if(file_exists(iso_list[0]))
 					{
+						int edat = 0;
+
 						sprintf(templn, "%s.MINIS.EDAT", iso_list[0]);
 						if(file_exists(templn))
 						{
-							if(isDir(PSP_LAUNCHER_MINIS))		sys_map_path(PSP_LAUNCHER_MINIS     "/USRDIR/MINIS.EDAT", templn);
-							if(isDir(PSP_LAUNCHER_REMASTERS))	sys_map_path(PSP_LAUNCHER_REMASTERS "/USRDIR/MINIS.EDAT", templn);
+							if(isDir(PSP_LAUNCHER_MINIS))
+							{
+								sprintf(iso_list[1], "/%s", PSP_LAUNCHER_MINIS "/USRDIR/MINIS.EDAT");
+								_file_copy(templn, iso_list[1]);
+								edat = read_file(iso_list[1], templn, 4, 0);
+							}
+
+							if(isDir(PSP_LAUNCHER_REMASTERS))
+							{
+								sprintf(iso_list[1], "/%s", PSP_LAUNCHER_REMASTERS "/USRDIR/MINIS.EDAT");
+								_file_copy(templn, iso_list[1]);
+								edat = read_file(iso_list[1], templn, 4, 0);
+							}
 						}
 
 						sprintf(templn, "%s.MINIS2.EDAT", iso_list[0]);
 						if(file_exists(templn))
 						{
-							if(isDir(PSP_LAUNCHER_REMASTERS)) sys_map_path(PSP_LAUNCHER_MINIS "/USRDIR/MINIS2.EDAT", templn);
+							if(isDir(PSP_LAUNCHER_REMASTERS))
+							{
+								sprintf(iso_list[1], "/%s", PSP_LAUNCHER_REMASTERS "/USRDIR/MINIS2.EDAT");
+								_file_copy(templn, iso_list[1]);
+								edat = read_file(iso_list[1], templn, 4, 0);
+							}
 						}
+
+						#ifndef LITE_EDITION
+						// restore original psp_emulator.self (if it's swapped)
+						swap_file(PSP_EMU_PATH, "psp_emulator.self", "psp_emulator.self.dec_edat", "psp_emulator.self.original");
+
+						// check if decrypted MINIS.EDAT is detected
+						if(edat)
+						{
+							if(!islike(templn, "NPD"))
+							{
+								// install psp_emulator.self with support for decrypted MINIS.EDAT
+								if((c_firmware >= 4.82f) && file_exists(WM_RES_PATH "/psp_emulator.self"))
+								{
+									if(not_exists("/dev_flash/pspemu/psp_emulator.self.dec_edat")
+									&& not_exists("/dev_flash/pspemu/psp_emulator.self.original"))
+									{
+										enable_dev_blind(NULL);
+										_file_copy((char*)(WM_RES_PATH "/psp_emulator.self"), (char*)"/dev_blind/pspemu/psp_emulator.self.dec_edat");
+									}
+								}
+
+								// swap psp_emulator.self if decrypted MINIS.EDAT is detected & psp_emulator.self.dec_edat is installed
+								swap_file(PSP_EMU_PATH, "psp_emulator.self", "psp_emulator.self.original", "psp_emulator.self.dec_edat");
+								show_msg("MINIS.EDAT is decrypted!");
+							}
+						}
+						#endif
 
 						int result = cobra_set_psp_umd(iso_list[0], NULL, (char*)"/dev_hdd0/tmp/wm_icons/psp_icon.png");
 
@@ -597,7 +656,7 @@
 
 				else if(strstr(_path, "/PSXISO") || strstr(_path, "/PSXGAMES") || mount_unk == EMU_PSX)
 				{
-					ret = mount_ps_disc_image(_path, cobra_iso_list, 1, EMU_PSX);
+					ret = mount_ps_disc_image(_path, cobra_iso_list, 1, EMU_PSX); if(multiCD) check_multipsx = !isDir("/dev_usb000"); // check eject/insert USB000 in mount_on_insert_usb()
 				}
 
 				// -------------------

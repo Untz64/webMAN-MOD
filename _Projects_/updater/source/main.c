@@ -385,7 +385,7 @@ int main()
 
 	if(button & (BUTTON_L1)) full = true; else
 	if(button & (BUTTON_CROSS | BUTTON_CIRCLE)) lite = true; else
-	if(	(!(button & BUTTON_R1) && (file_exists(PLUGINS_DIR "/webftp_server.sprx")) && (stat.st_size > 292000)) ||
+	if(	(!(button & BUTTON_R1) && (file_exists(PLUGINS_DIR "/webftp_server.sprx")) && (stat.st_size > 294000)) ||
 		(is_ps3hen() == 0x1337) ||
 		(file_exists("/dev_flash/hen/PS3HEN.BIN")) ||
 		(file_exists(HDDROOT_DIR "/hen/PS3HEN.BIN")) ||
@@ -541,6 +541,12 @@ int main()
 
 	// crossdomain.xml
 	file_copy(APP_USRDIR "/html/crossdomain.xml", XMLHOST_DIR "/crossdomain.xml");
+
+	// temperature monitor
+	file_copy(APP_USRDIR "/html/gauge.min.js", XMLHOST_DIR "/gauge.min.js");
+	file_copy(APP_USRDIR "/html/temp.js",      XMLHOST_DIR "/temp.js");
+	file_copy(APP_USRDIR "/html/tempc.html",   XMLHOST_DIR "/tempc.html");
+	file_copy(APP_USRDIR "/html/tempf.html",   XMLHOST_DIR "/tempf.html");
 
 	// fb.xml
 	if(is_ps3hen() == 0x1337)
@@ -855,6 +861,7 @@ int main()
 	sysLv2FsUnlink(TMP_DIR "/eula_cddb_plugin.sprx");
 
 	file_copy(APP_USRDIR "/res/wm_proxy.sprx", RES_DIR "/wm_proxy.sprx");
+	file_copy(APP_USRDIR "/res/psp_emulator.self", RES_DIR "/psp_emulator.self"); // supports decrypted MINIS.EDAT / MINIS2.EDAT (4.75-4.86)
 
 	sysLv2FsUnlink(TMP_DIR "/libfs.sprx");
 	file_copy(APP_USRDIR "/res/libfs.sprx", RES_DIR "/libfs.sprx");

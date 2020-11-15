@@ -207,6 +207,8 @@ static bool block_url(u64 addr, u64 value)
 
 static void block_online_servers(bool notify)
 {
+	if(payload_ps3hen) return; // not allowed due poke LV1 requirement
+
 	if(url_count == 0)
 	{
 		if(IS_INGAME) return; // not in XMB

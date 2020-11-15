@@ -28,7 +28,7 @@ enum paths_ids
 #define IS_PS3_TYPE    ((f1<=id_PS3ISO) || (f1==id_VIDEO || (f1==id_GAMEI)))
 #define IS_BLU_TYPE    ((f1<=id_BDISO)  || (f1==id_VIDEO || (f1==id_GAMEI)))
 
-#define IS_JB_FOLDER    ((f1<=id_GAMEZ) || (f1==id_VIDEO))
+#define IS_JB_FOLDER    ((f1<=id_GAMEZ) || (f1==id_VIDEO) || (f1==id_GAMEI))
 #define IS_PS3_FOLDER    (f1==id_PS3ISO)
 #define IS_BLU_FOLDER    (f1==id_BDISO)
 #define IS_DVD_FOLDER    (f1==id_DVDISO)
@@ -41,7 +41,7 @@ enum paths_ids
 
 #define IS_HDD0          (f0 == 0)
 #define IS_NTFS          (f0 == NTFS)
-#define IS_NET           (f0 >= 7 && f0 < NTFS)
+#define IS_NET           (f0 >= NET && f0 < NTFS)
 
 #define TYPE_ALL 0
 #define TYPE_PS1 1
@@ -67,7 +67,7 @@ enum paths_ids
 #include "games_slaunch.h"
 #include "games_covers.h"
 
-#if defined(PKG_LAUNCHER) || defined(MOUNT_ROMS)
+#if defined(MOUNT_GAMEI) || defined(MOUNT_ROMS)
  static u8 f1_len = 13;       // VIDEO + GAMEI + ROMS
 #else
  static const u8 f1_len = 11; // VIDEO
@@ -113,7 +113,16 @@ static int add_net_game(int ns, netiso_read_dir_result_data *data, int v3_entry,
 		if(not_exists(templn))
 		{
 			if(data[v3_entry].is_directory)
-				sprintf(enc_dir_name, "%s/%s/PS3_GAME/PARAM.SFO", param, data[v3_entry].name);
+			{
+				if(IS_GAMEI_FOLDER)
+					sprintf(enc_dir_name, "%s/%s/PARAM.SFO", param, data[v3_entry].name);
+				else
+					sprintf(enc_dir_name, "%s/%s/PS3_GAME/PARAM.SFO", param, data[v3_entry].name);
+				copy_net_file(templn, enc_dir_name, ns, COPY_WHOLE_FILE);
+
+				strcpy(templn + strlen(templn) - 4, ".png");
+				strcpy(enc_dir_name + strlen(enc_dir_name) - 9, "ICON0.PNG");
+			}
 			else
 			{
 				get_name(tempstr, data[v3_entry].name, NO_EXT);
@@ -163,7 +172,7 @@ static int add_net_game(int ns, netiso_read_dir_result_data *data, int v3_entry,
 	if(webman_config->tid && HAS_TITLE_ID && strlen(templn) < 50 && strstr(templn, " [") == NULL) {sprintf(enc_dir_name, " [%s]", title_id); strcat(templn, enc_dir_name);}
 
 	urlenc(enc_dir_name, data[v3_entry].name);
-	get_default_icon(icon, param, data[v3_entry].name, data[v3_entry].is_directory, title_id, ns, ((neth[4] & 0x0F) + 7), f1);
+	get_default_icon(icon, param, data[v3_entry].name, data[v3_entry].is_directory, title_id, ns, ((neth[4] & 0x0F) + NET), f1);
 
 	if(SHOW_COVERS_OR_ICON0 && (NO_ICON || (webman_config->nocov == SHOW_ICON0))) {get_name(tempstr, data[v3_entry].name, GET_WMTMP); strcat(tempstr, ".PNG"); if(file_exists(tempstr)) strcpy(icon, tempstr);}
 
@@ -203,7 +212,7 @@ static int check_drive(u8 f0)
 
 	// is_net
 #ifdef NET_SUPPORT
-	if(((f0 >= 7) && (f0 <= 11)) && !is_netsrv_enabled(f0 - 7)) return FAILED; //net
+	if(((f0 >= NET) && (f0 < NTFS)) && !is_netsrv_enabled(f0 - NET)) return FAILED; //net
 #else
 	if(IS_NET) return FAILED; // is_net (LITE_EDITION)
 #endif
@@ -223,6 +232,14 @@ static int check_content_type(u8 f1)
 	if((!webman_config->roms)        && IS_ROMS_FOLDER) return FAILED;
 #endif
 	return CELL_OK;
+}
+
+static char *is_multi_cd(const char *name)
+{
+	char  *p = strstr(name, "CD");
+	if(!p) p = strstr(name, "Vol");
+	if(!p) p = strstr(name, "Disc");
+	return p;
 }
 
 static void set_sort_key(char *skey, char *templn, int key, u8 subfolder, u8 f1)
@@ -260,9 +277,7 @@ static void set_sort_key(char *skey, char *templn, int key, u8 subfolder, u8 f1)
 	char *p = NULL, *nm = templn + 5;
 	if(f1 > id_PS3ISO)
 	{
-		       p = strstr(nm, "CD");
-		if(!p) p = strstr(nm, "Vol");
-		if(!p) p = strstr(nm, "Disc");
+		p = is_multi_cd(nm);
 		if( p) {while(*p && !ISDIGIT(*p)) ++p;}
 	}
 	if( p)
@@ -345,11 +360,12 @@ static bool game_listing(char *buffer, char *templn, char *param, char *tempstr,
 		if(!(webman_config->cmask & BLU))   add_query_html(pbuffer, "BDISO" );
 		if(!(webman_config->cmask & DVD))   add_query_html(pbuffer, "DVDISO");
 
- #if defined(PKG_LAUNCHER) || defined(MOUNT_ROMS)
-		if(webman_config->ps3l) {add_query_html(pbuffer, "GAMEI");}
-		if(webman_config->roms) {add_query_html(pbuffer, "ROMS");}
+ #ifdef MOUNT_GAMEI
+		if(webman_config->gamei) {add_query_html(pbuffer, "GAMEI");}
  #endif
-
+ #ifdef MOUNT_ROMS
+		if(webman_config->roms)  {add_query_html(pbuffer, "ROMS");}
+ #endif
  #ifdef NET_SUPPORT
 		if(webman_config->netd[0] || webman_config->netd[1] || webman_config->netd[2] || webman_config->netd[3] || webman_config->netd[4]) add_query_html(pbuffer, "net");
  #endif
@@ -435,8 +451,8 @@ static bool game_listing(char *buffer, char *templn, char *param, char *tempstr,
 		u8 clear_ntfs = 0;
 #endif
 
-#if defined(PKG_LAUNCHER) || defined(MOUNT_ROMS)
-		f1_len = (webman_config->roms ? id_ROMS : webman_config->ps3l ? id_GAMEI : id_VIDEO) + 1;
+#if defined(MOUNT_GAMEI) || defined(MOUNT_ROMS)
+		f1_len = (webman_config->roms ? id_ROMS : webman_config->gamei ? id_GAMEI : id_VIDEO) + 1;
 #endif
 
 #ifdef LAUNCHPAD
@@ -450,7 +466,7 @@ static bool game_listing(char *buffer, char *templn, char *param, char *tempstr,
 #ifdef COBRA_ONLY
 			if(strstr(param, "ntfs")) {filter0 = NTFS, b0 = 1; clear_ntfs = (strstr(param, "ntfs(0)") != NULL);} else
 #endif
-			for(u8 f0 = 0; f0 < 16; f0++) if(strstr(param, drives[f0])) {filter0 = f0, b0 = 1; break;}
+			for(u8 f0 = 0; f0 < MAX_DRIVES; f0++) if(strstr(param, drives[f0])) {filter0 = f0, b0 = 1; break;}
 			for(u8 f1 = 0; f1 < f1_len; f1++) if(strstr(param, paths [f1])) {filter1 = f1, b1 = 1; break;}
 			if(!b0 && strstr(param, "hdd" ))  {filter0 = 0, b0 = 1;}
 			if(!b0 && strstr(param, "usb" ))  {filter0 = 1, b0 = 2;}
@@ -458,7 +474,7 @@ static bool game_listing(char *buffer, char *templn, char *param, char *tempstr,
 			if(!b1 && strstr(param, "?ps3"))  {filter1 = 0, b1 = 3;}
 			if(!b1 && strstr(param, "npdrm")) {filter1 = 0, b1 = id_NPDRM;}
 #ifdef NET_SUPPORT
-			if(!b0 && strstr(param, "net" ))  {filter0 = 7, b0 = 3;}
+			if(!b0 && strstr(param, "net" ))  {filter0 = NET, b0 = 3;}
 #endif
 			if(strstr(param, "?") != NULL && ((!b0 && !b1) || (strrchr(param, '?') > strchr(param, '?'))) && strstr(param, "?html") == NULL && strstr(param, "mobile") == NULL) strcpy(filter_name, strrchr(param, '?') + 1);
 		}
@@ -567,7 +583,7 @@ static bool game_listing(char *buffer, char *templn, char *param, char *tempstr,
 list_games:
 #endif
 
-		for(u8 f0 = filter0; f0 < 16; f0++)  // drives: 0="/dev_hdd0", 1="/dev_usb000", 2="/dev_usb001", 3="/dev_usb002", 4="/dev_usb003", 5="/dev_usb006", 6="/dev_usb007", 7="/net0", 8="/net1", 9="/net2", 10="/net3", 11="/net4", 12="/ext", 13="/dev_sd", 14="/dev_ms", 15="/dev_cf"
+		for(u8 f0 = filter0; f0 < MAX_DRIVES; f0++)  // drives: 0="/dev_hdd0", 1="/dev_usb000", 2="/dev_usb001", 3="/dev_usb002", 4="/dev_usb003", 5="/dev_usb006", 6="/dev_usb007", 7="/net0", 8="/net1", 9="/net2", 10="/net3", 11="/net4", 12="/ext", 13="/dev_sd", 14="/dev_ms", 15="/dev_cf"
 		{
 			if(check_drive(f0)) continue;
 
@@ -587,26 +603,24 @@ list_games:
 				if(idx >= max_entries || tlen >= BUFFER_MAXSIZE) break;
 
 				//if(IS_PS2_FOLDER && f0>0)  continue; // PS2ISO is supported only from /dev_hdd0
-#ifdef PKG_LAUNCHER
-				if(IS_GAMEI_FOLDER) {if(is_net || (IS_HDD0) || (IS_NTFS) || (!webman_config->ps3l)) continue;}
-#endif
+				if(IS_GAMEI_FOLDER) {if((!webman_config->gamei) || (IS_HDD0) || (IS_NTFS)) continue;}
 				if(IS_VIDEO_FOLDER) {if(is_net) continue; else strcpy(paths[id_VIDEO], (IS_HDD0) ? "video" : "GAMES_DUP");}
 				if(IS_NTFS)  {if(f1 >= id_ISO) break; else if(IS_JB_FOLDER || (f1 == id_PSXGAMES)) continue;} // 0="GAMES", 1="GAMEZ", 7="PSXGAMES", 9="ISO", 10="video", 11="GAMEI", 12="ROMS"
 
 #ifdef NET_SUPPORT
 				if(is_net)
 				{
-					if(f1 >= id_ISO) break; // ignore 9="ISO", 10="video", 11="GAMEI"
+					if(f1 >= id_ISO) f1 = id_GAMEI; // ignore 9="ISO", 10="video"
 				}
 #endif
-				if(b0) {if((b0 == 2) && (f0 < 7)); else if((b0 == 3) && (!IS_NTFS)); else if(filter0 != f0) continue;}
+				if(b0) {if((b0 == 2) && (f0 < NET)); else if((b0 == 3) && (!IS_NTFS)); else if(filter0 != f0) continue;}
 				if(b1) {if((b1 >= 2) && ((f1 < b1) || IS_JB_FOLDER) && (filter1 < 3)); else if(filter1 != f1) continue;}
 				else
 					if(check_content_type(f1)) continue;
 
 #ifdef NET_SUPPORT
-				if(is_net && (netiso_svrid == (f0-7)) && (g_socket != -1)) ns = g_socket; /* reuse current server connection */ else
-				if(is_net && (ns<0)) ns = connect_to_remote_server(f0-7);
+				if(is_net && (netiso_svrid == (f0-NET)) && (g_socket != -1)) ns = g_socket; /* reuse current server connection */ else
+				if(is_net && (ns<0)) ns = connect_to_remote_server(f0-NET);
 #endif
 				if(is_net && (ns<0)) break;
 //
@@ -652,7 +666,7 @@ list_games:
 				{
 					v3_entries = read_remote_dir(ns, &data2, &abort_connection);
 					if(!data2) goto continue_reading_folder_html; //continue;
-					data = (netiso_read_dir_result_data*)data2; sprintf(neth, "/net%i", (f0-7));
+					data = (netiso_read_dir_result_data*)data2; sprintf(neth, "/net%i", (f0-NET));
 				}
 #endif
 				if(!is_net && cellFsOpendir(param, &fd) != CELL_FS_SUCCEEDED) goto continue_reading_folder_html; //continue;
@@ -747,7 +761,7 @@ next_html_entry:
 
 						if(IS_JB_FOLDER)
 						{
-#ifdef PKG_LAUNCHER
+#ifdef MOUNT_GAMEI
 							if(IS_GAMEI_FOLDER)
 							{
 								sprintf(templn, "%s/%s/USRDIR/EBOOT.BIN", param, entry.entry_name.d_name); if(not_exists(templn)) continue;

@@ -32,9 +32,9 @@
 #define  _16KB_		  16384UL
 #define _128KB_		 131072UL
 
-#define PSPL_PATH1		"/dev_hdd0/game/PSPC66820"
+#define PSPL_PATH1		"/dev_hdd0//game/PSPM66820"
 #define PSPL_ICON1		PSPL_PATH1 "/ICON0.PNG"
-#define PSPL_PATH2		"/dev_hdd0/game/PSPM66820"
+#define PSPL_PATH2		"/dev_hdd0//game/PSPC66820"
 #define PSPL_ICON2		PSPL_PATH2 "/ICON0.PNG"
 
 //#define PSPL_LAMBDA		PSPL_PATH1 "/USRDIR/CONTENT/lambda.db"
@@ -1474,10 +1474,28 @@ int cobra_map_paths(char *paths[], char *new_paths[], unsigned int num)
 }
 */
 
+static void restore_bak(const char *filename)
+{
+	char bak[64];
+	sprintf(bak, "/%s.bak", filename);
+
+	CellFsStat stat;
+
+	if(cellFsStat(bak, &stat) == CELL_FS_SUCCEEDED)
+	{
+		cellFsUnlink(filename);
+		file_copy(bak, (char*)filename, 0); // restore original edat from bak
+	}
+	else // create bak if not exists
+	{
+		file_copy(filename, bak, 0);
+	}
+}
+
 int cobra_unset_psp_umd(void)
 {
-	int ret1 = sys_map_path(PSPL_ICON1, NULL);
-	int ret2 = sys_map_path(PSPL_ICON2, NULL);
+	restore_bak(PSPL_ICON1);
+	restore_bak(PSPL_ICON2);
 
 	cellFsUnlink(PSPL_PATH1 "/PIC1.PNG");
 	cellFsUnlink(PSPL_PATH2 "/PIC1.PNG");
@@ -1491,11 +1509,9 @@ int cobra_unset_psp_umd(void)
 	cellFsUnlink(PSPL_PATH1 "/SND0.AT3");
 	cellFsUnlink(PSPL_PATH2 "/SND0.AT3");
 
-	sys_map_path(PSPL_PATH1 "/USRDIR/MINIS.EDAT", NULL);
-	sys_map_path(PSPL_PATH2 "/USRDIR/MINIS.EDAT", NULL);
-	sys_map_path(PSPL_PATH1 "/USRDIR/MINIS2.EDAT", NULL);
-
-	if (ret1 == ENOSYS || ret2 == ENOSYS) return ENOSYS;
+	restore_bak(PSPL_PATH1 "/USRDIR/MINIS.EDAT");
+	restore_bak(PSPL_PATH2 "/USRDIR/MINIS.EDAT");
+	restore_bak(PSPL_PATH2 "/USRDIR/MINIS2.EDAT");
 
 	sys_psp_set_umdfile(NULL, NULL, 0);
 	//sys_psp_change_emu_path(NULL);
@@ -1516,7 +1532,7 @@ int cobra_set_psp_umd(char *path, char *umd_root, char *icon_save_path)
 		return EABORT;
 	}
 
-	cobra_unset_psp_umd();
+	sys_psp_set_umdfile(NULL, NULL, 0);
 
 	//char sector[1024];
 	//read_file(path, sector, sizeof(sector), 0x8000);

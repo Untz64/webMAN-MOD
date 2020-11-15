@@ -1,6 +1,8 @@
 #define SYS_NET_EURUS_POST_COMMAND		(726)
 #define CMD_GET_MAC_ADDRESS				0x103f
 
+#define FAHRENHEIT(celsius)	((int)(1.8f * (float)celsius + 32.f))
+
 /*
 static u32 in_cobra(u32 *mode)
 {
@@ -139,8 +141,8 @@ static void cpu_rsx_stats(char *buffer, char *templn, char *param, u8 is_ps3_htt
 	get_temperature(0, &t1); // CPU // 3E030000 -> 3E.03°C -> 62.(03/256)°C
 	get_temperature(1, &t2); // RSX
 
-	t1f = (1.8f*(float)t1+32.f);
-	t2f = (1.8f*(float)t2+32.f);
+	t1f = FAHRENHEIT(t1);
+	t2f = FAHRENHEIT(t2);
 
 	_meminfo meminfo;
 	{system_call_1(SC_GET_FREE_MEM, (u64)(u32) &meminfo);}
@@ -150,7 +152,7 @@ static void cpu_rsx_stats(char *buffer, char *templn, char *param, u8 is_ps3_htt
 		u8 st, mode, unknown;
 		sys_sm_get_fan_policy(0, &st, &mode, &fan_speed, &unknown);
 
-		if(strstr(param, "?u")) enable_fan_control(ENABLE_SC8);
+		if(strstr(param, "?u") || strstr(param, "?d")) enable_fan_control(ENABLE_SC8);
 	}
 
 #ifdef SPOOF_CONSOLEID
@@ -185,19 +187,30 @@ static void cpu_rsx_stats(char *buffer, char *templn, char *param, u8 is_ps3_htt
 
 	if(strstr(param, "?"))
 	{
-		char *pos = strstr(param, "fan=");
+		char *pos = strstr(param, "fan=");  // 0 = SYSCON, 1 = DYNAMIC, 2 = FAN_AUTO2
 		if(pos)
 		{
 			u32 new_speed = get_valuen(param, "fan=", 0, webman_config->maxfan); max_temp = 0;
-			if(!new_speed)
-				enable_fan_control(DISABLED);
+			if(new_speed <= ENABLED)
+			{
+				webman_config->fanc = new_speed;
+				enable_fan_control(new_speed);
+			}
+			else if(new_speed == FAN_AUTO2)
+			{
+				webman_config->fanc = FAN_AUTO2;
+				enable_fan_control(ENABLE_AUTO2);
+			}
 			else
 			{
+				max_temp = FAN_MANUAL;
 				webman_config->man_rate = RANGE(new_speed, webman_config->minfan, webman_config->maxfan);
+				webman_config->man_speed = (u8)(((float)(webman_config->man_rate + 1) * 255.f)/100.f); // manual fan speed
 				if(webman_config->fanc == DISABLED) enable_fan_control(ENABLE_SC8);
+				set_fan_speed(webman_config->man_speed);
 			}
 		}
-		else
+		else if(webman_config->fanc || strstr(param, "?m"))
 		{
 			pos = strstr(param, "max=");
 			if(pos)
@@ -207,6 +220,8 @@ static void cpu_rsx_stats(char *buffer, char *templn, char *param, u8 is_ps3_htt
 				pos = strstr(param, "?m");
 				if(pos)
 				{
+					if(webman_config->fanc == FAN_AUTO2) enable_fan_control(ENABLED);
+
 					if((max_temp && !strstr(param, "dyn")) || strstr(param, "man"))
 						max_temp = FAN_MANUAL;
 					else
@@ -215,18 +230,19 @@ static void cpu_rsx_stats(char *buffer, char *templn, char *param, u8 is_ps3_htt
 					if(webman_config->fanc == DISABLED) enable_fan_control(ENABLE_SC8);
 				}
 			}
-		}
 
-		if(pos)
-		{
-			if(max_temp) //auto mode
+			if(strstr(param, "?mode=s"))
+				enable_fan_control(DISABLED);
+			else if(strstr(param, "?mode=a"))
+				enable_fan_control(ENABLE_AUTO2);
+			else if(max_temp) //auto mode
 			{
 				if(strstr(param, "?u")) max_temp++;
 				if(strstr(param, "?d")) max_temp--;
 				webman_config->dyn_temp = RANGE(max_temp, 40, MAX_TEMPERATURE); // dynamic fan max temperature in °C
 				webman_config->man_speed = FAN_AUTO;
 
-				fan_ps2_mode=false;
+				fan_ps2_mode = false;
 			}
 			else
 			{
@@ -236,8 +252,9 @@ static void cpu_rsx_stats(char *buffer, char *templn, char *param, u8 is_ps3_htt
 
 				reset_fan_mode();
 			}
-			save_settings();
 		}
+
+		save_settings();
 	}
 
 	{ PS3MAPI_ENABLE_ACCESS_SYSCALL8 }
@@ -249,19 +266,19 @@ static void cpu_rsx_stats(char *buffer, char *templn, char *param, u8 is_ps3_htt
 		sprintf(max_temp1, " (PS2 Mode: %i%%)", webman_config->ps2_rate);
 	}
 	else if((webman_config->fanc == DISABLED) || (!webman_config->man_speed && !max_temp))
-		sprintf(max_temp1, " <small>[%s %s]</small>", STR_FANCTRL3, STR_DISABLED);
+		sprintf(max_temp1, "<small>[%s %s]</small>", STR_FANCTRL3, "SYSCON");
 	else if(webman_config->fanc == FAN_AUTO2)
 	{
-		sprintf(max_temp1, " (AUTO)");
-		sprintf(max_temp2, " (AUTO)");
+		sprintf(max_temp1, "(AUTO)");
+		sprintf(max_temp2, "(AUTO)");
 	}
 	else if(max_temp)
 	{
-		sprintf(max_temp1, " (MAX: %i°C)", max_temp);
-		sprintf(max_temp2, " (MAX: %i°F)", (int)(1.8f*(float)max_temp+32.f));
+		sprintf(max_temp1, "(MAX: %i°C)", max_temp);
+		sprintf(max_temp2, "(MAX: %i°F)", FAHRENHEIT(max_temp));
 	}
 	else
-		sprintf(max_temp1, " <small>[FAN: %i%% %s]</small>", webman_config->man_rate, STR_MANUAL);
+		sprintf(max_temp1, "<small>[FAN: %i%% %s]</small>", webman_config->man_rate, STR_MANUAL);
 
 	*templn = NULL;
 
@@ -282,10 +299,10 @@ static void cpu_rsx_stats(char *buffer, char *templn, char *param, u8 is_ps3_htt
 
 	sprintf(param,	"<hr><font size=\"42px\">"
 					"<b><a class=\"s\" href=\"/cpursx.ps3?up\">"
-					"CPU: %i°C%s<br>"
+					"CPU: %i°C %s<br>"
 					"RSX: %i°C</a><hr>"
 					"<a class=\"s\" href=\"/cpursx.ps3?dn\">"
-					"CPU: %i°F%s<br>"
+					"CPU: %i°F %s<br>"
 					"RSX: %i°F</a><hr>",
 					t1, max_temp1, t2,
 					t1f, max_temp2, t2f); buffer += concat(buffer, param);
@@ -304,7 +321,7 @@ static void cpu_rsx_stats(char *buffer, char *templn, char *param, u8 is_ps3_htt
 					drives[0], hdd_free, STR_MBFREE, templn,
 					STR_FANCH2, (int)((int)fan_speed * 100) / 255, fan_speed); buffer += concat(buffer, param);
 
-	if(!max_temp && !is_ps3_http)
+	if(!max_temp && webman_config->fanc && !is_ps3_http )
 	{
 		sprintf(templn, "<input type=\"range\" value=\"%i\" min=\"%i\" max=\"%i\" style=\"width:600px\" onchange=\"self.location='/cpursx.ps3?fan='+this.value\">", webman_config->man_rate, webman_config->minfan, webman_config->maxfan); buffer += concat(buffer, templn);
 	}

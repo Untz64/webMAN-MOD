@@ -22,7 +22,7 @@ title Building webMAN_MOD_latest.pkg ...
 call make_update.bat
 
 set ver=1.47
-set rev=30
+set rev=31
 
 move webMAN_MOD_%ver%.xx_Updater.pkg                      ..\..\webMAN_MOD_%ver%.%rev%_Installer.pkg
 move webMAN_MOD_%ver%.xx_Updater_rebugification_theme.pkg ..\..\webMAN_MOD_%ver%.%rev%_Installer_rebugification_theme.pkg

@@ -99,13 +99,14 @@ static void filepath_check(char *file)
 #endif
 	)
 	{
-
 		// remove invalid chars
-		for(u16 n = 11, c = 11; file[c]; c++)
+		u16 n = 11;
+		for(u16 c = 11; file[c]; c++)
 		{
 			if(file[c] == '\\') file[c] = '/';
 			if(!strchr("\"<|>:*?", file[c])) file[n++] = file[c];
 		}
+		file[n] = 0;
 	}
 #ifdef USE_NTFS
 	if(is_ntfs_path(file)) {file[10] = ':'; if(mountCount == NTFS_UNMOUNTED) check_ntfs_volumes();}
@@ -218,12 +219,12 @@ static bool is_ext(const char *path, const char *ext)
 	return !extcasecmp(path, ext, 4);
 }
 
+#ifdef COBRA_ONLY
 static bool is_iso_0(const char *filename)
 {
 	return !extcasecmp(filename, ".iso.0", 6);
 }
 
-#ifdef COBRA_ONLY
 #define check_ps3_game(path)
 #else
 static void check_ps3_game(char *path)
@@ -238,7 +239,7 @@ static void check_ps3_game(char *path)
 }
 #endif
 
-#if defined(COPY_PS3) || defined(PKG_HANDLER) || defined(PKG_LAUNCHER)
+#if defined(COPY_PS3) || defined(PKG_HANDLER) || defined(MOUNT_GAMEI)
 static void mkdir_tree(char *path)
 {
 	size_t path_len = strlen(path);
@@ -1148,6 +1149,15 @@ static int wait_path(const char *path, u8 timeout, bool found)
 int wait_for(const char *path, u8 timeout)
 {
 	return wait_path(path, timeout, true);
+}
+
+#define MAX_WAIT	30
+
+static u8 wait_for_xmb(void)
+{
+	u8 t = 0;
+	while(View_Find("explore_plugin") == 0) {if(++t > MAX_WAIT) break; sys_ppu_thread_sleep(1);}
+	return (t > MAX_WAIT); // true = timeout
 }
 
 //////////////////////////////////////////////////////////////

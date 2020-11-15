@@ -686,6 +686,12 @@ parse_request:
 					// check /play.ps3<path>
 					if(file_exists(param2))
 					{
+						if(wait_for_xmb())
+						{
+							keep_alive = http_response(conn_s, header, param, CODE_BAD_REQUEST, param);
+							goto exit_handleclient_www;
+						}
+
 						if(IS(param2, "/app_home"))
 						{
 							launch_app_home_icon();
@@ -714,7 +720,9 @@ parse_request:
 #ifdef COBRA_ONLY
 					sprintf(header, "%s%s", HDD0_GAME_DIR, param2);
 
-					if((*param2 != NULL) && isDir(header))
+					if(*map_title_id && (*param2 == NULL))
+						launch_app_home_icon();
+					else if((*param2 != NULL) && isDir(header))
 					{
 						set_app_home(header);
 
@@ -762,6 +770,26 @@ parse_request:
 			if(islike(param, "/crossdomain.xml"))
 			{
 				sprintf(param, "%s%s", HTML_BASE_PATH, "/crossdomain.xml");
+			}
+			else
+			if(islike(param, "/tempc.html") || islike(param, "/tempf.html"))
+			{
+				u8 t1 = 0, t2 = 0;
+				get_temperature(0, &t1); // CPU // 3E030000 -> 3E.03°C -> 62.(03/256)°C
+				get_temperature(1, &t2); // RSX
+
+				u8 st, mode, unknown;
+				sys_sm_get_fan_policy(0, &st, &mode, &fan_speed, &unknown);
+
+				sprintf(header, "%s%s", HTML_BASE_PATH, param); strcpy(param, header);
+
+				sprintf(header, "function setGaugeValues(){"
+								"cpu=%i;"
+								"rsx=%i;"
+								"fan=%i;"
+								"}", t1, t2, fan_speed * 100 / 255);
+
+				save_file(HTML_BASE_PATH "/temp.js", header, SAVE_ALL);
 			}
 
  #ifdef SYS_ADMIN_MODE
@@ -967,6 +995,8 @@ parse_request:
 				// /browser.ps3$block_servers              block url of PSN servers in lv2
 				// /browser.ps3$restore_servers            restore url of PSN servers in lv2
 				// /browser.ps3$show_idps                  show idps/psid (same as R2+O)
+				// /browser.ps3$xregistry(<id>)            show value by id from xregistry.sys
+				// /browser.ps3$xregistry(<id>)=<value>    update value by id in xregistry.sys
 				// /browser.ps3$ingame_screenshot          enable screenshot in-game on CFW without the feature (same as R2+O)
 				// /browser.ps3$disable_syscalls           disable CFW syscalls
 				// /browser.ps3$toggle_rebug_mode          toggle rebug mode (swap VSH REX/DEX)
@@ -1007,56 +1037,97 @@ parse_request:
 					restore_blocked_urls();
 				}
 				else
-#ifdef SPOOF_CONSOLEID
+   #ifdef SPOOF_CONSOLEID
 				if(islike(param2, "$show_idps"))
 				{
 					show_idps(header);
 				}
 				else
-#endif
-/*
-				if(islike(param2, "$registryInt(0x"))
+   #endif
+   #ifdef DEBUG_XREGISTRY
+				if(islike(param2, "$xregistry(/"))
 				{
-					int id, value;
-					id = convertH(param2 + 15);
-
-					char *pos = strstr(param2 + 16, "=");
+					param2 += 11; char *pos = strchr(param2, ')');
 					if(pos)
 					{
-						value = val(pos + 1);
-						xsetting_D0261D72()->saveRegistryIntValue(id, value);
-					}
+						*pos = 0; u32 value; *header = 0;
+						if(pos[1] == '=')
+						{
+							strcpy(header, pos + 2);
+							value = val(header);
+							get_xreg_value(param2, value, header, false);
+						}
+						else
+							value = get_xreg_value(param2, 0, header, true);
+						*pos = ')';
 
-					xsetting_D0261D72()->loadRegistryIntValue(id, &value);
-					sprintf(param2 + strlen(param2), " => %i", value);
+						if(*header)
+							sprintf(pos + 1, " => %s", header);
+						else
+							sprintf(pos + 1, " => %i (0x%04x)", value, value);
+					}
 				}
 				else
-				if(islike(param2, "$registryString(0x"))
-				{
-					int id, len, size = 0;
-					id = convertH(param2 + 18);
-
-					char *pos = strstr(param2 + 19, "=");
-					if(pos)
-					{
-						pos++, len = strlen(pos);
-						xsetting_D0261D72()->saveRegistryStringValue(id, pos, len);
-					}
-
-					len = strlen(param2); char *value = param2 + len + 8;
-					char *pos2 = strstr(param2 + 19, ","); if(pos2) size = val(pos2 + 1); if(size <= 0) size = 0x80;
-					xsetting_D0261D72()->loadRegistryStringValue(id, value, size);
-					sprintf(param2 + len, " => %s", value);
-				}
-				else
-*/
+   #endif
    #ifndef LITE_EDITION
+				if(islike(param2, "$xregistry("))
+				{
+					int value, len, size = 0; param2 += 11;
+					int id = val(param2);
+
+					switch (id)
+					{
+						case 0x09: // "/setting/np/titleId"
+						case 0x19: // "/setting/np/tppsProxyServer"
+						case 0x1B: // "/setting/np/tppsProxyUserName"
+						case 0x1C: // "/setting/np/tppsProxyPassword"
+						case 0x20: // "/setting/system/hddSerial"
+						case 0x26: // "/setting/system/updateServerUrl"
+						case 0x2D: // "/setting/system/debugDirName"
+						case 0x3D: // "/setting/system/bootMode"
+						case 0x63: // "/setting/libad/adServerURL"
+						case 0x64: // "/setting/libad/adCatalogVersion"
+						case 0x6C: // "/setting/net/adhocSsidPrefix"
+						case 0x7C: // "/setting/wboard/baseUri"
+									size = 0x80;
+					}
+
+					char *pos = strstr(param2, ")="); // save
+					if(pos)
+					{
+						if(size)
+						{
+							pos += 2, len = strlen(pos);
+							xsetting_D0261D72()->saveRegistryStringValue(id, pos, len);
+						}
+						else
+						{
+							value = val(pos + 2);
+							xsetting_D0261D72()->saveRegistryIntValue(id, value);
+						}
+					}
+
+					len = strlen(param2);
+
+					if(size)
+					{
+						char *pos2 = strstr(param2, ","); if(pos2) size = val(pos2 + 1); if(size <= 0) size = 0x80;
+						xsetting_D0261D72()->loadRegistryStringValue(id, header, size);
+						sprintf(param2 + len, " => %s", header);
+					}
+					else
+					{
+						xsetting_D0261D72()->loadRegistryIntValue(id, &value);
+						sprintf(param2 + len, " => %i (0x%04x)", value, value);
+					}
+				}
+				else
 				if(islike(param2, "$ingame_screenshot"))
 				{
 					enable_ingame_screenshot();
 				}
 				else
-   #endif
+   #endif //#ifndef LITE_EDITION
    #ifdef REMOVE_SYSCALLS
 				if(islike(param2, "$disable_syscalls"))
 				{
@@ -1426,11 +1497,14 @@ parse_request:
 #endif
 			if(islike(param, "/wait.ps3"))
 			{
+				// /wait.ps3?xmb
 				// /wait.ps3?<secs>
 				// /wait.ps3/<path>
 
 				if(param[9] == '/')
 					wait_for(param + 9, 30);
+				else if(islike(param + 9, "?xmb"))
+					wait_for_xmb();
 				else
 					sys_ppu_thread_sleep(val(param + 10));
 
@@ -2041,10 +2115,24 @@ parse_request:
 			if(islike(param, "/fixgame.ps3"))
 			{
 				// /fixgame.ps3<path>  fix PARAM.SFO and EBOOT.BIN / SELF / SPRX in ISO or folder
+				// /fixgame.ps3<param_sfo>&attrib=<value>
 
-				// fix game folder
 				char *game_path = param + 12, titleID[10];
-				fix_game(game_path, titleID, FIX_GAME_FORCED);
+				char *attrib = strstr(game_path, "&attrib=");
+
+				if(attrib)
+				{
+					u32 attribute = get_valuen32(attrib, "&attrib="); *attrib = NULL;
+
+					char sfo[_4KB_];
+					u16 sfo_size = read_file(game_path, sfo, _4KB_, 0);
+					if(patch_param_sfo(game_path, (unsigned char *)sfo, sfo_size, attribute))
+					{
+						save_file(game_path, (void*)sfo, sfo_size);
+					}
+				}
+				else
+					fix_game(game_path, titleID, FIX_GAME_FORCED); // fix game folder
 
 				keep_alive = http_response(conn_s, header, param, CODE_BREADCRUMB_TRAIL, param);
 				goto exit_handleclient_www;
@@ -2375,6 +2463,13 @@ retry_response:
 
 				if(is_cpursx)
 				{
+					// /cpursx.ps3?fan=<n> 0=SYSCON, 1=DYNAMIC, 2=AUTO#2, n>=20 = % fan speed
+					// /cpursx.ps3?mode=<syscon|manual|dynamic|auto>
+					// /cpursx.ps3?mode <- Toggle between dynamic/manual
+					// /cpursx.ps3?max=<temp> <- Target temperature for dynamic fan control
+					// /cpursx.ps3?up
+					// /cpursx.ps3?dn
+
 					cpu_rsx_stats(pbuffer, templn, param, is_ps3_http);
 
 					loading_html = keep_alive = is_cpursx = 0; goto send_response;
@@ -2832,6 +2927,8 @@ retry_response:
 							del(HTML_BASE_PATH, RECURSIVE_DELETE);
 							del(VSH_MENU_IMAGES, RECURSIVE_DELETE);
 
+							restore_fan(SYSCON_MODE);
+
 							sprintf(param, "%s%s", "/delete.ps3", "?uninstall");
 							goto reboot;
 						}
@@ -2941,6 +3038,7 @@ retry_response:
 						// /find.lv2?<start-address>=<value>
 						// /hexview.ps3<file-path>
 						// /hexview.ps3<file-path>&offset=<value>
+						// /hexview.ps3<file-path>&offset=<value>&data=<new-value>
 
 						ps3mapi_find_peek_poke_hexview(pbuffer, templn, param);
 					}
@@ -2965,11 +3063,6 @@ retry_response:
 
 							if(get_explore_interface())
 							{
- #ifdef PKG_LAUNCHER
-								if(webman_config->ps3l && strstr(param, "/GAMEI/"))
-									focus_first_item();
-								else
- #endif
 								if(webman_config->ps2l && is_BIN_ENC(param))
 									focus_first_item();
 								else

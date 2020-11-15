@@ -3,7 +3,7 @@ function t2lnks(){
 	var url = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 	var www =/(^|[^\/#])(www\.[\S]+(\b|$))/gim;
 	var dev =/(\/\b(dev_+.*))/ig;
-	txt.innerHTML= "<a href='/'><b>webMAN MOD</b> 1.47.30</a><HR>" +
+	txt.innerHTML= "<a href='/'><b>webMAN MOD</b> 1.47.31</a><HR>" +
 				  txt.innerHTML
 				 .replace(url, "<a href='$1'>$1</a>")
 				 .replace(www, '$1<a target="_blank" href="http://$2">$2</a>')

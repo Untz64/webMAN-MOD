@@ -2,9 +2,20 @@
 static u8 get_default_usb_drive(const char *folder)
 {
 	char usb_path[32]; u8 n;
-	for(n = 1; n < 7; n++) {sprintf(usb_path, "%s%s", drives[n], folder ? folder : ""); if(isDir(usb_path)) break;}
+	for(n = 1; n < MAX_DRIVES; n++)
+	{
+		if(n == NET) n = NTFS + 1;
+		sprintf(usb_path, "%s%s", drives[n], folder ? folder : ""); if(isDir(usb_path)) break;
+	}
 
-	if((n < 7) || folder) return n;
+	if(folder)
+	{
+		if(n < MAX_DRIVES) return n;
+		if(isDir("/dev_bdvd/GAMEI")) return 0;
+		return n; // MAX_DRIVES = not found
+	}
+
+	if(n < MAX_DRIVES) return n; // 1-6 / 13-15
 
 	return 1; // 1 = usb000
 }
@@ -41,16 +52,16 @@ static int set_gamedata_status(u8 status, bool do_mount)
 		{
 			n = get_default_usb_drive("/GAMEI"); // find first USB HDD with /GAMEI
 
-			if(n >= 7)
+			if(n >= MAX_DRIVES)
 			{
 				n = get_default_usb_drive(0); // find first USB HDD, then create /GAMEI folder
 			}
 
-			sprintf(gamei_path, "%s/GAMEI", drives[n]);
+			sprintf(gamei_path, "%s/GAMEI", n ? drives[n] : "/dev_bdvd");
 			cellFsMkdir(gamei_path, DMODE); if(!isDir(gamei_path)) n = 99;
 		}
 
-		if(n < 7)
+		if(n < MAX_DRIVES)
 		{
 #ifdef COBRA_ONLY
 			sys_map_path("/dev_hdd0/game", gamei_path);
@@ -59,7 +70,7 @@ static int set_gamedata_status(u8 status, bool do_mount)
 			if(isDir(MM_ROOT_STD)) add_to_map(MM_ROOT_STD, MM_ROOT_STD);
 			add_to_map("/dev_hdd0/game", gamei_path);
 #endif
-			sprintf(msg, "gameDATA %s (%s)", STR_ENABLED, drives[n]);
+			sprintf(msg, "gameDATA %s (%s)", STR_ENABLED, n ? drives[n] : "/dev_bdvd");
 		}
 		else
 		{
